@@ -6,17 +6,13 @@ const morgan = require("morgan");
 const app = express();
 
 const APIRouter = require("./API/index");
+const loadImage = require("./API/image");
 
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use(morgan("dev"));
 
-app.use("/src", APIRouter);
-app.get("/api/v1", (req, res) => {
-  res.json({
-    project: "Vite/React and Express Global Keebs",
-    from: "IanDab47",
-  });
-});
+app.use("/src", loadImage);
+app.use("/api/v1", APIRouter);
 
 app.get("*", (_req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));

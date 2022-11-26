@@ -1,21 +1,22 @@
-require("dotenv").config();
-const express = require("express");
-const path = require("path");
-const morgan = require("morgan");
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const morgan = require('morgan');
 
 const app = express();
 
-const APIRouter = require("./API/index");
-const loadImage = require("./API/image");
+const APIRouter = require('./API/index');
+const loadImage = require('./API/image');
 
-app.use("/", express.static(path.join(__dirname, "public")));
-app.use(morgan("dev"));
+app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(morgan('dev'));
 
-app.use("/src", loadImage);
-app.use("/api/v1", APIRouter);
+// BACKEND ROUTES
+app.use('/src', loadImage);
+app.use('/api/v1', APIRouter);
 
-app.get("*", (_req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;

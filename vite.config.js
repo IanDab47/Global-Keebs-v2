@@ -1,5 +1,10 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+const root = resolve(__dirname, 'src');
+
+console.log(root);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -7,7 +12,10 @@ export default defineConfig({
   build: {
     manifest: true,
     rollupOptions: {
-      input: "./src/main.jsx",
+      input: {
+        main: resolve(root, 'main.jsx'),
+        home: resolve(root, 'pages', 'home/index.jsx'),
+      },
     },
   },
 });

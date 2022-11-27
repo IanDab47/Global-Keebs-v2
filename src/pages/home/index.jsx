@@ -5,7 +5,7 @@ import "./style.less"
 
 export default function Home() {
   return (
-    <header>
+    <header style={{ '--length': '4s' }}>
       <h1 style={{ '--order': 1 }}>
         Welcome to <span className="title-text accent">Global Keebs</span>
       </h1>

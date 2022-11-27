@@ -3,6 +3,11 @@
 @import '../../sharedStyles/dimensions.less';
 @import '../../sharedStyles/anim.less';
 
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(90%); }
+  to { opacity: 1; transform: scale(100%); }
+}
+
 body { 
   background-image: url('/earth-bg.png'); 
   background-repeat: no-repeat;
@@ -30,6 +35,8 @@ header {
     font-weight: 300;
     line-height: 9rem;
     color: @fnt-main-1;
+    opacity: 0;
+    animation: @fade-in;
 
     @media (max-width: 1280px) { 
       font-size: clamp(1px, 8.5vw, 6.7rem);
@@ -54,6 +61,8 @@ header {
 
   > div {
     text-align: center;
+    opacity: 0;
+    animation: @fade-in;
     
     > button {
       font-size: 1.8rem;

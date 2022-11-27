@@ -1,5 +1,6 @@
 @import './sharedStyles/colors.less';
 @import './sharedStyles/fonts.less';
+@import './sharedStyles/anim.less';
 
 * {
   box-sizing: border-box;
@@ -8,17 +9,17 @@
 }
 
 :root {
-  font-family: Lato, Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Lato, Helvetica, Arial, sans-serif;
   font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+  line-height: 1.5rem;
+  // font-weight: 400;
 
   // color-scheme: light dark;
   color: @fnt-main-1;
   background: linear-gradient(
     -45deg,
-    var(@bg-main-1),
-    var(@bg-main-2)
+    @bg-main-1,
+    @bg-main-2
   );
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,6 +30,7 @@
 
 a {
   text-decoration: none;
+  color: currentColor;
 }
 a:hover {
 }
@@ -39,8 +41,39 @@ body {
 }
 
 button {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  font-family: Montserrat, sans-serif;
+  font-style: italic;
+  background: @btn-bg;
+  color: @bg-main-1;
+  border: none;
+  border-radius: .5rem;
+  padding: .5rem 1.8rem;
+  transition: padding 300ms @quick-n-slow;
+}
+button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: @ntl-med-1;
+  mix-blend-mode: color-burn;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 300ms @quick-n-slow;
 }
 button:hover {
+  cursor: pointer;
+  padding-block: 1rem;
+  padding-inline: 4rem;
+  transition: 
+    padding-block 150ms @quick-n-slow,
+    padding-inline 300ms @quick-n-slow 150ms;
+}
+button:hover::before {
+  opacity: .3;
 }
 button:is(:focus, :focus-visible) {
 }

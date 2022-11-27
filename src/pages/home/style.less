@@ -1,11 +1,62 @@
 @import '../../sharedStyles/colors.less';
 @import '../../sharedStyles/fonts.less';
+@import '../../sharedStyles/dimensions.less';
 
-.title-text {
-  font-family: 'Montserrat Alternates', sans-serif;
-  color: red;
+body { 
+  background-image: url('/earth-bg.png'); 
+  background-repeat: no-repeat;
+  background-size: 87%;
+  background-position: 250% -25%;
 }
 
-.accent {
-  color: @fnt-act-1;
+header {
+  height: calc(100vh - @navbar-height);
+  display: grid;
+  place-items: center;
+  font-size: 3.2rem;
+  font-weight: 300;
+  line-height: 3.5rem;
+  padding: 2rem 0 6rem;
+
+  @media (max-width: 640px) {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+
+  h1 {
+    width: clamp(1px, 90%, max(69rem, 75%));
+    font-size: 6.7rem;
+    font-weight: 300;
+    line-height: 9rem;
+    color: @fnt-main-1;
+
+    @media (max-width: 1280px) { 
+      font-size: clamp(1px, 8.5vw, 6.7rem);
+      line-height: clamp(1px, 11.5vw, 9rem);
+    }
+  
+    .title-text {
+      display: block;
+      caret-color: @fnt-main-1;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 1.5em;
+      font-weight: 600;
+      font-style: italic;
+      text-align: center;
+      white-space: nowrap;
+    }
+    
+    .accent {
+      color: @fnt-act-1;
+    }
+  }
+
+  > div {
+    text-align: center;
+    
+    > button {
+      font-size: 1.8rem;
+      margin: 1.5rem auto 0;
+    }
+  }
 }

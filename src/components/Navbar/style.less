@@ -1,0 +1,42 @@
+@import '../../sharedStyles/colors.less';
+@import '../../sharedStyles/fonts.less';
+@import '../../sharedStyles/anim.less';
+
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  background: linear-gradient(
+    -0deg,
+    @fnt-act-1,
+    @fnt-act-2
+  );
+  font-family: 'Montserrat Alternates', Montserrat, Lato;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: @bg-main-1;
+  word-spacing: .5rem;
+  padding: .6rem 0;
+  box-shadow: 0 0 .8rem @ntl-med-1;
+
+  > a {
+    width: fit-content;
+    padding: .6rem 1.2rem;
+    border-radius: .5rem;
+    transition: 
+      background 300ms @quick-n-slow,
+      color 150ms @quick-n-slow,
+      box-shadow, 300ms @quick-n-slow;
+    box-shadow: 0 0 0 #604040;
+
+    &:is(:hover), &.active {
+      background: @bg-main-1;
+      color: @fnt-act-2;
+      transition: 
+        background 300ms @quick-n-slow,
+        color 300ms @quick-n-slow,
+        box-shadow, 300ms @quick-n-slow;
+      box-shadow: inset .1rem .1rem .3rem -.16rem #604040;
+    }
+  }
+}

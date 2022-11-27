@@ -29,9 +29,10 @@
       box-shadow, 300ms @quick-n-slow;
     box-shadow: 0 0 0 #604040;
 
-    &:is(:hover), &.active {
+    &:is(:hover, :focus, :focus-visible), &.active {
       background: @bg-main-1;
       color: @fnt-act-2;
+      outline: none;
       transition: 
         background 300ms @quick-n-slow,
         color 300ms @quick-n-slow,

@@ -28,6 +28,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html, body, #root {
+  scroll-behavior: smooth;
+}
+
 a {
   text-decoration: none;
   color: currentColor;
@@ -52,30 +56,28 @@ button {
   border-radius: .5rem;
   padding: .5rem 1.8rem;
   transition: padding 300ms @quick-n-slow;
-}
-button::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: @ntl-med-1;
-  mix-blend-mode: color-burn;
-  opacity: 0;
-  z-index: -1;
-  transition: opacity 300ms @quick-n-slow;
-}
-button:hover {
-  cursor: pointer;
-  padding-block: 1rem;
-  padding-inline: 4rem;
-  transition: 
-    padding-block 150ms @quick-n-slow,
-    padding-inline 300ms @quick-n-slow 150ms;
-}
-button:hover::before {
-  opacity: .3;
-}
-button:is(:focus, :focus-visible) {
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: @ntl-med-1;
+    mix-blend-mode: color-burn;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 300ms @quick-n-slow;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover::before {
+    opacity: .3;
+  }
+  &:is(:focus, :focus-visible) {
+    outline: .3rem solid @fnt-act-1;
+    outline-offset: .3rem;
+  }
 }
 
 // @media (prefers-color-scheme: light) {

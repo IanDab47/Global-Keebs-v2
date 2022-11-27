@@ -1,6 +1,7 @@
 @import '../../sharedStyles/colors.less';
 @import '../../sharedStyles/fonts.less';
 @import '../../sharedStyles/dimensions.less';
+@import '../../sharedStyles/anim.less';
 
 body { 
   background-image: url('/earth-bg.png'); 
@@ -57,6 +58,14 @@ header {
     > button {
       font-size: 1.8rem;
       margin: 1.5rem auto 0;
+
+      &:is(:hover, :focus, :focus-visible) {
+        padding-block: 1rem;
+        padding-inline: 4rem;
+        transition: 
+          padding-block 150ms @quick-n-slow,
+          padding-inline 300ms @quick-n-slow 150ms;
+      }
     }
   }
 }

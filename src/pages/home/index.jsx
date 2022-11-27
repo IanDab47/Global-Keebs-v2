@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 
 // Styles
 import "./style.less"
@@ -9,7 +9,7 @@ export default function Home() {
       <h1>Welcome to <span className="title-text accent">Global Keebs</span></h1>
       <div>
         <p>Click to Delete Financial Stability</p>
-        <button onClick={e => console.log('hi')}>Continue</button>
+        <button><Link to={'/listings'}>Continue</Link></button>
       </div>
     </header>
   )

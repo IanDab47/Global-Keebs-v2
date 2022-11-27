@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom"
+import axios from "axios";
 import logo from "/logo.svg";
 
 // Components
@@ -13,15 +14,19 @@ import List from './pages/list'
 import Listing from './pages/display'
 
 export default function App() {
-  const [count, setCount] = useState(0);
-  const [apiInfo, setApiInfo] = useState(null);
+  // State
+  const [apiInfo, setApiInfo] = useState([]);
 
+  // Hooks
   useEffect(() => {
-    fetch("/api/v1")
-      .then((data) => data.json())
-      .then((data) => setApiInfo(data));
+    axios.get("/api/v1/")
+      .then(response => {
+        setApiInfo([...response.data])
+      }) 
+      .catch(console.warn)
   }, []);
 
+  // Output
   return (
     <>
       <Navbar />

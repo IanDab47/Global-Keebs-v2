@@ -1,9 +1,13 @@
+// React
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 // Styles
 import "./style.less"
 
 export default function Home() {
+  // Output
   return (
     <header style={{ '--length': '4s' }}>
       <h1 style={{ '--order': 1 }}>

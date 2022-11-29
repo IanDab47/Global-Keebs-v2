@@ -6,7 +6,7 @@ const { sequelize } = require('../models');
 router.get('/', async (req, res) => {
   const list = await db.listing.findAll({
     order: [[sequelize.col('created_utc'), 'DESC']],
-    limit: 30,
+    limit: 100,
   });
   res.json(list);
 });

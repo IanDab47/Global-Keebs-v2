@@ -17,6 +17,7 @@
 @flr-str: #82dae2;
 @flr-gb: #bd93f9;
 @flr-etc: #d8e880;
+@flr-bg: @ntl-med-1;
 
 .dark {
   @nav-bg-1: #efede3;
@@ -31,3 +32,26 @@
   @inp-bg: #dfdfdf;
   @btn-bg: #b9b4a2;
 }
+
+
+.flair() {
+  width: max-content;
+  font-family: 'Montserrat Alternates';
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  text-shadow: 0 0 .2em darkgray;
+  color: white;
+  border-radius: 0 1rem 0 1rem;
+  padding: .35em 1em;
+  transition: transform 300ms @quick-n-slow;
+}
+[data-color]                      {background: @bdr-nav-2; }
+[data-color = "selling" i]        {background: @flr-sell; }
+[data-color = "buying" i]         {background: @flr-buy; }
+[data-color = "trading" i]        {background: @flr-trd; }
+[data-color = "store" i]          {background: @flr-str; }
+[data-color = "bulk" i]           {background: @flr-str; }
+[data-color = "group buy" i]      {background: @flr-gb; }
+[data-color = "interest check" i] {background: @flr-gb; }
+[data-color = "artisan" i]        {background: @flr-etc; }
+[data-color = "service" i]        {background: @flr-etc; }

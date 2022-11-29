@@ -1,0 +1,88 @@
+@import '../../sharedStyles/anim.less';
+@import '../../sharedStyles/colors.less';
+@import '../../sharedStyles/fonts.less';
+
+.list-page {
+  .list {
+    .tab {
+      position: relative;
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+      isolation: isolate;
+      box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000;
+      backdrop-filter: blur(.5rem);
+      padding-inline: calc(25% - 18rem);
+      opacity: 0;
+      transition: background 300ms @quick-n-slow,
+                  color 300ms @quick-n-slow;
+      animation: @fade-in, @drop-in;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0;
+        width: 100%; height: 100%;
+        background: @ntl-med-1;
+        opacity: .2;
+        z-index: -1;
+        transition: width 300ms cubic-bezier(.4,.6,.4,1),
+                    clip-path 300ms linear 300ms;
+      }
+
+      &:hover::before {
+        width: 8%;
+        clip-path: polygon(3rem 0, 100% 0, 100% 100%, 0 100%);
+        box-shadow: 0 0 .5rem black;
+        transition: width 300ms cubic-bezier(.4,.6,.4,1),
+                    clip-path 300ms cubic-bezier(.4,.6,.4,1);
+      }
+
+      .short, .long {
+        padding: 1rem;
+      }
+
+      .long > h1 {
+        position: relative;
+        isolation: isolate;
+        z-index: 1;
+        transition: color 100ms 200ms, z-index 0ms 300ms;
+
+        &::before, &::after {
+          content: attr(value);
+          position: absolute;
+          top: 0; left: 0;
+          color: transparent;
+          z-index: -1;
+          transition: transform 300ms @quick-n-slow, color 100ms 200ms, z-index 0ms 300ms;
+        }
+      }
+
+      &:hover .long > h1 {
+        color: @bdr-nav-1;
+        transition: color 0ms @quick-n-slow;
+
+        &::before, &::after {
+          transition: transform 300ms @quick-n-slow;
+        }
+
+        &::before {
+          color: @fnt-main-1;
+          transform: scale(102%) translate(1.5%, -.2rem);
+          z-index: 2;
+        }
+      }
+
+      .flair {
+        font-size: 1.5rem;
+      }
+
+      .location {
+        font-weight: bold;
+      }
+
+      .time {
+        font-weight: 400;
+      }
+    }
+  }
+}

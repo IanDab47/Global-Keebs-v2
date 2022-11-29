@@ -30,6 +30,7 @@
     
 html, body, #root {
   scroll-behavior: smooth;
+  z-index: -99;
 }
 
 a {
@@ -78,6 +79,16 @@ button {
     outline: .3rem solid @fnt-act-1;
     outline-offset: .3rem;
   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(90%); }
+  to { opacity: 1; transform: scale(100%); }
+}
+
+@keyframes drop-in {
+  from { transform: translateY(-40%); }
+  to { transform: translateY(0%); }
 }
 
 // @media (prefers-color-scheme: light) {

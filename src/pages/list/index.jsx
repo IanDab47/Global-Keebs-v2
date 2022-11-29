@@ -5,10 +5,11 @@ import axios from 'axios'
 // Components
 
 // Utils
-import { setTime, timeSincePost } from '../../util/time'
+import { setTime } from '../../util/time'
 
 // Styles
 import "./style.less"
+import ListTab from '../../components/ListTab'
 
 export default function List() {
   // State
@@ -30,48 +31,28 @@ export default function List() {
     getList()
   }, []); 
 
+  // Handlers
+  
+
+  // Output
   const listings = list.map((listing, i) => {
     i === 0 ? console.log(listing) : null 
     return (
-      <div
-        className='tab'
-        style={{ '--order': i / 13 + 1.1, '--length': '1.5s', '--flair': listing.flair_text }}
-        key={listing.pageId}
-      >
-        <div className='short'>
-          <div
-            className='flair'
-            data-color={listing.flair_text}
-          >
-            {listing.flair_text.toLowerCase()}
-          </div>
-
-          {listing.location.toLowerCase() !== listing.flair_text.toLowerCase() &&
-            <p className='location'>[{listing.location}]</p>}
-          
-          <p className='time' >{timeSincePost(currTime, listing.created_utc)}</p>
-        </div>
-
-        <div className='long'>
-          <h1 value={listing.title}>{listing.title}</h1>
-
-          <div>
-            <p>u/{listing.author}</p>
-
-            <span
-              onClick={e => showTimestamp(listing)}
-            >
-              Timestamp
-            </span>
-          </div>
-
-        </div>
-      </div>
+      <ListTab
+        key={`tab_GK${i}_${listing.pageId}`}
+        listing={listing}
+        currTime={currTime}
+        i={i}
+      />
     )}
   )
 
   return (
     <section className='list-page'>
+      <form onSubmit={e => handleSearch}>
+
+      </form>
+        
       <div className='listings list'>
         {listings}
       </div>

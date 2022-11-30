@@ -22,7 +22,7 @@
       }
     }
 
-    input:focus, 
+    input:is(:focus-visible, :focus-within), 
     input[type="text"]:not(input[value=""]){
       ~ button {
         padding: 1rem 2rem;

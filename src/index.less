@@ -69,7 +69,7 @@ input + label {
   transition: all 300ms @quick-n-slow;
 }
 
-input:focus, input[type='text']:not(input[value=""]) {
+input:is(:focus-visible, :focus-within), input[type='text']:not(input[value=""]) {
   padding-top: 1.5rem;
 
   + label {

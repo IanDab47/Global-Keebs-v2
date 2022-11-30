@@ -3,22 +3,21 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 // Components
+import ListTab from '../../components/ListTab'
+import ListCard from '../../components/ListCard'
 
 // Utils
 import { setTime } from '../../util/time'
 
 // Styles
 import "./style.less"
-import ListTab from '../../components/ListTab'
-import ListCard from '../../components/ListCard'
 
 export default function List() {
   // State
   const [list, setList] = useState([])
-  const [listType, setListType] = useState(0)
-  const [searchInput, setSearchInput] = useState(null)
-  const [searchLabel, setSearchLabel] = useState('Search...')
-  const [currTime, setCurrTime] = useState(setTime())
+  const [listType, setListType] = useState(null)
+  const [searchInput, setSearchInput] = useState(undefined)
+  const currTime = setTime()
   
   // Hooks
   useEffect(() => {
@@ -75,7 +74,7 @@ export default function List() {
             name='view-type'
             onChange={e => setListType(Number(e.target.value))}
           >
-            <option value={null}>Select View Type</option>
+            { typeof listType === 'number' ? null : <option selected>Select View Type</option> }
             <option value={0}>List</option>
             <option value={1}>Card</option>
           </select>

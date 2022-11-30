@@ -15,7 +15,7 @@ import "./style.less"
 export default function List() {
   // State
   const [list, setList] = useState([])
-  const [listType, setListType] = useState(0)
+  const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const currTime = setTime()
   
@@ -34,7 +34,16 @@ export default function List() {
   }, []); 
 
   // Handlers
-  
+  const handleSearch = async e => {
+    e.preventDefault()
+
+    try {
+      const response = await axios.get(`/api/v1/listings?search=${searchInput}`)
+      setList(response.data)
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
   // Output
   const listings = list.map((listing, i) => {
@@ -63,26 +72,28 @@ export default function List() {
 
   return (
     <section className='list-page'>
-      <form onSubmit={e => handleSearch}>
+      <form onSubmit={e => handleSearch(e)}>
         <header>
           <h1>Listings</h1>
 
           <div className='searchbar'>
-            <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
+            <input type='text' value={searchInput} onClick={e => setSearchInput(e.target.value)} />
             <label>Search</label>
             <button className={ searchInput ? null : 'clear' }>Submit</button>
           </div>
         </header>
 
         <div className='view-type'>
-          <select
-            name='view-type'
-            onChange={e => setListType(Number(e.target.value))}
-          >
-            { typeof listType === 'number' ? null : <option>Select View Type</option> }
-            <option value={0}>List</option>
-            <option value={1}>Card</option>
-          </select>
+          {window.innerWidth > 640 && (
+            <select
+              name='view-type'
+              onChange={e => setListType(Number(e.target.value))}
+            >
+              { typeof listType === 'number' ? null : <option>Select View Type</option> }
+              <option value={1}>Card</option>
+              <option value={0}>List</option>
+            </select>
+          )}
         </div>
       </form>
         

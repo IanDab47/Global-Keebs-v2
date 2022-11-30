@@ -4,37 +4,72 @@
 
 .list-page {
   margin-top: 1.2rem;
-  
-  .searchbar {
-    position: relative;
-    width: 100%;
-    user-select: none;
-    padding-inline: ~"max(.6rem, calc(25vw - 18rem))";
 
-    label {
-      left: ~"max(.6rem, calc(25vw - 16.5rem))";
+  header {
+    display: flex;
+    gap: 2.5rem;
+    @media (max-width: 640px) { flex-direction: column; gap: .75rem }
+    align-items: center;
+    padding-inline: ~"max(1.2rem, calc(25vw - 18rem))";
+    @media (max-width: 640px) { padding-inline: .6rem; }
 
-      + button {
-        position: absolute;
-        right: ~"max(.6rem, calc(25vw - 18rem))";
-        font-size: 1.5rem;
-        transition: opacity 300ms @quick-n-slow;
+    h1 {
+      display: inline;
+      width: min-content;
+      height: min-content;
+      cursor: default;
+      background-image: linear-gradient(
+        @fnt-act-2,
+        @fnt-act-2
+      );
+      background-size: 0% .2rem;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      font-family: Montserrat;
+      font-size: 2.5rem;
+      font-weight: 300;
+      font-style: italic;
+      padding-bottom: 1rem;
+      margin-top: .5rem;
+      transition: background 300ms @quick-n-slow;
+
+      &:hover {
+        background-size: 100% .2rem;
       }
     }
 
-    input:is(:focus-visible, :focus-within), 
-    input[type="text"]:not(input[value=""]){
-      ~ button {
-        padding: 1rem 2rem;
+    .searchbar {
+      position: relative;
+      width: 100%;
+      user-select: none;
+  
+      label {
+        left: 1rem;
+  
+        + button {
+          position: absolute;
+          right: 0;
+          font-size: 1.5rem;
+          outline: none;
+          transition: opacity 300ms @quick-n-slow;
+        }
+      }
+  
+      input:is(:focus-visible, :focus-within), 
+      input[type="text"]:not(input[value=""]){
+        ~ button {
+          padding: .75rem 1.5rem;
+        }
       }
     }
   }
+
 
   .view-type {
     text-align: center;
   }
 
-  .list {
-    
+  .listings {
+    margin-top: 1rem;
   }
 }

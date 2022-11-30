@@ -1,5 +1,8 @@
 import { timeSincePost } from '../../util/time'
 
+// Styles
+import './style.less'
+
 export default function ListTab({ currTime, listing, i }) {
   return (
     <div
@@ -26,11 +29,13 @@ export default function ListTab({ currTime, listing, i }) {
         <div>
           <p>u/{listing.author}</p>
 
-          <span
+          {listing.timestamp && (
+            <span
             onClick={e => showTimestamp(listing)}
           >
             Timestamp
-          </span>
+            </span>
+          )}
         </div>
 
       </div>

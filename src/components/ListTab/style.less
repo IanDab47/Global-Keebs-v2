@@ -1,0 +1,172 @@
+@import '../../sharedStyles/anim.less';
+@import '../../sharedStyles/colors.less';
+@import '../../sharedStyles/fonts.less';
+
+.list .tab {
+  position: relative;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  isolation: isolate;
+  box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000;
+  backdrop-filter: blur(.5rem);
+  padding-inline: calc(25% - 18rem);
+  opacity: 0;
+  transition: background 300ms @quick-n-slow,
+              color 300ms @quick-n-slow;
+  animation: @fade-in, @drop-in;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%; height: 100%;
+    background: @ntl-med-1;
+    opacity: .2;
+    z-index: -1;
+    transition: width 300ms cubic-bezier(.4,.6,.4,1),
+                clip-path 300ms linear 300ms;
+  }
+
+  &:hover::before {
+    width: 5%;
+    clip-path: polygon(2rem 0, 100% 0, 100% 100%, 0 100%);
+    box-shadow: 0 0 .5rem black;
+    transition: width 300ms cubic-bezier(.4,.6,.4,1),
+                clip-path 300ms cubic-bezier(.4,.6,.4,1);
+  }
+
+  .short, .long {
+    padding: 1rem;
+  }
+
+  .short {
+    text-align: center;
+  }
+
+  .long {
+    display: grid;
+    grid-template-rows: auto auto;
+
+    > h1 {
+      position: relative;
+      width: fit-content;
+      isolation: isolate;
+      font-size: 1.8rem;
+      line-height: initial;
+      z-index: 1;
+      transition: color 100ms 200ms, z-index 0ms 300ms;
+
+      &::before, &::after {
+        content: attr(value);
+        position: absolute;
+        top: 0; left: 0;
+        color: transparent;
+        z-index: -1;
+        transition: transform 300ms @quick-n-slow, color 100ms 200ms, z-index 0ms 300ms;
+      }
+    }
+
+    > div {
+      margin-top: auto;
+      width: max-content;
+      font-size: 1.1rem;
+      transition: all 300ms @quick-n-slow;
+      
+      > * {
+        position: relative;
+        isolation: isolate;
+        display: inline;
+        padding: .2em .5em;
+        transition: all 300ms @quick-n-slow;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%; left: 0;
+          width: 100%; height: 0%;
+          // border-inline: .1rem solid @ntl-med-1;
+          z-index: 1;
+          transition: top 500ms @quick-n-slow, 
+                      height 500ms @quick-n-slow;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0; right: 0;
+          width: 0; height: 100%;
+          background: @inp-bg;
+          background-position: center;
+          background-size: 0%;
+          z-index: -1;
+          transition: all 500ms @quick-n-slow;
+        }
+
+        &:hover::after {
+          width: 100%;
+          background-size: 100%;
+        }
+      }
+
+      > span {
+        cursor: pointer;
+        &::after {
+          left: 0; right: initial;
+        }
+      }
+    }
+  }
+
+  &:hover .long { 
+    > h1 {
+      color: transparent;
+      cursor: pointer;
+      transition: color 0ms @quick-n-slow;
+
+      &::before, &::after {
+        transition: transform 300ms @quick-n-slow;
+      }
+
+      &::before {
+        color: @fnt-main-1;
+        transform: scale(102%) translate(1.5%, -.2rem);
+        z-index: 2;
+      }
+    }
+
+    > div {
+      > * {
+        padding: .4em 1.2em;
+
+        &::before {
+          top: 0;
+          height: 100%;
+        }
+      }
+      > :first-child {
+        border-right-color: transparent;
+      }
+      > :last-child, :last-child::before {
+        border-left-color: transparent;
+      }
+    }
+  }
+
+  .flair {
+    .flair();
+    margin-bottom: .5rem;
+  }
+
+  &:hover .flair {
+    transform: scale(110%);
+  }
+
+  .location {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .time {
+    font-weight: 400;
+  }
+}

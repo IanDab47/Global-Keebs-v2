@@ -42,7 +42,7 @@
       justify-content: space-between;
       isolation: isolate;
       background: @inp-bg;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1.5rem 1rem;
       overflow: clip;
       transition: color 300ms @quick-n-slow;
 
@@ -57,20 +57,38 @@
       }
 
       &:hover {
-        color: @bg-nav-1;
+        color: @bg-main-1;
       }
 
       &:hover::before {
         width: 100%;
       }
 
-      h1 {
+      > h1 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+        cursor: pointer;
         overflow: hidden;
         font-size: 1.8rem;
         line-height: 2rem;
+      }
+
+      > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        > p {
+          border-radius: .5rem;
+          transition: padding 300ms @quick-n-slow, background 300ms @quick-n-slow;
+
+          &:first-child:hover {
+            cursor: pointer;
+            background: @fnt-act-2;
+            padding: .3rem 1.2rem;
+          }
+        }
       }
     }
 

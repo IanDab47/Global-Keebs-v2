@@ -1,3 +1,5 @@
+import { timeSincePost } from '../../util/time'
+
 // Styles
 import './style.less'
 
@@ -8,8 +10,7 @@ export default function ListCard({ currTime, listing, i }) {
   // + 1.1 = delay -- Must be at least 1
 
   const rowCardNumber = !window ? null :
-    window.innerWidth > 1660 ? 4 :
-      window.innerWidth > 1252 ? 3 :
+      window.innerWidth > 1313 ? 3 :
         window.innerWidth > 844 ? 2 : 1
     
   const gridAnimMath = (i % rowCardNumber + Math.floor(i / rowCardNumber)) / 13 + 1.1
@@ -37,7 +38,11 @@ export default function ListCard({ currTime, listing, i }) {
       <div className='bottom'>
         <h1>{listing.title}</h1>
 
-        <p>u/{listing.author}</p>
+        <div>
+          <p>u/{listing.author}</p>
+          <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
+        </div>
+        
       </div>
     </div>
   )

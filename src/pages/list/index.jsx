@@ -15,13 +15,13 @@ import "./style.less"
 export default function List() {
   // State
   const [list, setList] = useState([])
+  const [category, setCategory] = useState('')
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [filterInput, setFilterInput] = useState('')
   const [locationInput, setLocationInput] = useState('')
   const currTime = setTime()
   const listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}`
-  const category = 'Listing'
   
   // Hooks
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function List() {
       const response = await axios.get(listAPIURL)
       console.log(response.data)
       setList(response.data)
+      setCategory(filterInput)
     } catch (err) {
       console.warn(err)
     }
@@ -77,7 +78,7 @@ export default function List() {
     <section className='list-page'>
       <form onSubmit={e => handleSearch(e)}>
         <header>
-          <h1>{category}</h1>
+          <h1>{ category === '' ? 'Listings' : category }</h1>
 
           <div className='searchbar'>
             <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
@@ -97,10 +98,10 @@ export default function List() {
                   onClick={e => setFilterInput(e.target.value)}
                 >
                   <option value={''}>All</option>
-                  <option value={'selling'}>Selling</option>
-                  <option value={'buying'}>Buying</option>
-                  <option value={'artisan'}>Artisan</option>
-                  <option value={'upcoming'}>GBs and ICs</option>
+                  <option value={'Selling'}>Selling</option>
+                  <option value={'Buying'}>Buying</option>
+                  <option value={'Artisan'}>Artisan</option>
+                  <option value={'Upcoming'}>GBs and ICs</option>
                 </select>
               </>
             )}

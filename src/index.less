@@ -34,6 +34,11 @@ html, body, #root {
   z-index: -99;
 }
 
+body {
+  width: 100%;
+  min-height: 100vh;
+}
+
 a {
   text-decoration: none;
   color: currentColor;
@@ -41,23 +46,17 @@ a {
 a:hover {
 }
 
-body {
-  width: 100%;
-  min-height: 100vh;
-}
-
 input {
   width: 100%;
-  background: @inp-bg;
+  background: transparent;
   font-family: Montserrat;
   font-size: 1.5rem;
   border: none;
   border-radius: .4rem;
   outline: none;
   padding: .5rem 1.6rem;
-  transition: padding 300ms @quick-n-slow;
+  transition: padding 300ms @quick-n-slow, background 300ms @quick-n-slow;
 }
-
 input + label {
   position: absolute;
   pointer-events: none;
@@ -68,8 +67,8 @@ input + label {
   transform: translateY(-50%);
   transition: all 300ms @quick-n-slow;
 }
-
 input:is(:focus-visible, :focus-within), input[type='text']:not(input[value=""]) {
+  background: @inp-bg;
   padding-top: 1.5rem;
 
   + label {

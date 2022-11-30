@@ -15,7 +15,7 @@ import "./style.less"
 export default function List() {
   // State
   const [list, setList] = useState([])
-  const [listType, setListType] = useState(null)
+  const [listType, setListType] = useState(0)
   const [searchInput, setSearchInput] = useState('')
   const currTime = setTime()
   
@@ -64,11 +64,15 @@ export default function List() {
   return (
     <section className='list-page'>
       <form onSubmit={e => handleSearch}>
-        <div className='searchbar'>
-          <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
-          <label>Search</label>
-          <button className={searchInput ? null : 'clear'}>Submit</button>
-        </div>
+        <header>
+          <h1>Listings</h1>
+
+          <div className='searchbar'>
+            <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
+            <label>Search</label>
+            <button className={ searchInput ? null : 'clear' }>Submit</button>
+          </div>
+        </header>
 
         <div className='view-type'>
           <select
@@ -82,8 +86,8 @@ export default function List() {
         </div>
       </form>
         
-      <div className={`listings ${listType ? 'cards' : 'list'}`}>
-        {listType ? cards : listings}
+      <div className={`listings ${ listType ? 'cards' : 'list' }`}>
+        { listType ? cards : listings }
       </div>
 
     </section>

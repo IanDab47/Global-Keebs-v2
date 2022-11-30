@@ -16,6 +16,8 @@ export default function List() {
   // State
   const [list, setList] = useState([])
   const [listType, setListType] = useState(0)
+  const [searchInput, setSearchInput] = useState(null)
+  const [searchLabel, setSearchLabel] = useState('Search...')
   const [currTime, setCurrTime] = useState(setTime())
   
   // Hooks
@@ -63,6 +65,11 @@ export default function List() {
   return (
     <section className='list-page'>
       <form onSubmit={e => handleSearch}>
+        <div className='searchbar'>
+          <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
+          <label>Search</label>
+        </div>
+
         <div className='view-type'>
           <select
             name='view-type'

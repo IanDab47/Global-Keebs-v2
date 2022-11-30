@@ -17,15 +17,18 @@ export default function List() {
   const [list, setList] = useState([])
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
+  const [filterInput, setFilterInput] = useState('')
+  const [locationInput, setLocationInput] = useState('')
   const currTime = setTime()
+  const listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}`
+  const category = 'Listing'
   
   // Hooks
   useEffect(() => {
     const getList = async () => {
       try {
-        await axios.get("/api/v1/listings")
-          .then(response => setList(response.data))
-          .catch(console.warn)
+        const response = await axios.get(listAPIURL)
+        setList(response.data)
       } catch (err) {
         console.warn(err)
       }
@@ -36,9 +39,9 @@ export default function List() {
   // Handlers
   const handleSearch = async e => {
     e.preventDefault()
-
     try {
-      const response = await axios.get(`/api/v1/listings?search=${searchInput}`)
+      const response = await axios.get(listAPIURL)
+      console.log(response.data)
       setList(response.data)
     } catch (err) {
       console.warn(err)
@@ -74,27 +77,70 @@ export default function List() {
     <section className='list-page'>
       <form onSubmit={e => handleSearch(e)}>
         <header>
-          <h1>Listings</h1>
+          <h1>{category}</h1>
 
           <div className='searchbar'>
-            <input type='text' value={searchInput} onClick={e => setSearchInput(e.target.value)} />
+            <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
             <label>Search</label>
             <button className={ searchInput ? null : 'clear' }>Submit</button>
           </div>
         </header>
 
-        <div className='view-type'>
-          {window.innerWidth > 640 && (
-            <select
-              name='view-type'
-              onChange={e => setListType(Number(e.target.value))}
-            >
-              { typeof listType === 'number' ? null : <option>Select View Type</option> }
-              <option value={1}>Card</option>
-              <option value={0}>List</option>
-            </select>
-          )}
-        </div>
+        <section className='filters'>
+
+          <div className='flair-filter'>
+            {window.innerWidth > 640 && (
+              <>
+                <label>Select Category: </label>
+                <select
+                  name='flair-filter'
+                  onClick={e => setFilterInput(e.target.value)}
+                >
+                  <option value={''}>All</option>
+                  <option value={'selling'}>Selling</option>
+                  <option value={'buying'}>Buying</option>
+                  <option value={'artisan'}>Artisan</option>
+                  <option value={'upcoming'}>GBs and ICs</option>
+                </select>
+              </>
+            )}
+          </div>
+
+          <div className='location-filter'>
+            {window.innerWidth > 640 && (
+              <>
+                <label>Select Location(s): </label>
+                <select
+                  name='location-filter'
+                  onClick={e => setLocationInput(e.target.value)}
+                >
+                  <option value={''}>All</option>
+                  <option value={'AS'}>Asia</option>
+                  <option value={'AU'}>Australia</option>
+                  <option value={'CA'}>Canada</option>
+                  <option value={'EU'}>Europe</option>
+                  <option value={'US'}>USA</option>
+                </select>
+              </>
+            )}
+          </div>
+          
+          <div className='view-type'>
+            {window.innerWidth > 640 && (
+              <>
+                <label>Select View Type: </label>
+                <select
+                  name='view-type'
+                  onClick={e => setListType(Number(e.target.value))}
+                >
+                  <option value={1}>Card</option>
+                  <option value={0}>List</option>
+                </select>
+              </>
+            )}
+          </div>
+
+        </section>
       </form>
         
       <div className={`listings ${ listType ? 'cards' : 'list' }`}>

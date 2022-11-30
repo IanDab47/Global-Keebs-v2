@@ -8,10 +8,25 @@
   .searchbar {
     position: relative;
     width: 100%;
+    user-select: none;
     padding-inline: ~"max(.6rem, calc(25vw - 18rem))";
 
     label {
-      left: ~"max(.6rem, calc(25vw - 16rem))";
+      left: ~"max(.6rem, calc(25vw - 16.5rem))";
+
+      + button {
+        position: absolute;
+        right: ~"max(.6rem, calc(25vw - 18rem))";
+        font-size: 1.5rem;
+        transition: opacity 300ms @quick-n-slow;
+      }
+    }
+
+    input:focus, 
+    input[type="text"]:not(input[value=""]){
+      ~ button {
+        padding: 1rem 2rem;
+      }
     }
   }
 

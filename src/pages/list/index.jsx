@@ -16,7 +16,7 @@ export default function List() {
   // State
   const [list, setList] = useState([])
   const [listType, setListType] = useState(null)
-  const [searchInput, setSearchInput] = useState(undefined)
+  const [searchInput, setSearchInput] = useState('')
   const currTime = setTime()
   
   // Hooks
@@ -67,6 +67,7 @@ export default function List() {
         <div className='searchbar'>
           <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
           <label>Search</label>
+          <button className={searchInput ? null : 'clear'}>Submit</button>
         </div>
 
         <div className='view-type'>
@@ -74,7 +75,7 @@ export default function List() {
             name='view-type'
             onChange={e => setListType(Number(e.target.value))}
           >
-            { typeof listType === 'number' ? null : <option selected>Select View Type</option> }
+            { typeof listType === 'number' ? null : <option>Select View Type</option> }
             <option value={0}>List</option>
             <option value={1}>Card</option>
           </select>

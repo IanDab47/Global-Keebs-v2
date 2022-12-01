@@ -1,5 +1,6 @@
 @import './sharedStyles/colors.less';
 @import './sharedStyles/fonts.less';
+@import './sharedStyles/dimensions.less';
 @import './sharedStyles/anim.less';
 
 * {
@@ -29,7 +30,7 @@
 }
     
 html, body, #root {
-  overflow-x: overlay;
+  overflow-y: overlay;
   scroll-behavior: smooth;
   z-index: -99;
 }
@@ -116,6 +117,24 @@ button {
     outline: .3rem solid @fnt-act-1;
     outline-offset: .3rem;
   }
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  background: @sb-clr-2;
+  border: 4px solid @sb-bg;
+  border-block: none;
+  border-radius: 8px;
+
+}
+::-webkit-scrollbar-track {
+  margin-top: calc(@navbar-height + 10px);
+}
+::-webkit-scrollbar-corner {
+ background: transparent;
 }
 
 .clear {

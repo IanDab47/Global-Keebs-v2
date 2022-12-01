@@ -90,40 +90,36 @@ export default function List() {
         <section className='filters'>
 
           <div className='flair-filter'>
-            {window.innerWidth > 640 && (
-              <>
-                <label>Select Category: </label>
-                <select
-                  name='flair-filter'
-                  onClick={e => setFilterInput(e.target.value)}
-                >
-                  <option value={''}>All</option>
-                  <option value={'Selling'}>Selling</option>
-                  <option value={'Buying'}>Buying</option>
-                  <option value={'Artisan'}>Artisan</option>
-                  <option value={'Upcoming'}>GBs and ICs</option>
-                </select>
-              </>
-            )}
+            <label>Categories </label>
+            <select
+              className='fluid'
+              name='flair-filter'
+              onClick={e => setFilterInput(e.target.value)}
+              multiple
+            >
+              <option value={''}>All</option>
+              <option value={'Selling'}>Selling</option>
+              <option value={'Buying'}>Buying</option>
+              <option value={'Artisan'}>Artisan</option>
+              <option value={'Upcoming'}>GBs and ICs</option>
+            </select>
           </div>
 
           <div className='location-filter'>
-            {window.innerWidth > 640 && (
-              <>
-                <label>Select Location(s): </label>
-                <select
-                  name='location-filter'
-                  onClick={e => setLocationInput(e.target.value)}
-                >
-                  <option value={''}>All</option>
-                  <option value={'AS'}>Asia</option>
-                  <option value={'AU'}>Australia</option>
-                  <option value={'CA'}>Canada</option>
-                  <option value={'EU'}>Europe</option>
-                  <option value={'US'}>USA</option>
-                </select>
-              </>
-            )}
+            <label>Locations </label>
+            <select
+              className='fluid'
+              name='location-filter'
+              onClick={e => setLocationInput(e.target.value)}
+              multiple
+            >
+              <option value={''}>All</option>
+              <option value={'AS'}>Asia</option>
+              <option value={'AU'}>Australia</option>
+              <option value={'CA'}>Canada</option>
+              <option value={'EU'}>Europe</option>
+              <option value={'US'}>USA</option>
+            </select>
           </div>
           
           <div className='view-type'>

@@ -9,12 +9,18 @@ router.get('/', async (req, res) => {
   const filterValue = req.query.filter || '';
   const locationValue = req.query.location || '';
 
-  const upcoming = ['group buy', 'interest check'];
+  console.log(filterValue);
+  const upcoming = ['INTEREST CHECK', 'GROUP BUY'];
 
   const list = await db.listing.findAll({
     where: {
       self_text: { [Op.iLike]: `%${searchValue}%` },
-      flair_text: { [Op.iLike]: `%${filterValue}%` },
+      flair_text: {
+        [Op.or]: {
+          [Op.iLike]: `%${filterValue}%`,
+          [Op.in]: upcoming,
+        },
+      },
       location: { [Op.iLike]: `${locationValue}%` },
     },
     order: [[sequelize.col('created_utc'), 'DESC']],

@@ -42,6 +42,7 @@ export default function List() {
     try {
       const response = await axios.get(listAPIURL)
       console.log(response.data)
+      setList([])
       setList(response.data)
       setCategory(filterInput)
     } catch (err) {
@@ -49,12 +50,9 @@ export default function List() {
     }
   }
 
-  const handleFilters = e => {
-    e.preventDefault()
-    e.target.name === 'fluid-filter' ?
-      setFilterInput(e.target.value)
-      :
-      setLocationInput(e.target.value)
+  const toggleField = async (filter, value) => {
+    filter === 'category' && setFilterInput([...filterInput, value])
+    filter === ''
   }
 
   // Output
@@ -104,39 +102,32 @@ export default function List() {
               name='flair-filter'
             >
               <p 
-                className={ filterInput === '' ? 'checked' : '' } 
-                value={''}
-                onClick={e => setFilterInput(e.target.value)}
-                disabled 
+                className={ filterInput === '' ? 'on' : '' } 
+                onClick={e => setFilterInput('')} 
               >
                 All
               </p>
               <p 
-                className={ filterInput === 'Selling' ? 'checked' : '' } 
-                value={'Selling'}
-                onClick={e => setFilterInput(e.target.value)}
-                disabled 
+                className={ filterInput === 'Selling' ? 'on' : '' } 
+                onClick={e => setFilterInput('Selling')} 
               >
                 Selling
               </p>
               <p 
-                className={ filterInput === 'Buying' ? 'checked' : '' } 
-                value={'Buying'}
-                disabled 
+                className={ filterInput === 'Buying' ? 'on' : '' } 
+                onClick={e => setFilterInput('Buying')} 
               >
                 Buying
               </p>
               <p 
-                className={ filterInput === 'Artisan' ? 'checked' : '' } 
-                value={'Artisan'}
-                disabled 
+                className={ filterInput === 'Artisan' ? 'on' : '' } 
+                onClick={e => setFilterInput('Artisan')} 
               >
                 Artisan
               </p>
               <p 
-                className={ filterInput === 'Upcoming' ? 'checked' : '' } 
-                value={'Upcoming'}
-                disabled 
+                className={ filterInput === 'Upcoming' ? 'on' : '' } 
+                onClick={e => setFilterInput('Upcoming')} 
               >
                 GBs and ICs
               </p>

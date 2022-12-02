@@ -146,7 +146,6 @@ button {
 
 .fluid {
   width: 100%;
-  background: transparent;
   font-family: Montserrat;
   font-size: 1rem;
   padding-top: .5em;
@@ -154,18 +153,20 @@ button {
   p {
     display: inline-block;
     cursor: pointer;
+    user-select: none;
     background: @inp-bg;
-    line-height: 1.2rem;
+    font-size: clamp(1rem, calc(1.75rem - 1.15vw), 1.25rem);
+    line-height: 1.25rem;
     border-radius: 2em;
     padding: .6em 1.2em;
-    transition: color 120ms @quick-n-slow, background 200ms @quick-n-slow;
     margin-bottom: .3rem;
+    transition: color 120ms @quick-n-slow, background 200ms @quick-n-slow;
 
     &:has(+ p) {
       margin-right: .3rem;
     }
 
-    &:is(:hover, :checked, .checked) {
+    &:is(:hover, .on) {
       background: @btn-bg;
       color: @bg-nav-1;
       transition: color 120ms @quick-n-slow, background 300ms @quick-n-slow;

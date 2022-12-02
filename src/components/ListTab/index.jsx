@@ -7,7 +7,11 @@ export default function ListTab({ currTime, listing, i }) {
   return (
     <div
       className='tab'
-      style={{ '--order': i / 13 + 1.1, '--length': '1.5s', '--flair': listing.flair_text }}
+      style={{
+        '--order': i / 13 + 1.1,
+        '--length': '1.5s',
+        '--flair': listing.flair_text
+      }}
     >
       <div className='short'>
         <div
@@ -30,11 +34,7 @@ export default function ListTab({ currTime, listing, i }) {
           <p>u/{listing.author}</p>
 
           {listing.timestamp && (
-            <span
-            onClick={e => showTimestamp(listing)}
-          >
-            Timestamp
-            </span>
+            <span onClick={e => showTimestamp(listing)}>Timestamp</span>
           )}
         </div>
 

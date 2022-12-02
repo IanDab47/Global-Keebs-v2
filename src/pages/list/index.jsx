@@ -5,6 +5,7 @@ import axios from 'axios'
 // Components
 import ListTab from '../../components/ListTab'
 import ListCard from '../../components/ListCard'
+import FluidFilter from '../../components/FluidFilter'
 
 // Utils
 import { setTime } from '../../util/time'
@@ -15,7 +16,7 @@ import "./style.less"
 export default function List() {
   // State
   const [list, setList] = useState([])
-  const [category, setCategory] = useState([''])
+  const [category, setCategory] = useState([])
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [filterInput, setFilterInput] = useState([''])
@@ -37,12 +38,12 @@ export default function List() {
   }, []); 
 
   // Handlers
-  const handleSearch = async e => {
+  const handleSearch = async (e) => {
     e.preventDefault()
+
     try {
       const response = await axios.get(listAPIURL)
       console.log(response.data)
-      setList([])
       setList(response.data)
       setCategory(filterInput)
     } catch (err) {
@@ -51,7 +52,6 @@ export default function List() {
   }
 
   const toggleField = async (filter, value) => {
-    
     // Set Temp array for filters
     let tempCategoryArr = filter === 'category' && filterInput.includes(value) ?
       filterInput.filter(category => category !== value) : null
@@ -111,7 +111,7 @@ export default function List() {
     <section className='list-page'>
       <form onSubmit={e => handleSearch(e)}>
         <header>
-          <h1>{ category.length > 1 || category.includes('') ? 'Listings' : category }</h1>
+          <h1>{ category.length !== 1 || category.includes('') ? 'Listings' : category }</h1>
 
           <div className='searchbar'>
             <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
@@ -122,95 +122,17 @@ export default function List() {
 
         <section className='filters'>
 
-          <div className='flair-filter'>
-            <label>Categories</label>
-            <div
-              className='fluid'
-              name='flair-filter'
-            >
-              <p 
-                className={ filterInput.includes('') ? 'on' : '' } 
-                onClick={e => setFilterInput([''])} 
-              >
-                All
-              </p>
-              <p 
-                className={ filterInput.includes('SELLING') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'SELLING')} 
-              >
-                Selling
-              </p>
-              <p 
-                className={ filterInput.includes('BUYING') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'BUYING')} 
-              >
-                Buying
-              </p>
-              <p 
-                className={ filterInput.includes('ARTISAN') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'ARTISAN')} 
-              >
-                Artisan
-              </p>
-              <p 
-                className={ filterInput.includes('GROUP BUY') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'GROUP BUY')} 
-              >
-                Group Buy
-              </p>
-              <p 
-                className={ filterInput.includes('INTEREST CHECK') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'INTEREST CHECK')} 
-              >
-                Interest Check
-              </p>
-            </div>
-          </div>
+          <FluidFilter
+            filterType={'category'}
+            filterInput={filterInput}
+            setFilterInput={setFilterInput}
+          />
 
-          <div className='location-filter'>
-            <label>Locations</label>
-            <div
-              className='fluid'
-              name='location-filter'
-            >
-              <p 
-                className={ locationInput.includes('') ? 'on' : '' } 
-                onClick={e => setLocationInput([''])} 
-              >
-                All
-              </p>
-              <p 
-                className={ locationInput.includes('AS') ? 'on' : '' } 
-                onClick={e => toggleField('location', 'AS')} 
-              >
-                Asia
-              </p>              
-              <p 
-                className={ locationInput.includes('AU') ? 'on' : '' } 
-                onClick={e => toggleField('location', 'AU')} 
-              >
-                Australia
-              </p>              
-              <p 
-                className={ locationInput.includes('CA') ? 'on' : '' } 
-                onClick={e => toggleField('location', 'CA')} 
-              >
-                Canada
-              </p>              
-              <p 
-                className={ locationInput.includes('EU') ? 'on' : '' } 
-                onClick={e => toggleField('location', 'EU')} 
-              >
-                Europe
-              </p>
-              <p 
-                className={ locationInput.includes('US') ? 'on' : '' } 
-                onClick={e => toggleField('location', 'US')} 
-              >
-                USA
-              </p>
-            </div>
-          </div>
+          <FluidFilter
+            filterType={'location'}
+            filterInput={locationInput}
+            setFilterInput={setLocationInput}
+          />
           
           <div className='view-type'>
             {window.innerWidth > 640 && (

@@ -32,6 +32,7 @@ router.get('/', async (req, res) => {
       }),
     },
     order: [[sequelize.col('created_utc'), 'DESC']],
+    offset: 30,
     limit: 30,
   });
 

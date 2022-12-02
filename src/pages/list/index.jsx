@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 // Components
+import Loading from '../../components/Loading'
 import ListTab from '../../components/ListTab'
 import ListCard from '../../components/ListCard'
 import FluidFilter from '../../components/FluidFilter'
@@ -16,6 +17,7 @@ import "./style.less"
 export default function List() {
   // State
   const [list, setList] = useState([])
+  const [page, setPage] = useState(0)
   const [category, setCategory] = useState([])
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
@@ -38,15 +40,16 @@ export default function List() {
   }, []); 
 
   // Handlers
-  const handleSearch = async (e) => {
+  const handleSearch = async (e, page = 0) => {
     e.preventDefault()
 
     try {
-      const response = await axios.get(listAPIURL)
+      const response = await axios.get(listAPIURL + `&page=${page}`)
       console.log(response.data)
       setList([])
       setList(response.data)
       setCategory(filterInput)
+      setPage(page)
     } catch (err) {
       console.warn(err)
     }
@@ -78,54 +81,62 @@ export default function List() {
   )
   
   return (
-    <section className='list-page'>
-      <form onSubmit={e => handleSearch(e)}>
-        <header>
-          <h1>{ category.length !== 1 || category.includes('') ? 'Listings' : category }</h1>
+    <>
+      <Loading clear={list ? true : false} /> 
+      
+      {list && (
+        <section className='list-page'>
+          <form onSubmit={e => handleSearch(e)}>
+            <header>
+              <h1>{category.length !== 1 || category.includes('') ? 'Listings' : category}</h1>
 
-          <div className='searchbar'>
-            <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
-            <label>Search</label>
-            <button className={ searchInput ? null : 'clear' }>Submit</button>
-          </div>
-        </header>
+              <div className='searchbar'>
+                <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
+                <label>Search</label>
+                <button className={searchInput ? null : 'clear'}>Submit</button>
+              </div>
+            </header>
 
-        <section className='filters'>
+            <section className='filters'>
 
-          <FluidFilter
-            filterType={'category'}
-            filterInput={filterInput}
-            setFilterInput={setFilterInput}
-          />
+              <FluidFilter
+                filterType={'category'}
+                filterInput={filterInput}
+                setFilterInput={setFilterInput}
+              />
 
-          <FluidFilter
-            filterType={'location'}
-            filterInput={locationInput}
-            setFilterInput={setLocationInput}
-          />
+              <FluidFilter
+                filterType={'location'}
+                filterInput={locationInput}
+                setFilterInput={setLocationInput}
+              />
+            
+              <div className='view-type'>
+                {window.innerWidth > 640 && (
+                  <>
+                    <label>Select View Type: </label>
+                    <select
+                      name='view-type'
+                      onClick={e => setListType(Number(e.target.value))}
+                    >
+                      <option value={1}>Card</option>
+                      <option value={0}>List</option>
+                    </select>
+                  </>
+                )}
+              </div>
+
+            </section>
+          </form>
           
-          <div className='view-type'>
-            {window.innerWidth > 640 && (
-              <>
-                <label>Select View Type: </label>
-                <select
-                  name='view-type'
-                  onClick={e => setListType(Number(e.target.value))}
-                >
-                  <option value={1}>Card</option>
-                  <option value={0}>List</option>
-                </select>
-              </>
-            )}
+          <div className={`listings ${listType ? 'cards' : 'list'}`}>
+            {listType ? cards : listings}
           </div>
+
+          <button onClick={e => handleSearch(e, page + 1)}>Next Page</button>
 
         </section>
-      </form>
-        
-      <div className={`listings ${ listType ? 'cards' : 'list' }`}>
-        { listType ? cards : listings }
-      </div>
-
-    </section>
+      )}
+    </>
   )
 }

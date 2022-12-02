@@ -1,0 +1,35 @@
+@import "../../sharedStyles/colors.less";
+@import "../../sharedStyles/dimensions.less";
+
+.loading-anim {
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50vh; left: 50%;
+  width: 3rem;
+  user-select: none;
+  pointer-events: none;
+  opacity: 1;
+  -webkit-mask-image: radial-gradient(transparent 37.75%, black 38.25%);
+  mask-image: radial-gradient(transparent 37.75%, black 38.25%);
+  transform: translate(-50%, -50%);
+  transition: opacity 3000ms;
+}
+
+.loading-anim::before {
+  content: '';
+  position: absolute;
+  width: 100%; height: 100%;
+  background: conic-gradient(
+    @ntl-med-2,
+    transparent
+  );
+  border-radius: 50%;
+  mix-blend-mode: darken;
+  z-index: 1;
+  animation: loop 2s cubic-bezier(.2,.6,.5,.97) infinite;
+}
+
+@keyframes loop {
+  from { transform: rotate(0deg) };
+  to { transform: rotate(360deg) };
+}

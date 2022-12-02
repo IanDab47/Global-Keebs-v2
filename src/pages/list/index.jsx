@@ -18,6 +18,7 @@ export default function List() {
   // State
   const [list, setList] = useState([])
   const [page, setPage] = useState(0)
+  const [loading, setLoading] = useState(false)
   const [category, setCategory] = useState([])
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
@@ -42,12 +43,14 @@ export default function List() {
   // Handlers
   const handleSearch = async (e, page = 0) => {
     e.preventDefault()
+    setLoading(true)
 
     try {
       const response = await axios.get(listAPIURL + `&page=${page}`)
       console.log(response.data)
-      setList([])
-      setList(response.data)
+      response && setLoading(false)
+      page = 0 && setList([])
+      setList([...list, ...response.data])
       setCategory(filterInput)
       setPage(page)
     } catch (err) {
@@ -62,6 +65,7 @@ export default function List() {
       <ListTab
         key={`tab_GK${i}_${listing.pageId}`}
         listing={listing}
+        page={page}
         currTime={currTime}
         i={i}
       />
@@ -74,6 +78,7 @@ export default function List() {
       <ListCard
         key={`tab_GK${i}_${listing.pageId}`}
         listing={listing}
+        page={page}
         currTime={currTime}
         i={i}
       />
@@ -83,7 +88,7 @@ export default function List() {
   return (
     <>
       <Loading clear={list ? true : false} /> 
-      
+
       {list && (
         <section className='list-page'>
           <form onSubmit={e => handleSearch(e)}>

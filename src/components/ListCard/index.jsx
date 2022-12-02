@@ -13,7 +13,7 @@ export default function ListCard({ currTime, listing, i }) {
       window.innerWidth > 1313 ? 3 :
         window.innerWidth > 844 ? 2 : 1
     
-  const gridAnimMath = (i % rowCardNumber + Math.floor(i / rowCardNumber)) / 13 + 1.1
+  const gridAnimMath = (i % 30 % rowCardNumber + Math.floor(i % 30 / rowCardNumber)) / 13 + 1.1
 
   return (
     <div

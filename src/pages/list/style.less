@@ -7,6 +7,10 @@
   margin-top: 1.5rem;
   text-align: center;
 
+  > * {
+    text-align: initial;
+  }
+
   header {
     display: flex;
     gap: 2.5rem;
@@ -96,8 +100,13 @@
   }
 
   button {
-    font-size: 1.6rem;
+    user-select: none;
+    font-size: 1.2rem;
     padding: .6em 1em;
     margin: 2rem auto;
+
+    &:is(:focus, :focus-visible) {
+      outline: none;
+    }
   }
 }

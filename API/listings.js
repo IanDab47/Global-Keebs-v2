@@ -5,6 +5,7 @@ const { sequelize } = require('../models');
 const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
+  const pageNumber = req.query.page || 0;
   const searchValue = req.query.search || '';
   const filterValue = req.query.filter.includes(',')
     ? req.query.filter.split(',')
@@ -12,6 +13,8 @@ router.get('/', async (req, res) => {
   const locationValue = req.query.location.includes(',')
     ? req.query.location.split(',')
     : [req.query.location] || [''];
+
+  console.log();
 
   const list = await db.listing.findAll({
     where: {
@@ -32,7 +35,7 @@ router.get('/', async (req, res) => {
       }),
     },
     order: [[sequelize.col('created_utc'), 'DESC']],
-    offset: 30,
+    offset: 30 * pageNumber,
     limit: 30,
   });
 

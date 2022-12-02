@@ -8,7 +8,7 @@ export default function ListTab({ currTime, listing, i }) {
     <div
       className='tab'
       style={{
-        '--order': i / 13 + 1.1,
+        '--order': i % 30 / 13 + 1.1,
         '--length': '1.5s',
         '--flair': listing.flair_text
       }}

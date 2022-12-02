@@ -18,8 +18,8 @@ export default function List() {
   const [category, setCategory] = useState('')
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
-  const [filterInput, setFilterInput] = useState('')
-  const [locationInput, setLocationInput] = useState('')
+  const [filterInput, setFilterInput] = useState([''])
+  const [locationInput, setLocationInput] = useState([''])
   const currTime = setTime()
   const listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}`
   
@@ -51,8 +51,34 @@ export default function List() {
   }
 
   const toggleField = async (filter, value) => {
-    filter === 'category' && setFilterInput([...filterInput, value])
-    filter === ''
+    
+    // Set Temp array for filters
+    let tempCategoryArr = filter === 'category' && filterInput.includes(value) ?
+      filterInput.filter(category => category !== value) : null
+    let tempLocationArr = filter === 'location' && locationInput.includes(value) ?
+      locationInput.filter(location => location !== value) : null
+
+    // Edit filter State based on toggle on or off
+    if (filter === 'category') {
+      filterInput.includes('') && setFilterInput(filterInput.shift())
+
+      filterInput.includes(value) ?
+        setFilterInput(tempCategoryArr)
+        : 
+        setFilterInput([...filterInput, value])
+    }
+    if (filter === 'location') {
+      locationInput.includes('') && setLocationInput(locationInput.shift())
+
+      locationInput.includes(value) ?
+        setLocationInput(tempLocationArr)
+        : 
+        setLocationInput([...locationInput, value])
+    }
+
+    // Set to all if filter is empty
+    if(tempCategoryArr && tempCategoryArr.length === 0) setFilterInput([''])
+    if(tempLocationArr && tempLocationArr.length === 0) setLocationInput([''])
   }
 
   // Output
@@ -84,7 +110,7 @@ export default function List() {
     <section className='list-page'>
       <form onSubmit={e => handleSearch(e)}>
         <header>
-          <h1>{ category === '' ? 'Listings' : category }</h1>
+          <h1>{ category.length > 1 || category === '' ? 'Listings' : category }</h1>
 
           <div className='searchbar'>
             <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
@@ -102,34 +128,40 @@ export default function List() {
               name='flair-filter'
             >
               <p 
-                className={ filterInput === '' ? 'on' : '' } 
-                onClick={e => setFilterInput('')} 
+                className={ filterInput.includes('') ? 'on' : '' } 
+                onClick={e => setFilterInput([''])} 
               >
                 All
               </p>
               <p 
-                className={ filterInput === 'Selling' ? 'on' : '' } 
-                onClick={e => setFilterInput('Selling')} 
+                className={ filterInput.includes('Selling') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'Selling')} 
               >
                 Selling
               </p>
               <p 
-                className={ filterInput === 'Buying' ? 'on' : '' } 
-                onClick={e => setFilterInput('Buying')} 
+                className={ filterInput.includes('Buying') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'Buying')} 
               >
                 Buying
               </p>
               <p 
-                className={ filterInput === 'Artisan' ? 'on' : '' } 
-                onClick={e => setFilterInput('Artisan')} 
+                className={ filterInput.includes('Artisan') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'Artisan')} 
               >
                 Artisan
               </p>
               <p 
-                className={ filterInput === 'Upcoming' ? 'on' : '' } 
-                onClick={e => setFilterInput('Upcoming')} 
+                className={ filterInput.includes('Group Buy') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'Group Buy')} 
               >
-                GBs and ICs
+                Group Buy
+              </p>
+              <p 
+                className={ filterInput.includes('Interest Checks') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'Interest Checks')} 
+              >
+                Interest Check
               </p>
             </div>
           </div>
@@ -139,15 +171,43 @@ export default function List() {
             <div
               className='fluid'
               name='location-filter'
-              onClick={e => setLocationInput(e.target.value)}
-              multiple
             >
-              <p disabled className='checked' value={''}>All</p>
-              <p disabled value={'AS'}>Asia</p>
-              <p disabled value={'AU'}>Australia</p>
-              <p disabled value={'CA'}>Canada</p>
-              <p disabled value={'EU'}>Europe</p>
-              <p disabled value={'US'}>USA</p>
+              <p 
+                className={ locationInput.includes('') ? 'on' : '' } 
+                onClick={e => setLocationInput([''])} 
+              >
+                All
+              </p>
+              <p 
+                className={ locationInput.includes('AS') ? 'on' : '' } 
+                onClick={e => toggleField('location', 'AS')} 
+              >
+                Asia
+              </p>              
+              <p 
+                className={ locationInput.includes('AU') ? 'on' : '' } 
+                onClick={e => toggleField('location', 'AU')} 
+              >
+                Australia
+              </p>              
+              <p 
+                className={ locationInput.includes('CA') ? 'on' : '' } 
+                onClick={e => toggleField('location', 'CA')} 
+              >
+                Canada
+              </p>              
+              <p 
+                className={ locationInput.includes('EU') ? 'on' : '' } 
+                onClick={e => toggleField('location', 'EU')} 
+              >
+                Europe
+              </p>
+              <p 
+                className={ locationInput.includes('US') ? 'on' : '' } 
+                onClick={e => toggleField('location', 'US')} 
+              >
+                USA
+              </p>
             </div>
           </div>
           

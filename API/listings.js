@@ -18,10 +18,15 @@ router.get('/', async (req, res) => {
       flair_text: {
         [Op.or]: {
           [Op.iLike]: `%${filterValue}%`,
-          [Op.in]: upcoming,
+          [Op.in]: filterValue,
         },
       },
-      location: { [Op.iLike]: `${locationValue}%` },
+      location: {
+        [Op.or]: {
+          [Op.iLike]: `%${locationValue}%`,
+          [Op.in]: locationValue,
+        },
+      },
     },
     order: [[sequelize.col('created_utc'), 'DESC']],
     limit: 30,

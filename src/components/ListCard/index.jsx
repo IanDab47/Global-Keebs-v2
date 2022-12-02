@@ -6,6 +6,7 @@ import './style.less'
 export default function ListCard({ currTime, listing, i }) {
   // Animate grid diagonally
   // (...) = order
+  // % 30 = reset count based on page size
   // / 13 = rate
   // + 1.1 = delay -- Must be at least 1
 

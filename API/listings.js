@@ -6,11 +6,18 @@ const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
   const searchValue = req.query.search || '';
-  const filterValue = req.query.filter || '';
-  const locationValue = req.query.location || '';
+  const filterValue = req.query.filter.includes(',')
+    ? req.query.filter.split(',')
+    : [req.query.filter];
+  let locationValue = req.query.location.includes(',')
+    ? req.query.location.split(',')
+    : [req.query.location];
+  locationValue = locationValue.map((locale) => locale + '%');
 
-  console.log(filterValue);
-  const upcoming = ['INTEREST CHECK', 'GROUP BUY'];
+  // console.log(
+  //   locationValue + '%',
+  //   ...locationValue.map((locale) => locale + '%')
+  // );
 
   const list = await db.listing.findAll({
     where: {
@@ -21,16 +28,20 @@ router.get('/', async (req, res) => {
           [Op.in]: filterValue,
         },
       },
-      location: {
-        [Op.or]: {
-          [Op.iLike]: `%${locationValue}%`,
-          [Op.in]: locationValue,
-        },
-      },
+      [Op.or]: locationValue.map((locale) => {
+        return {
+          location: {
+            [Op.iLike]: locale + '%',
+          },
+        };
+      }),
     },
     order: [[sequelize.col('created_utc'), 'DESC']],
     limit: 30,
   });
+
+  console.log(list[0]);
+
   res.json(list);
 });
 

@@ -15,7 +15,7 @@ import "./style.less"
 export default function List() {
   // State
   const [list, setList] = useState([])
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState([''])
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [filterInput, setFilterInput] = useState([''])
@@ -106,11 +106,12 @@ export default function List() {
     )}
   )
 
+  
   return (
     <section className='list-page'>
       <form onSubmit={e => handleSearch(e)}>
         <header>
-          <h1>{ category.length > 1 || category === '' ? 'Listings' : category }</h1>
+          <h1>{ category.length > 1 || category.includes('') ? 'Listings' : category }</h1>
 
           <div className='searchbar'>
             <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
@@ -134,32 +135,32 @@ export default function List() {
                 All
               </p>
               <p 
-                className={ filterInput.includes('Selling') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'Selling')} 
+                className={ filterInput.includes('SELLING') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'SELLING')} 
               >
                 Selling
               </p>
               <p 
-                className={ filterInput.includes('Buying') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'Buying')} 
+                className={ filterInput.includes('BUYING') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'BUYING')} 
               >
                 Buying
               </p>
               <p 
-                className={ filterInput.includes('Artisan') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'Artisan')} 
+                className={ filterInput.includes('ARTISAN') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'ARTISAN')} 
               >
                 Artisan
               </p>
               <p 
-                className={ filterInput.includes('Group Buy') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'Group Buy')} 
+                className={ filterInput.includes('GROUP BUY') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'GROUP BUY')} 
               >
                 Group Buy
               </p>
               <p 
-                className={ filterInput.includes('Interest Checks') ? 'on' : '' } 
-                onClick={e => toggleField('category', 'Interest Checks')} 
+                className={ filterInput.includes('INTEREST CHECK') ? 'on' : '' } 
+                onClick={e => toggleField('category', 'INTEREST CHECK')} 
               >
                 Interest Check
               </p>

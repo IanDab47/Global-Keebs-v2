@@ -105,7 +105,6 @@ export default function List() {
       />
     )}
   )
-
   
   return (
     <section className='list-page'>
@@ -123,12 +122,14 @@ export default function List() {
         <section className='filters'>
 
           <FluidFilter
+            toggleField={toggleField}
             filterType={'category'}
             filterInput={filterInput}
             setFilterInput={setFilterInput}
           />
 
           <FluidFilter
+            toggleField={toggleField}
             filterType={'location'}
             filterInput={locationInput}
             setFilterInput={setLocationInput}

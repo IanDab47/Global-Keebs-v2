@@ -1,17 +1,19 @@
+import './style.less'
+
 const categories = [
-  { value: 'Selling' },
-  { value: 'Buying' },
-  { value: 'Trading' },
-  { value: 'Artisan' },
-  { value: 'Group Buy' },
-  { value: 'Interest Check' },
-  { value: 'Store' },
-  { value: 'Bulk' },
-  { value: 'Service' },
+  { value: 'Selling', bg: '#ff5555', color: null },
+  { value: 'Buying', bg: '#40e47b', color: '#f1ffff' },
+  { value: 'Trading', bg: '#ff79c6', color: null },
+  { value: 'Artisan', bg: '#d8e880', color: '#035' },
+  { value: 'Group Buy', bg: '#bd93f9', color: null },
+  { value: 'Interest Check', bg: '#bd93f9', color: null },
+  { value: 'Store', bg: '#82dae2', color: '#ffffef' },
+  { value: 'Bulk', bg: '#82dae2', color: '#ffffef' },
+  { value: 'Service', bg: '#82dae2', color: '#ffffef' },
 ]
 
 const locations = [
-  { value: 'AS', name: 'Asia' },
+  // { value: 'AS', name: 'Asia' },
   { value: 'AU', name: 'Australia' },
   { value: 'CA', name: 'Canada' },
   { value: 'CH', name: 'China' },
@@ -21,7 +23,7 @@ const locations = [
   { value: 'US', name: 'USA' },
 ]
 
-export default function FluidFilter({ filterType, filterInput, setFilterInput }) {
+export default function FluidFilter({ toggleField, filterType, filterInput, setFilterInput }) {
   return (
     <div className={`${filterType}-filter`}>
       <label>{filterType}</label>
@@ -38,6 +40,7 @@ export default function FluidFilter({ filterType, filterInput, setFilterInput })
         
         {filterType === 'category' && categories.map(category => (
           <p 
+            style={{ '--bg': category.bg, '--color': category.color }}
             className={ filterInput.includes(category.value) ? 'on' : '' } 
             onClick={e => toggleField(filterType, category.value)} 
           >

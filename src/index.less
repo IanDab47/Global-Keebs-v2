@@ -148,48 +148,6 @@ button {
   user-select: none;
 }
 
-.fluid {
-  width: 100%;
-  font-family: Montserrat;
-  font-size: 1rem;
-  padding-top: .5em;
-  
-  p {
-    display: inline-block;
-    cursor: pointer;
-    user-select: none;
-    background: @inp-bg;
-    font-size: clamp(1rem, calc(1.75rem - 1.15vw), 1.25rem);
-    text-transform: capitalize;
-    line-height: 1.25rem;
-    border-radius: 2em;
-    padding: .6em 1.2em;
-    margin-bottom: .3rem;
-    transition: color 120ms @quick-n-slow, background 200ms @quick-n-slow;
-
-    &:has(+ p) {
-      margin-right: .3rem;
-    }
-
-    &.on {
-      background: @btn-bg;
-      color: @bg-nav-1;
-      transition: color 120ms @quick-n-slow, background 300ms @quick-n-slow;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    @media (max-width: 640px) { display: none; }
-    height: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: @sb-clr-1;
-    border-right: none;
-    border-bottom: 2px solid @sb-bg;
-    border-radius: 3px 3px 4px 4px;
-  }
-}
-
 @keyframes fade-in {
   from { opacity: 0; transform: scale(90%); }
   to { opacity: 1; transform: scale(100%); }

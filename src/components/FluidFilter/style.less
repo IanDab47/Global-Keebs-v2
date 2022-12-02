@@ -1,0 +1,63 @@
+@import '../../sharedStyles/colors.less';
+@import '../../sharedStyles/fonts.less';
+@import '../../sharedStyles/anim.less';
+
+.fluid {
+  max-width: 35rem;
+  font-family: Montserrat;
+  font-size: 1rem;
+  padding-top: .5em;
+  
+  p {
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    background: @inp-bg;
+    font-size: clamp(1rem, calc(1.75rem - 1.15vw), 1.25rem);
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 1.25rem;
+    border-radius: 2em;
+    padding: .6em 1.2em;
+    margin-bottom: .3rem;
+    transition: color 120ms @quick-n-slow, 
+                background 200ms @quick-n-slow,
+                opacity 300ms @quick-n-slow;
+
+    &:has(+ p) {
+      margin-right: .3rem;
+    }
+
+    &.on {
+      background: var(--bg, @btn-bg);
+      color: var(--color, @bg-main-2);
+      transition: color 120ms @quick-n-slow, background 300ms @quick-n-slow;
+    }
+
+    &:first-child {
+      &.on ~ p {
+        mix-blend-mode: multiply;
+        opacity: .5;
+        transition: color 120ms @quick-n-slow, 
+                    background 200ms @quick-n-slow,
+                    opacity 2s @quick-n-slow;
+      }
+
+      &:not(.on) {
+        mix-blend-mode: multiply;
+        opacity: .5;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    @media (max-width: 640px) { display: none; }
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: @sb-clr-1;
+    border-right: none;
+    border-bottom: 2px solid @sb-bg;
+    border-radius: 3px 3px 4px 4px;
+  }
+}

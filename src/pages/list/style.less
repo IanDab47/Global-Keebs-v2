@@ -10,7 +10,7 @@
     gap: 2.5rem;
     @media (max-width: 640px) { flex-direction: column; gap: .75rem }
     align-items: center;
-    padding-inline: ~"max(1.2rem, calc(25vw - 18rem))";
+    padding-inline: ~"max(1rem, calc(25vw - 18rem))";
     @media (max-width: 640px) { padding-inline: .6rem; }
 
     h1 {
@@ -69,14 +69,15 @@
     display: flex;
     gap: .5rem;
     justify-content: space-between;
-    @media (max-width: 640px) { flex-direction: column; }
+    @media (max-width: 640px) { flex-direction: column; gap: 1rem; }
     width: 100%;
-    padding-inline: ~"max(1.2rem, calc(25vw - 18rem))";
+    padding-inline: ~"max(1rem, calc(25vw - 18rem))";
     margin-top: 1rem;
 
     label {
-      vertical-align: top;
       cursor: text;
+      text-transform: capitalize;
+      vertical-align: top;
 
       &:has(+ .fluid) {
         font-family: Montserrat;

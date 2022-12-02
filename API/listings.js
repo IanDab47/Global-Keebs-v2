@@ -8,10 +8,10 @@ router.get('/', async (req, res) => {
   const searchValue = req.query.search || '';
   const filterValue = req.query.filter.includes(',')
     ? req.query.filter.split(',')
-    : [req.query.filter];
+    : [req.query.filter] || [''];
   let locationValue = req.query.location.includes(',')
     ? req.query.location.split(',')
-    : [req.query.location];
+    : [req.query.location] || [''];
   locationValue = locationValue.map((locale) => locale + '%');
 
   // console.log(

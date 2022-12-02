@@ -49,6 +49,14 @@ export default function List() {
     }
   }
 
+  const handleFilters = e => {
+    e.preventDefault()
+    e.target.name === 'fluid-filter' ?
+      setFilterInput(e.target.value)
+      :
+      setLocationInput(e.target.value)
+  }
+
   // Output
   const listings = list.map((listing, i) => {
     // i === 0 ? console.log(listing) : null 
@@ -90,36 +98,66 @@ export default function List() {
         <section className='filters'>
 
           <div className='flair-filter'>
-            <label>Categories </label>
-            <select
+            <label>Categories</label>
+            <div
               className='fluid'
               name='flair-filter'
-              onClick={e => setFilterInput(e.target.value)}
-              multiple
             >
-              <option value={''}>All</option>
-              <option value={'Selling'}>Selling</option>
-              <option value={'Buying'}>Buying</option>
-              <option value={'Artisan'}>Artisan</option>
-              <option value={'Upcoming'}>GBs and ICs</option>
-            </select>
+              <p 
+                className={ filterInput === '' ? 'checked' : '' } 
+                value={''}
+                onClick={e => setFilterInput(e.target.value)}
+                disabled 
+              >
+                All
+              </p>
+              <p 
+                className={ filterInput === 'Selling' ? 'checked' : '' } 
+                value={'Selling'}
+                onClick={e => setFilterInput(e.target.value)}
+                disabled 
+              >
+                Selling
+              </p>
+              <p 
+                className={ filterInput === 'Buying' ? 'checked' : '' } 
+                value={'Buying'}
+                disabled 
+              >
+                Buying
+              </p>
+              <p 
+                className={ filterInput === 'Artisan' ? 'checked' : '' } 
+                value={'Artisan'}
+                disabled 
+              >
+                Artisan
+              </p>
+              <p 
+                className={ filterInput === 'Upcoming' ? 'checked' : '' } 
+                value={'Upcoming'}
+                disabled 
+              >
+                GBs and ICs
+              </p>
+            </div>
           </div>
 
           <div className='location-filter'>
-            <label>Locations </label>
-            <select
+            <label>Locations</label>
+            <div
               className='fluid'
               name='location-filter'
               onClick={e => setLocationInput(e.target.value)}
               multiple
             >
-              <option value={''}>All</option>
-              <option value={'AS'}>Asia</option>
-              <option value={'AU'}>Australia</option>
-              <option value={'CA'}>Canada</option>
-              <option value={'EU'}>Europe</option>
-              <option value={'US'}>USA</option>
-            </select>
+              <p disabled className='checked' value={''}>All</p>
+              <p disabled value={'AS'}>Asia</p>
+              <p disabled value={'AU'}>Australia</p>
+              <p disabled value={'CA'}>Canada</p>
+              <p disabled value={'EU'}>Europe</p>
+              <p disabled value={'US'}>USA</p>
+            </div>
           </div>
           
           <div className='view-type'>

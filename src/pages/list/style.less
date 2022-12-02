@@ -67,14 +67,20 @@
   .filters {
     display: flex;
     gap: .5rem;
-    justify-content: center;
+    justify-content: space-between;
     @media (max-width: 640px) { flex-direction: column; }
     width: 100%;
     padding-inline: ~"max(1.2rem, calc(25vw - 18rem))";
-    margin-top: .5rem;
+    margin-top: 1rem;
 
     label {
       vertical-align: top;
+
+      &:has(+ .fluid) {
+        font-family: Montserrat;
+        font-size: 1.2em;
+        font-weight: 500;
+      }
     }
     
   }

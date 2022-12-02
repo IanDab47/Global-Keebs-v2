@@ -1,3 +1,4 @@
+// Styles
 import './style.less'
 
 const categories = [
@@ -23,7 +24,26 @@ const locations = [
   { value: 'US', name: 'USA' },
 ]
 
-export default function FluidFilter({ toggleField, filterType, filterInput, setFilterInput }) {
+export default function FluidFilter({ filterType, filterInput, setFilterInput }) {
+  const toggleField = async (filter, value) => {
+    // Set Temp array for filters
+    let tempFilterArr = filterInput.includes(value) ?
+      filterInput.filter(item => item !== value) : null
+    // let tempLocationArr = filter === 'location' && locationInput.includes(value) ?
+    //   locationInput.filter(location => location !== value) : null
+
+    // Edit filter State based on toggle on or off
+    filterInput.includes('') && setFilterInput(filterInput.shift())
+
+    filterInput.includes(value) ?
+      setFilterInput(tempFilterArr)
+      : 
+      setFilterInput([...filterInput, value])
+
+    // Set to all if filter is empty
+    if(tempFilterArr && tempFilterArr.length === 0) setFilterInput([''])
+  }
+  
   return (
     <div className={`${filterType}-filter`}>
       <label>{filterType}</label>

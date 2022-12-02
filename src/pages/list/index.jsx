@@ -44,41 +44,12 @@ export default function List() {
     try {
       const response = await axios.get(listAPIURL)
       console.log(response.data)
+      setList([])
       setList(response.data)
       setCategory(filterInput)
     } catch (err) {
       console.warn(err)
     }
-  }
-
-  const toggleField = async (filter, value) => {
-    // Set Temp array for filters
-    let tempCategoryArr = filter === 'category' && filterInput.includes(value) ?
-      filterInput.filter(category => category !== value) : null
-    let tempLocationArr = filter === 'location' && locationInput.includes(value) ?
-      locationInput.filter(location => location !== value) : null
-
-    // Edit filter State based on toggle on or off
-    if (filter === 'category') {
-      filterInput.includes('') && setFilterInput(filterInput.shift())
-
-      filterInput.includes(value) ?
-        setFilterInput(tempCategoryArr)
-        : 
-        setFilterInput([...filterInput, value])
-    }
-    if (filter === 'location') {
-      locationInput.includes('') && setLocationInput(locationInput.shift())
-
-      locationInput.includes(value) ?
-        setLocationInput(tempLocationArr)
-        : 
-        setLocationInput([...locationInput, value])
-    }
-
-    // Set to all if filter is empty
-    if(tempCategoryArr && tempCategoryArr.length === 0) setFilterInput([''])
-    if(tempLocationArr && tempLocationArr.length === 0) setLocationInput([''])
   }
 
   // Output
@@ -122,14 +93,12 @@ export default function List() {
         <section className='filters'>
 
           <FluidFilter
-            toggleField={toggleField}
             filterType={'category'}
             filterInput={filterInput}
             setFilterInput={setFilterInput}
           />
 
           <FluidFilter
-            toggleField={toggleField}
             filterType={'location'}
             filterInput={locationInput}
             setFilterInput={setLocationInput}

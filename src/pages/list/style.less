@@ -1,9 +1,9 @@
 @import '../../sharedStyles/anim.less';
 @import '../../sharedStyles/colors.less';
+@import '../../sharedStyles/dimensions.less';
 @import '../../sharedStyles/fonts.less';
 
 .list-page {
-  // width: 100vw;
   margin-top: 1.5rem;
   text-align: center;
 
@@ -99,11 +99,28 @@
     margin-top: 1rem;
   }
 
-  > button {
+  > button, > p:last-of-type {
     user-select: none;
     font-size: 1.2rem;
     padding: .6em 1em;
     margin: 2rem auto;
+
+    span {
+      font-family: Lato;
+      font-weight: bold;
+    }
+
+    &:is(.search-error) {
+      position: absolute;
+      top: calc((100vh - @navbar-height) / 2); left: 50%;
+      width: max-content;
+      background: @ntl-med-1;
+      color: @bg-main-1;
+      border-radius: .1em .8em .1em .8em;
+      box-shadow: .25rem .15rem .1rem 0rem @ntl-med-2;
+      transform: translate(-50%);
+      animation: error 500ms forwards;
+    }
 
     &:is(:focus, :focus-visible) {
       outline: none;

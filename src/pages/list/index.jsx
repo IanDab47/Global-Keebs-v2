@@ -15,7 +15,7 @@ import { setTime } from '../../util/time'
 import "./style.less"
 
 export default function List() {
-  // State
+  // States
   const [list, setList] = useState([])
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -41,16 +41,16 @@ export default function List() {
   }, []); 
 
   // Handlers
-  const handleSearch = async (e, page = 0) => {
+  const fetchListings = async (e, page = 0) => {
     e.preventDefault()
     setLoading(true)
 
     try {
       const response = await axios.get(listAPIURL + `&page=${page}`)
       console.log(response.data)
-      response && setLoading(false)
-      page = 0 && setList([])
-      setList([...list, ...response.data])
+      // response && setLoading(false)
+      page === 0 && setList([])
+      page !== 0 ? setList([...list, ...response.data]) : setList(response.data)
       setCategory(filterInput)
       setPage(page)
     } catch (err) {
@@ -91,7 +91,7 @@ export default function List() {
 
       {list && (
         <section className='list-page'>
-          <form onSubmit={e => handleSearch(e)}>
+          <form onSubmit={e => fetchListings(e)}>
             <header>
               <h1>{category.length !== 1 || category.includes('') ? 'Listings' : category}</h1>
 
@@ -137,8 +137,13 @@ export default function List() {
           <div className={`listings ${listType ? 'cards' : 'list'}`}>
             {listType ? cards : listings}
           </div>
-
-          <button onClick={e => handleSearch(e, page + 1)}>Load More . . .</button>
+          
+          {/* TODO: Add auto fetch to load more component. 
+              TODO: Toggle hidden if no results */}
+          {list.length ?
+            <button onClick={e => fetchListings(e, page + 1)}>Load More . . .</button>
+            :
+            <p className={`${!loading ? '' : 'search-error'}`}><span>ERROR</span>: No More Keebs D:</p>}
 
         </section>
       )}

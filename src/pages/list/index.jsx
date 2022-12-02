@@ -138,7 +138,7 @@ export default function List() {
             {listType ? cards : listings}
           </div>
 
-          <button onClick={e => handleSearch(e, page + 1)}>Next Page</button>
+          <button onClick={e => handleSearch(e, page + 1)}>Load More . . .</button>
 
         </section>
       )}

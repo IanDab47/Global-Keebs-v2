@@ -25,6 +25,7 @@ export default function ListTab({ currTime, listing, i }) {
           <p className='location'>[{listing.location}]</p>}
         
         <p className='time' >{timeSincePost(currTime, listing.created_utc)}</p>
+      
       </div>
 
       <div className='long'>
@@ -32,10 +33,11 @@ export default function ListTab({ currTime, listing, i }) {
 
         <div>
           <p>u/{listing.author}</p>
-
+          
           {listing.timestamp && (
             <span onClick={e => showTimestamp(listing)}>Timestamp</span>
           )}
+
         </div>
 
       </div>

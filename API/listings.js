@@ -22,12 +22,13 @@ router.get('/', async (req, res) => {
   const list = await db.listing.findAll({
     where: {
       self_text: { [Op.iLike]: `%${searchValue}%` },
-      flair_text: {
-        [Op.or]: {
-          [Op.iLike]: `%${filterValue}%`,
-          [Op.in]: filterValue,
-        },
-      },
+      [Op.or]: filterValue.map((category) => {
+        return {
+          location: {
+            [Op.iLike]: '%' + category + '%',
+          },
+        };
+      }),
       [Op.or]: locationValue.map((locale) => {
         return {
           location: {

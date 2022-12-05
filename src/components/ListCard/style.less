@@ -6,7 +6,7 @@
   position: relative;
   display: grid;
   gap: .5rem;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   padding-inline: ~"max(1rem, calc(25vw - 18rem))";
   @media (max-width: 640px) { padding-inline: 1.2rem; grid-template-columns: 1fr;}
 
@@ -17,7 +17,6 @@
     isolation: isolate;
     overflow: clip;
     backdrop-filter: blur(.5rem);
-    border-radius: .3rem 2rem .3rem 2rem;
     box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000,
                 inset 0 5rem 10rem -8rem @ntl-med-1;
     margin-bottom: .5rem;
@@ -30,6 +29,24 @@
     &:has(.top:is(:hover, :focus, :focus-within)) {
       box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000,
                   inset 0 3rem 10rem -7rem @ntl-med-2;
+    }
+
+    &:nth-of-type(3n + 1) {
+      border-radius: .3rem .3rem .3rem 2rem;
+
+      &:last-of-type {
+        border-radius: .3rem 2rem .3rem 2rem;
+      }
+    }
+    &:nth-of-type(3n + 2) {
+      border-radius: .3rem;
+
+      &:last-of-type {
+        border-radius: .3rem 2rem .3rem .3rem;
+      }
+    }
+    &:nth-of-type(3n + 3) {
+      border-radius: .3rem 2rem .3rem .3rem;
     }
 
     .top {

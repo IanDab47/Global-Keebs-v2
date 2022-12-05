@@ -23,7 +23,7 @@ export default function ListCard({ currTime, listing, i }) {
   return (
     <div
       className='card'
-      style={{ '--order': gridAnimMath, '--length': '1.5s', '--flair': listing.flair_text }}
+      style={{ '--order': gridAnimMath, '--length': '1.5s' }}
     >
       <div className='top'>
         {!listing.timestamp ?

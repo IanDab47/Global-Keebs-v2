@@ -1,0 +1,61 @@
+@import '../../sharedStyles/anim.less';
+@import '../../sharedStyles/colors.less';
+@import '../../sharedStyles/dimensions.less';
+@import '../../sharedStyles/fonts.less';
+
+.listing-display-page {
+  isolation: isolate;
+  header {
+    display: flex;
+    gap: .5rem;
+    width: 100%;
+    background: linear-gradient(
+      @fnt-act-1,
+      @fnt-act-2
+    );
+    color: @bg-main-1;
+    line-height: initial;
+    padding: 3.5rem 5rem;
+    box-shadow: inset 0 1rem 2rem -2rem @fnt-main-2;
+    z-index: -1;
+
+    & > a {
+      display: -webkit-box;
+      overflow: clip;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      font-size: 5rem;
+      font-weight: 900;
+      
+      &:hover {
+        -webkit-line-clamp: 99;
+      }
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 30rem;
+      font-family: Montserrat;
+      font-size: 2.4rem;
+      white-space: nowrap;
+
+      & > :not(:first-child, :last-child) {
+        font-weight: 300;
+        font-style: italic;
+        margin-top: .5rem;
+      }
+
+      & > :last-child {
+        font-size: 4rem;
+        font-weight: 600;
+      }
+      
+      .flair {
+        .flair(2.5rem);
+        margin-top: .625rem;
+      }
+    }
+  }
+}

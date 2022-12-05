@@ -48,4 +48,16 @@ router.get('/', async (req, res) => {
   res.json(list);
 });
 
+router.get('/:pageId', async (req, res) => {
+  try {
+    const listing = await db.listing.findOne({
+      where: { page_id: req.params.pageId },
+    });
+
+    res.json(listing);
+  } catch (err) {
+    console.warn(err);
+  }
+});
+
 module.exports = router;

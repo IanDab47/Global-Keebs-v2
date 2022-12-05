@@ -32,6 +32,7 @@ export default function List() {
     const getList = async () => {
       try {
         const response = await axios.get(listAPIURL)
+        console.log(response.data)
         setList(response.data)
       } catch (err) {
         console.warn(err)

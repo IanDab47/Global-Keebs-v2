@@ -37,15 +37,15 @@
 }
 
 
-.flair() {
+.flair(@fntSize) {
   width: max-content;
   caret-color: transparent;
   font-family: 'Montserrat Alternates';
-  font-size: 1.5rem;
+  font-size: @fntSize;
   text-transform: capitalize;
   text-shadow: 0 0 .2em darkgray;
   color: white;
-  border-radius: .1rem 1rem .1rem 1rem;
+  border-radius: .1em .5em .1em .5em;
   padding: .35em 1em;
   transition: transform 300ms @quick-n-slow;
 }

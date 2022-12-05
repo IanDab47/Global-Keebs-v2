@@ -21,6 +21,7 @@ const locations = [
   { value: 'JP', name: 'Japan' },
   { value: 'KR', name: 'Korea' },
   { value: 'US', name: 'USA' },
+  { value: 'VN', name: 'Vietnam' },
 ]
 
 export default function FluidFilter({ filterType, filterInput, setFilterInput }) {

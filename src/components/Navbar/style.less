@@ -3,6 +3,7 @@
 @import '../../sharedStyles/anim.less';
 
 .navbar {
+  position: relative;
   display: flex;
   justify-content: space-evenly;
   width: 100%;
@@ -17,7 +18,8 @@
   color: @bg-main-1;
   word-spacing: .5rem;
   padding: .6rem 0;
-  box-shadow: 0 0 .8rem @ntl-med-1;
+  // box-shadow: 0 0 .8rem @ntl-med-1;
+  z-index: 99;
 
   > a {
     width: fit-content;

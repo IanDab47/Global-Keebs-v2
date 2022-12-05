@@ -47,7 +47,7 @@ a {
 a:hover {
 }
 
-input {
+input[type = 'text'] {
   width: 100%;
   background: transparent;
   font-family: Montserrat;
@@ -69,7 +69,7 @@ input + label {
   transform: translateY(-50%);
   transition: all 300ms @quick-n-slow;
 }
-input:is(:focus-visible, :focus-within), input[type='text']:not(input[value=""]) {
+input[type = 'text']:is(:focus-visible, :focus-within), input[type='text']:not(input[value=""]) {
   background: @inp-bg;
   padding-top: 1rem;
 
@@ -82,6 +82,11 @@ input:is(:focus-visible, :focus-within), input[type='text']:not(input[value=""])
     padding: .2em 1em;
     margin-left: .5rem;
   }
+}
+
+textarea {
+  border: none;
+  outline: none;
 }
 
 button {

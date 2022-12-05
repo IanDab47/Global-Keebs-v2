@@ -3,13 +3,21 @@
 @import '../../sharedStyles/dimensions.less';
 @import '../../sharedStyles/fonts.less';
 
+// Adjust scroll bar margin
+:has(.listing-display-page) ::-webkit-scrollbar-track {
+  margin-top: calc(100vh - @navbar-height - @display-header-height);
+}
+
 .listing-display-page {
   isolation: isolate;
+  line-height: initial;
   
+  // Page padding
   & > :not(:first-child) { padding: 3.5rem ~"max(1.2rem, calc(8vw - 5rem))"; }
 
   header {
     display: flex;
+    @media (max-width: 640px) { flex-direction: column; }
     gap: .5rem;
     width: 100%;
     background: linear-gradient(
@@ -17,9 +25,9 @@
       @fnt-act-2
     );
     color: @bg-main-1;
-    line-height: initial;
     box-shadow: inset 0 1rem 2rem -2rem @fnt-main-2;
     padding: 3.5rem ~"max(1.2rem, calc(8vw - 5rem))";
+    @media (max-width: 640px) { padding: 1.5rem ~"max(1.2rem, calc(8vw - 5rem))" 3.5rem }
     z-index: -1;
 
     & > a {
@@ -44,20 +52,69 @@
       font-size: 2.4rem;
       white-space: nowrap;
 
+      // Selects inner text rows
       & > :not(:first-child, :last-child) {
         font-weight: 300;
         font-style: italic;
         margin-top: .5rem;
+        margin-left: .5rem;
       }
 
       & > :last-child {
         font-size: 4rem;
         font-weight: 600;
       }
+
+      @media (max-width: 640px) {
+        display: grid;
+        font-size: 1.6rem;
+        margin-top: 1rem;
+
+        & > :first-child {
+          grid-row: span 2;
+        }
+        & > :last-child {
+          font-size: 3rem;
+          font-weight: 600;
+        }
+      }
       
       .flair {
         .flair(2.5rem);
         margin-top: .625rem;
+      }
+    }
+  }
+
+  article {
+    section {
+      margin: 1rem 0 3rem;
+    }
+
+    h1 {
+      width: max-content;
+      background: linear-gradient(@bdr-nav-1, @bdr-nav-2);
+      background-size: 100% .15rem;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      font-family: Montserrat;
+      font-size: 3.25rem;
+      font-weight: 300;
+      letter-spacing: -.07rem;
+      padding: 0 1em .15em;
+      margin-bottom: .5em;
+    }
+
+    .comments {
+      user-select: none;
+
+      textarea {
+        width: min(100%, 50rem);
+        height: ~"max(16rem, calc(60rem - 100vw))";
+        font-family: lato;
+        font-size: 1.2rem;
+        padding: 1.2rem 1rem;
+        resize: none;
       }
     }
   }

@@ -81,10 +81,19 @@ export default function Display(...props) {
 
       </header>
 
-      <section
-        className="self-text"
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}>
-      </section>
+      <article>
+        
+        <section className="self-text">
+          <h1>Listing Details</h1>
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
+        </section>
+
+        <section className="comments">
+          <h1>Comments</h1>
+          <textarea></textarea>
+        </section>
+
+      </article>
     </div>
   )
 }

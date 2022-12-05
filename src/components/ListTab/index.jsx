@@ -1,3 +1,7 @@
+// React
+import { Link } from 'react-router-dom'
+
+// Util
 import { timeSincePost } from '../../util/time'
 
 // Styles
@@ -29,7 +33,7 @@ export default function ListTab({ currTime, listing, i }) {
       </div>
 
       <div className='long'>
-        <h1 value={listing.title}>{listing.title}</h1>
+        <Link to={`${listing.page_id}`}><h1 value={listing.title}>{listing.title}</h1></Link>
 
         <div>
           <p>u/{listing.author}</p>

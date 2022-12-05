@@ -47,7 +47,7 @@
     display: grid;
     grid-template-rows: auto auto;
 
-    > h1 {
+    h1 {
       position: relative;
       width: fit-content;
       isolation: isolate;
@@ -120,7 +120,6 @@
   &:hover .long { 
     > h1 {
       color: transparent;
-      cursor: pointer;
       transition: color 0ms @quick-n-slow;
 
       &::before, &::after {

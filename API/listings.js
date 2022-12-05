@@ -7,32 +7,36 @@ const { Op } = require('sequelize');
 router.get('/', async (req, res) => {
   const pageNumber = req.query.page || 0;
   const searchValue = req.query.search || '';
-  const filterValue = req.query.filter.includes(',')
+  let filterValue = req.query.filter.includes(',')
     ? req.query.filter.split(',')
     : [req.query.filter] || [''];
-  const locationValue = req.query.location.includes(',')
+  let locationValue = req.query.location.includes(',')
     ? req.query.location.split(',')
     : [req.query.location] || [''];
 
-  console.log();
+  filterValue = filterValue.map((category) => {
+    return {
+      flair_text: {
+        [Op.iLike]: '%' + category + '%',
+      },
+    };
+  });
+
+  locationValue = locationValue.map((locale) => {
+    return {
+      location: {
+        [Op.iLike]: '%' + locale + '%',
+      },
+    };
+  });
+
+  console.log([...filterValue, ...locationValue]);
 
   const list = await db.listing.findAll({
     where: {
       self_text: { [Op.iLike]: `%${searchValue}%` },
-      [Op.or]: filterValue.map((category) => {
-        return {
-          flair_text: {
-            [Op.iLike]: '%' + category + '%',
-          },
-        };
-      }),
-      [Op.and]: locationValue.map((locale) => {
-        return {
-          location: {
-            [Op.iLike]: locale + '%',
-          },
-        };
-      }),
+      [Op.or]: filterValue,
+      [Op.and]: locationValue,
     },
     order: [[sequelize.col('created_utc'), 'DESC']],
     offset: 30 * pageNumber,

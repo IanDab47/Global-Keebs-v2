@@ -6,8 +6,7 @@
   position: relative;
   display: grid;
   gap: .5rem;
-  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-  // backdrop-filter: blur(.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   padding-inline: ~"max(1rem, calc(25vw - 18rem))";
   @media (max-width: 640px) { padding-inline: 1.2rem; grid-template-columns: 1fr;}
 
@@ -58,7 +57,7 @@
         }
       }
 
-      > h1 {
+      h1 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;

@@ -1,3 +1,7 @@
+// React
+import { Link } from 'react-router-dom'
+
+// Util
 import { timeSincePost } from '../../util/time'
 
 // Styles
@@ -37,7 +41,7 @@ export default function ListCard({ currTime, listing, i }) {
       </div>
 
       <div className='bottom'>
-        <h1>{listing.title}</h1>
+        <Link to={`${listing.page_id}`}><h1>{listing.title}</h1></Link>
 
         <div>
           <p>u/{listing.author}</p>

@@ -2,6 +2,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import DOMPurify from "dompurify"
 
 // Styles
 import "./style.less"
@@ -79,6 +80,11 @@ export default function Display(...props) {
         </div>
 
       </header>
+
+      <section
+        className="self-text"
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}>
+      </section>
     </div>
   )
 }

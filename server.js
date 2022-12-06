@@ -4,7 +4,7 @@ const path = require('path');
 const morgan = require('morgan');
 const APIRouter = require('./API/index');
 const loadImage = require('./API/image');
-const checkListings = require('./Util/listing');
+const fetchReddit = require('./Util/listing-v2');
 
 const app = express();
 
@@ -12,8 +12,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 
 // Major Fetch
-checkListings()
-setInterval(checkListings, 60_000);
+fetchReddit();
+setInterval(fetchReddit, 180_000);
 
 // BACKEND ROUTES
 app.use('/src', loadImage);

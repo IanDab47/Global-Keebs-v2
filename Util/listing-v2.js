@@ -57,7 +57,7 @@ const saveData = async (data) => {
   const date = time.makeDate(created_utc);
 
   try {
-    const timestampModel = timestamps.map(async (timestamp) => {
+    const timestampPromises = timestamps.map(async (timestamp) => {
       const [newTimestamp, created] = await db.timestamp.findOrCreate({
         where: {
           url: timestamp,
@@ -65,6 +65,8 @@ const saveData = async (data) => {
       });
       return newTimestamp;
     });
+
+    const timestampModels = await Promise.all(timestampPromises);
 
     const [newListing, created] = await db.listing.findOrCreate({
       where: {
@@ -107,6 +109,10 @@ const saveData = async (data) => {
         }
       );
     }
+
+    timestampModels.map(
+      async (timestamp) => await newListing.addTimestamp(timestamp)
+    );
   } catch (err) {
     console.warn(err);
   }
@@ -157,4 +163,4 @@ const fetchReddit = async (url) => {
   }
 };
 
-fetchReddit(apiURL);
+exports.fetchReddit = fetchReddit;

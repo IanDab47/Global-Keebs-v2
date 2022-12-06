@@ -29,7 +29,7 @@ export default function Display(...props) {
   const [location, setLocation] = useState('')
   const [pageName, setPageName] = useState('')
   const [selfText, setSelfText] = useState('')
-  const [timestamp, setTimestamp] = useState('')
+  const [timestamps, setTimestamps] = useState('')
   const [title, setTitle] = useState('')
   const [ups, setUps] = useState('')
   const [upvoteRatio, setUpvoteRatio] = useState('')
@@ -42,24 +42,24 @@ export default function Display(...props) {
     const fetchListing = async () => {
       try {
         const response = await axios.get(`/api/v1/listings/${pageId}`)
-        console.log(response.data)
-        // const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
+        console.log(response.data.self_text)
+        const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
         
-        // setId(res_id)
-        // setAuthor(res_author)
-        // setAuthorRef(res_author_ref)
-        // setCreatedUTC(res_created_utc)
-        // setDate(res_date)
-        // setDowns(res_downs)
-        // setFlairText(res_flair_text)
-        // setLocation(res_location)
-        // setPageName(res_page_name)
-        // setSelfText(res_self_text)
-        // setTimestamp(res_timestamp)
-        // setTitle(res_title)
-        // setUps(res_ups)
-        // setUpvoteRatio(res_upvote_ratio)
-        // setUrl(res_url)
+        setId(res_id)
+        setAuthor(res_author)
+        setAuthorRef(res_author_ref)
+        setCreatedUTC(res_created_utc)
+        setDate(res_date)
+        setDowns(res_downs)
+        setFlairText(res_flair_text)
+        setLocation(res_location)
+        setPageName(res_page_name)
+        setSelfText(res_self_text)
+        setTimestamps(response.data.timestamps.map(timestamp => timestamp.url))
+        setTitle(res_title)
+        setUps(res_ups)
+        setUpvoteRatio(res_upvote_ratio)
+        setUrl(res_url)
 
       } catch (err) {
         console.warn(err)
@@ -104,9 +104,9 @@ export default function Display(...props) {
 
       <article>
 
-        {timestamp && (
+        {timestamps && (
           <section className="timestamp">
-            <a href={timestamp} target="_blank"><h1>Gallery</h1></a>
+            <a href={timestamps[0]} target="_blank"><h1>Gallery</h1></a>
             {thumbnails.map((url, i) => <img src={url} alt={`keyboard_${i}`} title={`keyboard_${i}`}/>) }
           </section>
         )}

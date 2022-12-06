@@ -13,6 +13,8 @@ import { setTime } from '../../util/time'
 
 // Styles
 import "./style.less"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 export default function List() {
   // States
@@ -47,8 +49,12 @@ export default function List() {
     setLoading(true)
 
     try {
+      // Remove space following search term
+      searchInput[searchInput.length - 1] === ' ' &&
+        setSearchInput(searchInput.substring(0, searchInput.length - 1))
+      
       const response = await axios.get(listAPIURL + `&page=${page}`)
-      console.log(response.data)
+      // console.log(response.data)
       // response && setLoading(false)
       page === 0 && setList([])
       page !== 0 ? setList([...list, ...response.data]) : setList(response.data)
@@ -99,7 +105,7 @@ export default function List() {
               <div className='searchbar'>
                 <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
                 <label>Search</label>
-                <button className={searchInput ? null : 'clear'}>Submit</button>
+                <button className={searchInput ? null : 'clear'}>{ innerWidth <= 768 ? <FontAwesomeIcon icon={faMagnifyingGlass} /> : 'Submit' }</button>
               </div>
             </header>
 
@@ -109,12 +115,16 @@ export default function List() {
                 filterType={'category'}
                 filterInput={filterInput}
                 setFilterInput={setFilterInput}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
               />
 
               <FluidFilter
                 filterType={'location'}
                 filterInput={locationInput}
                 setFilterInput={setLocationInput}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
               />
             
               <div className='view-type'>

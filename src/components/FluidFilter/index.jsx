@@ -24,7 +24,9 @@ const locations = [
   { value: 'VN', name: 'Vietnam' },
 ]
 
-export default function FluidFilter({ filterType, filterInput, setFilterInput }) {
+export default function FluidFilter({
+  filterType, filterInput, setFilterInput, searchInput, setSearchInput
+}) {
   const toggleField = async (filter, value) => {
     // Set Temp array for filters
     let tempFilterArr = filterInput.includes(value) ?
@@ -50,6 +52,11 @@ export default function FluidFilter({ filterType, filterInput, setFilterInput })
       <div
         className='fluid'
         name={`${filterType}-filter`}
+        onClick={
+          e => setSearchInput(searchInput[searchInput.length - 1] === ' '
+            ? searchInput
+            : searchInput + ' '
+        )}
       >
         <div>
           <p 

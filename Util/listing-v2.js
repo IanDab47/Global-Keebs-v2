@@ -126,7 +126,9 @@ const nextPage = async (nextId) => {
   }
 };
 
-const fetchReddit = async (url) => {
+const fetchReddit = async (
+  url = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100'
+) => {
   let finishRequests = false;
 
   console.log(url);
@@ -163,4 +165,4 @@ const fetchReddit = async (url) => {
   }
 };
 
-exports.fetchReddit = fetchReddit;
+module.exports = fetchReddit;

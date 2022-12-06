@@ -8,7 +8,15 @@ const getLocation = (title) => {
   const re_local = /\[([^\]]+)\]/;
   let location = '';
   const titleText = re_local.exec(title) || ['ha', null];
-  location = titleText[1] ? titleText[1] : 'N/A';
+  location = !titleText[1]
+    ? ''
+    : titleText[1].toLowerCase().includes('store') ||
+      titleText[1].toLowerCase().includes('service') ||
+      titleText[1].toLowerCase().includes('meta') ||
+      titleText[1].includes('IC') ||
+      titleText[1].includes('GB')
+    ? ''
+    : titleText[1];
 
   return location;
 };
@@ -32,8 +40,6 @@ const formatSelfText = (text) => {
 };
 
 const saveData = async (data) => {
-  console.log(data.selftext);
-
   const author = data.author;
   const author_ref = data.author_fullname;
   const created_utc = data.created_utc;
@@ -52,7 +58,11 @@ const saveData = async (data) => {
 
   try {
     const timestampModel = timestamps.map(async (timestamp) => {
-      const [newTimestamp, created] = await db.timestamp.create(timestamp);
+      const [newTimestamp, created] = await db.timestamp.findOrCreate({
+        where: {
+          url: timestamp,
+        },
+      });
       return newTimestamp;
     });
 
@@ -82,6 +92,7 @@ const saveData = async (data) => {
         {
           author: author,
           author_ref: author_ref,
+          date: date,
           downs: downs,
           self_text: self_text,
           title: title,
@@ -112,6 +123,8 @@ const nextPage = async (nextId) => {
 const fetchReddit = async (url) => {
   let finishRequests = false;
 
+  console.log(url);
+
   try {
     const response = await axios.get(url);
     const nextId = response.data.data.after;
@@ -124,18 +137,19 @@ const fetchReddit = async (url) => {
           ? await saveData(listing.data)
           : null;
 
-        // Check if final listing
-        finishRequests =
-          i === response.data.data.dist - 1 && response.data.data.after === null
-            ? true
-            : false;
+        // Load next page if available
+        if (
+          i === response.data.data.dist - 1 &&
+          response.data.data.after === null
+        ) {
+          return console.log('Finished Requests!');
+        } else if (i === response.data.data.dist - 1) {
+          nextPage(nextId);
+        }
       } catch (err) {
         console.warn(err);
       }
     });
-
-    // Load next page if available
-    finishRequests ? console.log('Finished Requests!') : nextPage(nextId);
 
     return;
   } catch (err) {

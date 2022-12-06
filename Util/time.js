@@ -17,11 +17,10 @@ const convUnix = (timestamp) => {
     'Dec',
   ];
   const month = months[date.getMonth()].padStart(2, '0');
-  const day = toString(date.getDate()).padStart(2, '0');
-  const hour = toString(date.getHours()).padStart(2, '0');
-  const min = toString(date.getMinutes()).padStart(2, '0');
-  const sec = toString(date.getSeconds()).padStart(2, '0');
-  console.log(sec, min, hour, day, month, months, year);
+  const day = date.getDate().toString().padStart(2, '0');
+  const hour = date.getHours().toString().padStart(2, '0');
+  const min = date.getMinutes().toString().padStart(2, '0');
+  const sec = date.getSeconds().toString().padStart(2, '0');
 
   return { sec, min, hour, day, month, months, year };
 };

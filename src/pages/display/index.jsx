@@ -43,7 +43,7 @@ export default function Display(...props) {
       try {
         const response = await axios.get(`/api/v1/listings/${pageId}`)
         console.log(response.data)
-        const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_timestamp, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
+        const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
         
         setId(res_id)
         setAuthor(res_author)
@@ -55,7 +55,7 @@ export default function Display(...props) {
         setLocation(res_location)
         setPageName(res_page_name)
         setSelfText(res_self_text)
-        setTimestamp(res_timestamp)
+        // setTimestamp(res_timestamp)
         setTitle(res_title)
         setUps(res_ups)
         setUpvoteRatio(res_upvote_ratio)

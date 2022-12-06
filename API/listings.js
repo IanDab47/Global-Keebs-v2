@@ -52,6 +52,7 @@ router.get('/:pageId', async (req, res) => {
   try {
     const listing = await db.listing.findOne({
       where: { page_id: req.params.pageId },
+      include: [db.thumbnail],
     });
 
     res.json(listing);

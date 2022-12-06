@@ -54,8 +54,6 @@ export default function List() {
         setSearchInput(searchInput.substring(0, searchInput.length - 1))
       
       const response = await axios.get(listAPIURL + `&page=${page}`)
-      // console.log(response.data)
-      // response && setLoading(false)
       page === 0 && setList([])
       page !== 0 ? setList([...list, ...response.data]) : setList(response.data)
       setCategory(filterInput)
@@ -67,7 +65,6 @@ export default function List() {
 
   // Output
   const listings = list.map((listing, i) => {
-    // i === 0 ? console.log(listing) : null 
     return (
       <ListTab
         key={`tab_GK${i}_${listing.pageId}`}
@@ -80,7 +77,6 @@ export default function List() {
   )
 
   const cards = list.map((listing, i) => {
-    // i === 0 ? console.log(listing) : null 
     return (
       <ListCard
         key={`tab_GK${i}_${listing.pageId}`}

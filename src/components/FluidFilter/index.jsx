@@ -21,6 +21,7 @@ const locations = [
   { value: 'JP', name: 'Japan' },
   { value: 'KR', name: 'Korea' },
   { value: 'US', name: 'USA' },
+  { value: 'TW', name: 'Taiwan' },
   { value: 'VN', name: 'Vietnam' },
 ]
 

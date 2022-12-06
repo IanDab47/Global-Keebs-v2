@@ -7,11 +7,21 @@ import DOMPurify from "dompurify"
 // Styles
 import "./style.less"
 
+const imgFiller = [
+  '/imgs/filler/switches.jpg',
+  '/imgs/filler/iron180.jpg',
+  '/imgs/filler/space65.jpg',
+  '/imgs/filler/thera.jpg',
+  '/imgs/filler/suit.jpg',
+]
+let thumbnails = []
+
 export default function Display(...props) {
   // State
-  const [id, setId] = useState('')
+  const [id, setId] = useState(null)
   const [author, setAuthor] = useState('')
   const [authorRef, setAuthorRef] = useState('')
+  const [comments, setComments] = useState([])
   const [createdUTC, setCreatedUTC] = useState('')
   const [date, setDate] = useState('')
   const [downs, setDowns] = useState('')
@@ -58,7 +68,18 @@ export default function Display(...props) {
     fetchListing()
   }, [])
 
+  // Handlers
+  const submitComment = e => {
+    e.preventDefault()
+  }
+
   // Output
+  // Add random amount of unique images to display
+  while (thumbnails.length <= createdUTC % 5) {
+    const rndArrPos = Math.ceil(Math.random() * 5) % 5
+    thumbnails.includes(imgFiller[rndArrPos]) ? null : thumbnails.push(imgFiller[rndArrPos])
+  }
+
   return (
     <div className="listing-display-page">
       <header>
@@ -83,9 +104,12 @@ export default function Display(...props) {
 
       <article>
 
-        {timestamp && <section className="timestamp">
-          <h1>Timestamp</h1>
-        </section> }
+        {timestamp && (
+          <section className="timestamp">
+            <a href={timestamp} target="_blank"><h1>Gallery</h1></a>
+            {thumbnails.map((url, i) => <img src={url} alt={`keyboard_${i}`} title={`keyboard_${i}`}/>) }
+          </section>
+        )}
         
         <section className="self-text">
           <h1>Listing Details</h1>
@@ -94,8 +118,13 @@ export default function Display(...props) {
 
         <section className="comments">
           <h1>Comments</h1>
-          <textarea></textarea>
-          <button>Comment</button>
+          <form onSubmit={e => submitComment(e)}>
+            <textarea></textarea>
+            <div>
+              <button>Comment</button>
+              <p>{comments.length} { comments.length === 1 ? 'person' : 'people' } have responded.</p>
+            </div>
+          </form>
         </section>
 
       </article>

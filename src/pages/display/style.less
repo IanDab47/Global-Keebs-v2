@@ -3,9 +3,18 @@
 @import '../../sharedStyles/dimensions.less';
 @import '../../sharedStyles/fonts.less';
 
-// Adjust scroll bar margin
-:has(.listing-display-page) ::-webkit-scrollbar-track {
-  margin-top: calc(100vh - @navbar-height - @display-header-height);
+:has(.listing-display-page) {
+  // Remove scroll bar on mobile
+  @media (max-width: 768px) {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  // Adjust scroll bar margin
+  &::-webkit-scrollbar-track {
+    margin-top: calc(100vh - @navbar-height - @display-header-height);
+  }
 }
 
 .listing-display-page {
@@ -13,30 +22,34 @@
   line-height: initial;
   
   // Page padding
-  & > :not(:first-child) { padding: 3.5rem ~"max(2rem, calc(8vw - 5rem))"; }
+  & > :not(:first-child) { padding: 2rem ~"max(1rem, calc(8vw - 5rem))"; }
 
   header {
     display: flex;
-    @media (max-width: 640px) { flex-direction: column; }
+    @media (max-width: 768px) { flex-direction: column; }
     gap: .5rem;
     width: 100%;
     background: linear-gradient(
       @fnt-act-1,
       @fnt-act-2
     );
-    color: @bg-main-1;
+    color: @bg-main-2;
     box-shadow: inset 0 1rem 2rem -2rem @fnt-main-2;
-    padding: 3.5rem ~"max(2rem, calc(8vw - 5rem))";
-    @media (max-width: 640px) { padding: 1.5rem ~"max(2rem, calc(8vw - 5rem))" 3.5rem }
+    padding: 3.5rem ~"max(1rem, calc(8vw - 5rem))";
+    @media (max-width: 768px) { padding: 1.5rem ~"max(1rem, calc(8vw - 5rem))" 3.5rem }
     z-index: -1;
 
     & > a {
-      display: -webkit-box;
-      overflow: clip;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
       font-size: 5rem;
+      @media (max-width: 768px) { font-size: clamp(2.4rem, 10.4vw, 5rem); }
       font-weight: 900;
+
+      @media (min-width: 769px) {
+        display: -webkit-box;
+        overflow: clip;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
       
       &:hover {
         -webkit-line-clamp: 99;
@@ -62,17 +75,18 @@
 
       & > :last-child {
         font-size: 4rem;
+        @media (max-width: 768px) { font-size: 2.4rem !important; }
         font-weight: 600;
       }
 
-      @media (max-width: 640px) {
-        width: auto;
+      @media (max-width: 768px) {
         display: grid;
+        width: 100%;
         font-size: 1.6rem;
         margin-top: 1rem;
 
         & > :first-child {
-          grid-row: span 2;
+          // grid-row: span 2;
         }
         & > :last-child {
           font-size: 3rem;
@@ -82,20 +96,26 @@
       
       .flair {
         .flair(2.5rem);
+        @media (max-width: 768px) { .flair(clamp(1.6rem, 5.2vw, 2.5rem)) }
         margin-top: .625rem;
       }
     }
   }
 
   article {
-    display: grid;
-    gap: 2rem;
-    &:has(.timestamp) { grid-template-columns: 2fr 3fr; }
-    @media (max-width: 768px) { grid-template-columns: 1fr; }
+    &:has(.timestamp) {
+      display: grid;
+      gap: .75rem; 
+      grid-template-columns: 
+        minmax(40%, 35rem) 
+        calc(25vw - 20.75rem) 
+        minmax(50%, 50rem)
+      ; 
+    }
+    @media (max-width: 768px) { grid-template-columns: 1fr !important; }
     font-size: 1rem;
 
     section {
-      // place-self: center;
       width: 100%;
       margin: 1rem 0 3rem;
 
@@ -107,7 +127,7 @@
 
     h1 {
       width: max-content;
-      @media (max-width: 640px) { width: 100% }
+      @media (max-width: 768px) { width: 100% }
       background: linear-gradient(
         @bdr-nav-1,
         @bdr-nav-2
@@ -120,14 +140,37 @@
       font-weight: 300;
       text-align: center;
       letter-spacing: -.07rem;
-      @media (min-width: 640px) { 
-        padding: 0 1em .15em; 
+      white-space: no-wrap;
+      padding-bottom: .35rem;
+      @media (min-width: 769px) { 
+        padding: 0 1em .15rem; 
         margin-left: .5em; 
       }
       margin-bottom: .5em;
     }
 
+    .timestamp {
+      margin-right: auto;
+
+      a h1 {
+        margin-inline: auto;
+      }
+
+      img {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        object-fit: cover;
+        padding: .3rem;
+        transition: padding 300ms @quick-n-slow;
+
+        &:hover {
+          padding: 0;
+        }
+      }
+    }
+
     .self-text {
+      @media (min-width: 769px) { grid-column: 3; }
       max-width: 50rem;
       text-align: justify;
 
@@ -137,22 +180,31 @@
     }
 
     .comments {
+      @media (min-width: 769px) { grid-column: 3; }
       user-select: none;
 
       textarea {
-        width: min(100%, 50rem);
-        height: ~"max(16rem, calc(60rem - 100vw))";
+        width: min(100%, 60rem);
+        height: ~"max(12rem, calc(45rem - 100vw))";
         font-family: lato;
         font-size: 1.2rem;
+        border-radius: .3rem;
         padding: 1.2rem 1rem;
         resize: none;
       }
+      
+      div {
+        display: flex;
+        gap: 1rem;
+        @media (max-width: 768px) { justify-content: space-around; }
+        @media (min-width: 769px) { padding-inline: 1.2rem; }
+        margin-top: 1rem;
 
-      button {
-        display: block;
-        font-size: 1.2rem;
-        padding-block: .6em;
-        margin-top: .5rem;
+        button {
+          display: inline;
+          font-size: 1.2rem;
+          padding-block: .6em;
+        }
       }
     }
   }

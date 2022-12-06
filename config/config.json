@@ -3,7 +3,7 @@
     "username": "sequelize",
     "password": "sequelize",
     "logging": false,
-    "database": "global_keebs",
+    "database": "GlobalKeebs_v2",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }

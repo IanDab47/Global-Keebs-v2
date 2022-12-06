@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.listing.belongsToMany(models.user, { through: 'users_listings' });
       models.listing.belongsToMany(models.comment, {through: 'comments_listings' });
-      models.listing.hasMany(models.thumbnail);
+      models.listing.hasMany(models.timestamp);
     }
   }
   listing.init(

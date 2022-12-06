@@ -12,7 +12,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 
 // Major Fetch
-setInterval(checkListings, 60000);
+checkListings()
+setInterval(checkListings, 60_000);
 
 // BACKEND ROUTES
 app.use('/src', loadImage);

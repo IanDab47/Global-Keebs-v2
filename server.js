@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 
 // Major Fetch
 fetchReddit();
-setInterval(fetchReddit, 180_000);
+setInterval(fetchReddit, 300_000);
 
 // BACKEND ROUTES
 app.use('/src', loadImage);

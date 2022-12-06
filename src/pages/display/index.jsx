@@ -82,6 +82,10 @@ export default function Display(...props) {
       </header>
 
       <article>
+
+        {timestamp && <section className="timestamp">
+          <h1>Timestamp</h1>
+        </section> }
         
         <section className="self-text">
           <h1>Listing Details</h1>
@@ -91,6 +95,7 @@ export default function Display(...props) {
         <section className="comments">
           <h1>Comments</h1>
           <textarea></textarea>
+          <button>Comment</button>
         </section>
 
       </article>

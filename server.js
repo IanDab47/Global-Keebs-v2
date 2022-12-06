@@ -2,19 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const APIRouter = require('./API/index');
+const loadImage = require('./API/image');
+const checkListings = require('./Util/listing');
 
 const app = express();
 
-const APIRouter = require('./API/index');
-const loadImage = require('./API/image');
-
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
+
+// Major Fetch
+setInterval(checkListings, 60000);
 
 // BACKEND ROUTES
 app.use('/src', loadImage);
 app.use('/api/v1', APIRouter);
 
+// ACCESS FRONTEND
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

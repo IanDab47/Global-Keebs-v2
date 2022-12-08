@@ -148,9 +148,8 @@ const fetchReddit = async (
 
         // Load next page if available
         if (
-          (i === response.data.data.dist - 1 &&
-            response.data.data.after === null) ||
-          type === 'minor'
+          i === response.data.data.dist - 1 &&
+          (response.data.data.after === null || type === 'minor')
         ) {
           return console.log('Finished Requests!');
         } else if (i === response.data.data.dist - 1) {

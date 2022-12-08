@@ -4,8 +4,7 @@ const path = require('path');
 const morgan = require('morgan');
 const APIRouter = require('./API/index');
 const loadImage = require('./API/image');
-const fetchReddit = require('./Util/listing-v2');
-const minorFetch = require('./Util/listing-v2');
+const { fetchReddit, minorFetch } = require('./Util/listing-v2');
 
 const app = express();
 

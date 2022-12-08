@@ -25,8 +25,12 @@ export default function ListTab({ currTime, listing, i }) {
           {listing.flair_text.toLowerCase()}
         </div>
 
-        {listing.location.toLowerCase() !== listing.flair_text.toLowerCase() &&
-          <p className='location'>[{listing.location}]</p>}
+        {
+          listing.location.toLowerCase() !== listing.flair_text.toLowerCase() ||
+          listing.location === '' 
+            ? <p className='location'>[{listing.location}]</p>
+            : null
+        }
         
         <p className='time' >{timeSincePost(currTime, listing.created_utc)}</p>
       

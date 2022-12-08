@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const APIRouter = require('./API/index');
 const loadImage = require('./API/image');
 const fetchReddit = require('./Util/listing-v2');
+const minorFetch = require('./Util/listing-v2');
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(morgan('dev'));
 
 // Major Fetch
 fetchReddit();
-setInterval(fetchReddit, 300_000);
+setInterval(minorFetch, 300_000);
 
 // BACKEND ROUTES
 app.use('/src', loadImage);

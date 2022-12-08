@@ -6,13 +6,13 @@ const apiURL = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100';
 
 const getLocation = (title) => {
   const re_local = /\[([^\]]+)\]/;
-  let location = '';
   const titleText = re_local.exec(title) || ['ha', null];
-  location = !titleText[1]
+  const location = !titleText[1]
     ? ''
-    : titleText[1].toLowerCase().includes('store') ||
-      titleText[1].toLowerCase().includes('service') ||
+    : titleText[1].toLowerCase().includes('bulk') ||
       titleText[1].toLowerCase().includes('meta') ||
+      titleText[1].toLowerCase().includes('store') ||
+      titleText[1].toLowerCase().includes('service') ||
       titleText[1].includes('IC') ||
       titleText[1].includes('GB')
     ? ''
@@ -120,13 +120,14 @@ const saveData = async (data) => {
 
 const nextPage = async (nextId) => {
   try {
-    await fetchReddit(`${apiURL}&after=${nextId}`);
+    await fetchReddit('major', `${apiURL}&after=${nextId}`);
   } catch (err) {
     console.warn(err);
   }
 };
 
 const fetchReddit = async (
+  type = 'major',
   url = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100'
 ) => {
   let finishRequests = false;
@@ -147,8 +148,9 @@ const fetchReddit = async (
 
         // Load next page if available
         if (
-          i === response.data.data.dist - 1 &&
-          response.data.data.after === null
+          (i === response.data.data.dist - 1 &&
+            response.data.data.after === null) ||
+          type === 'minor'
         ) {
           return console.log('Finished Requests!');
         } else if (i === response.data.data.dist - 1) {
@@ -165,4 +167,11 @@ const fetchReddit = async (
   }
 };
 
-module.exports = fetchReddit;
+const minorFetch = () => {
+  fetchReddit('minor');
+};
+
+module.exports = {
+  fetchReddit,
+  minorFetch,
+};

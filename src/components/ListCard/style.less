@@ -18,7 +18,7 @@
     overflow: clip;
     backdrop-filter: blur(.5rem);
     box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000,
-                inset 0 5rem 10rem -8rem @ntl-med-1;
+                inset 0 5rem 10rem -8rem @sec-light;
     margin-bottom: .5rem;
     opacity: 0;
     transition: background 300ms @quick-n-slow,
@@ -28,7 +28,7 @@
 
     &:has(.top:is(:hover, :focus, :focus-within)) {
       box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000,
-                  inset 0 3rem 10rem -7rem @ntl-med-2;
+                  inset 0 3rem 10rem -7rem @sec-fair;
     }
 
     &:nth-of-type(3n + 1) {
@@ -64,7 +64,7 @@
       flex-direction: column;
       justify-content: space-between;
       isolation: isolate;
-      background: @inp-bg;
+      background: @ntl-bright;
       padding: 2rem 1.5rem 1rem;
       overflow: clip;
 
@@ -98,8 +98,8 @@
 
           &:first-child:hover {
             cursor: pointer;
-            background: @fnt-act-2;
-            color: @bg-nav-1;
+            background: @act-main;
+            color: @pri-bright;
             padding: .3rem 1.2rem;
             transition: padding 300ms @quick-n-slow, 
                         background 300ms @quick-n-slow,

@@ -1,41 +1,77 @@
-@bg-main-1: #eae7e0;
-@bg-main-2: #f1f1f1;
-@bg-nav-1: #efede3;
-@bdr-nav-1: #d6ccc2;
-@bdr-nav-2: #cec5b8;
-@inp-bg: #dfdfdf;
-@btn-bg: #b9b4a2;
-@fnt-main-1: #101010;
-@fnt-main-2: #242424;
-@fnt-act-1: #d62828;
-@fnt-act-2: #df3838;
-@ntl-med-1: #a0a6ab;
-@ntl-med-2: #60666b;
+// @bg-main-1: #eae7e0;
+// @bg-main-2: #f1f1f1;
+// @bg-nav-1: #efede3;
+// @bdr-nav-1: #d6ccc2;
+// @bdr-nav-2: #cec5b8;
+// @inp-bg: #dfdfdf;
+// @btn-bg: #b9b4a2;
+// @fnt-main-1: #101010;
+// @fnt-main-2: #242424;
+// @fnt-act-1: #d62828;
+// @fnt-act-2: #df3838;
+// @ntl-med-1: #a0a6ab;
+// @ntl-med-2: #60666b;
 @sb-clr-1: #d628286f;
 @sb-clr-2: #d62828ff;
 @sb-bg: #f1f1f1ff;
-@flr-sell: #ff5555;
-@flr-buy: #40e47b;
-@flr-trd: #ff79c6;
-@flr-str: #82dae2;
-@flr-gb: #bd93f9;
-@flr-etc: #d8e880;
-@flr-bg: @ntl-med-1;
+// @flr-sell: #ff5555;
+// @flr-buy: #40e47b;
+// @flr-trd: #ff79c6;
+// @flr-str: #82dae2;
+// @flr-gb: #bd93f9;
+// @flr-etc: #d8e880;
+// @flr-bg: @ntl-med-1;
 
-.dark {
-  @nav-bg-1: #efede3;
-  @nav-brd-1: #d6ccc2;
-  @nav-brd-2: #cec5b8;
-  @nav-act-1: #d62828;
-  @nav-act-2: #df3838;
-  @bg-lig-1: #eae7e0;
-  @bg-lig-2: #f1f1f1;
-  @bg-med-1: #a0a0a0;
-  @bg-med-2: #808080;
-  @inp-bg: #dfdfdf;
-  @btn-bg: #b9b4a2;
+// PRIMARY
+@pri-bright: #EAE8E0;
+@pri-light: #CECAB8;
+@pri-fair: #B9B4A2;
+@pri-dark: #8F8B7F;
+@pri-heavy: #52504A;
+// SECONDARY
+@sec-bright: #E9EFF1;
+@sec-light: #C4C9CD;
+@sec-fair: #878B93;
+@sec-dark: #4F5258;
+@sec-heavy: #24272B;
+// NEUTRAL
+@ntl-bright: #F1F1F1;
+@ntl-light: #BBBBBB;
+@ntl-fair: #7D7D7D;
+@ntl-dark: #444444;
+@ntl-heavy: #010101;
+// ACCENT
+@act-main: #DF3838;
+// FLAIR
+@flr-sell: #F43232;
+@flr-buy: #72DB4D;
+@flr-trd: #F16CCC;
+@flr-str: #00DCF0;
+@flr-upc: #5200FF;
+@flr-art: #E9FF6F;
+@flr-bg: @ntl-light;
+
+// .dark {
+//   @nav-bg-1: #efede3;
+//   @nav-brd-1: #d6ccc2;
+//   @nav-brd-2: #cec5b8;
+//   @nav-act-1: #d62828;
+//   @nav-act-2: #df3838;
+//   @bg-lig-1: #eae7e0;
+//   @bg-lig-2: #f1f1f1;
+//   @bg-med-1: #a0a0a0;
+//   @bg-med-2: #808080;
+//   @inp-bg: #dfdfdf;
+//   @btn-bg: #b9b4a2;
+// }
+
+.shine(@direction) {
+  background: linear-gradient(
+    @direction,
+    @ntl-bright,
+    @ntl-bright
+  );
 }
-
 
 .flair(@fntSize) {
   width: max-content;
@@ -50,13 +86,13 @@
   padding: .35em 1em;
   transition: transform 300ms @quick-n-slow;
 }
-[data-color]                      {background: @bdr-nav-2; }
+[data-color]                      {background: @pri-light; }
 [data-color = "selling" i]        {background: @flr-sell; }
 [data-color = "buying" i]         {background: @flr-buy; }
 [data-color = "trading" i]        {background: @flr-trd; }
 [data-color = "store" i]          {background: @flr-str; }
 [data-color = "bulk" i]           {background: @flr-str; }
 [data-color = "service" i]        {background: @flr-str; }
-[data-color = "group buy" i]      {background: @flr-gb; }
-[data-color = "interest check" i] {background: @flr-gb; }
-[data-color = "artisan" i]        {background: @flr-etc; }
+[data-color = "group buy" i]      {background: @flr-upc; }
+[data-color = "interest check" i] {background: @flr-upc; }
+[data-color = "artisan" i]        {background: @flr-art; }

@@ -9,16 +9,15 @@
   width: 100%;
   background: linear-gradient(
     -0deg,
-    @fnt-act-1,
-    @fnt-act-2
+    @act-main,
+    @act-main
   );
   font-family: 'Montserrat Alternates', Montserrat, Lato;
   font-size: 1.5rem;
   font-weight: 300;
-  color: @bg-main-1;
+  color: @pri-bright;
   word-spacing: .5rem;
   padding: .6rem 0;
-  // box-shadow: 0 0 .8rem @ntl-med-1;
   z-index: 99;
 
   > a {
@@ -32,8 +31,8 @@
     box-shadow: 0 0 0 #604040;
 
     &:is(:hover, :focus, :focus-visible), &.active {
-      background: @bg-main-1;
-      color: @fnt-act-2;
+      background: @sec-bright;
+      color: @act-main;
       outline: none;
       transition: 
         background 300ms @quick-n-slow,

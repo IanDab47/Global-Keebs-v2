@@ -2,15 +2,15 @@
 import './style.less'
 
 const categories = [
-  { value: 'Selling', bg: '#ff5555', color: null },
-  { value: 'Buying', bg: '#40e47b', color: '#f1ffff' },
-  { value: 'Trading', bg: '#ff79c6', color: null },
-  { value: 'Group Buy', bg: '#bd93f9', color: null },
-  { value: 'Interest Check', bg: '#bd93f9', color: null },
-  { value: 'Artisan', bg: '#d8e880', color: '#035' },
-  { value: 'Store', bg: '#82dae2', color: '#ffffef' },
-  { value: 'Bulk', bg: '#82dae2', color: '#ffffef' },
-  { value: 'Service', bg: '#82dae2', color: '#ffffef' },
+  { value: 'Selling', bg: '#F43232', color: null },
+  { value: 'Buying', bg: '#72DB4D', color: '#f1ffff' },
+  { value: 'Trading', bg: '#F16CCC', color: null },
+  { value: 'Group Buy', bg: '#5200FF', color: null },
+  { value: 'Interest Check', bg: '#5200FF', color: null },
+  { value: 'Artisan', bg: '#E9FF6F', color: '#035' },
+  { value: 'Store', bg: '#00DCF0', color: '#ffffef' },
+  { value: 'Bulk', bg: '#00DCF0', color: '#ffffef' },
+  { value: 'Service', bg: '#00DCF0', color: '#ffffef' },
 ]
 
 const locations = [

@@ -2,9 +2,7 @@
 @import '../../sharedStyles/fonts.less';
 @import '../../sharedStyles/anim.less';
 
-// TODO: Set to a 2-row grid and make it scroll on overflow 
 .fluid {
-  // display: grid;
   gap: .3em;
   @media (min-width: 640px) { max-width: min(35rem, 50vw); }
   font-family: Montserrat;
@@ -30,9 +28,9 @@
     user-select: none;
     cursor: pointer;
     width: max-content;
-    background: @inp-bg;
+    background: @sec-bright;
     font-size: 1rem;
-    @media (max-wdith: 640px) { font-size: 1.25rem}
+    @media (max-wdith: 640px) { font-size: 1.25rem }
     font-weight: 500;
     text-transform: capitalize;
     line-height: 1.25rem;
@@ -48,8 +46,8 @@
     }
 
     &.on {
-      background: var(--bg, @btn-bg);
-      color: var(--color, @bg-main-2);
+      background: var(--bg, @pri-light);
+      color: var(--color, @ntl-bright);
       transition: color 120ms @quick-n-slow, background 300ms @quick-n-slow;
     }
 

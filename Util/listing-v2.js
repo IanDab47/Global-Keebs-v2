@@ -4,15 +4,15 @@ const time = require('./time');
 
 const apiURL = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100';
 
-const getLocation = (title) => {
+const getLocation = (title, flair) => {
   const re_local = /\[([^\]]+)\]/;
   const titleText = re_local.exec(title) || ['ha', null];
   const location = !titleText[1]
     ? ''
-    : !titleText[1].toLowerCase().includes('buying') ||
-      !titleText[1].toLowerCase().includes('selling') ||
-      !titleText[1].toLowerCase().includes('trading')
-    ? ''
+    : !flair.toLowerCase().includes('buy') &&
+      !flair.toLowerCase().includes('sell') &&
+      !flair.toLowerCase().includes('trad')
+    ? flair
     : titleText[1];
 
   return location;
@@ -20,15 +20,15 @@ const getLocation = (title) => {
 
 const replacePattern = (patterns, text, fill = '', filter = null) => {
   let newText = text;
-  !filter
-    ? patterns.map((pattern) => (newText = newText.replace(pattern[0], fill)))
-    : patterns.map(
+  filter
+    ? patterns.map(
         (pattern) =>
           (newText =
             pattern.includes(filter) && pattern.includes('(')
               ? newText.replace(pattern, fill)
               : newText)
-      );
+      )
+    : patterns.map((pattern) => (newText = newText.replace(pattern[0], fill)));
 
   return newText;
 };
@@ -49,14 +49,12 @@ const findTimestamps = (text) => {
   );
 
   // Remove timestamp from text
-  const self_text =
+  const [self_text] =
     timestampFetch.length > 0
       ? timestampFetch.map((timestamp) =>
           replacePattern(timestamp, text, '', 'img')
         )
-      : text;
-
-  console.log(self_text);
+      : [text];
 
   return { self_text, timestamps };
 };
@@ -66,10 +64,12 @@ const formatSelfText = (text) => {
   let { self_text, timestamps } = findTimestamps(text);
 
   // Remove all &amp; patterns
-  const re_linePattern = /&amp;.{1,};/g;
-  const checkLinePattern = [...text.matchAll(re_linePattern)];
+  const re_linePattern = /&amp.{1,};|&amp;/g;
+  const checkLinePattern = [self_text.matchAll(re_linePattern)];
   self_text =
-    checkLinePattern.length > 0 ? replacePattern(checkLinePattern, text) : text;
+    checkLinePattern.length > 0
+      ? replacePattern(checkLinePattern, self_text)
+      : self_text;
 
   // Replace all '\n' with <br>
   self_text = self_text.replaceAll('\n', '<br>');
@@ -83,7 +83,7 @@ const saveData = async (data) => {
   const created_utc = data.created_utc;
   const downs = data.downs;
   const flair_text = data.link_flair_text.toUpperCase() || 'N/A';
-  const location = getLocation(data.title);
+  const location = getLocation(data.title, flair_text);
   const page_id = data.id || null;
   const page_name = data.name;
   const { self_text, timestamps } = formatSelfText(data.selftext);
@@ -134,6 +134,7 @@ const saveData = async (data) => {
           author_ref: author_ref,
           date: date,
           downs: downs,
+          location: location,
           self_text: self_text,
           title: title,
           ups: ups,

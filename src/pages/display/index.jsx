@@ -107,7 +107,7 @@ export default function Display(...props) {
 
         {timestamps && (
           <section className="timestamp">
-            {/* <a href={timestamps[0]} target="_blank"><h1>Gallery</h1></a> */}
+            <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} />
             <div>
               {thumbnails.map((url, i) => {

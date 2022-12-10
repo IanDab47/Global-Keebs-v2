@@ -103,7 +103,7 @@ export default function Display(...props) {
 
       </header>
 
-      <article>
+      <div className="grid-row">
 
         {timestamps && (
           <section className="timestamp">
@@ -131,18 +131,19 @@ export default function Display(...props) {
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
         </section>
 
-        <section className="comments">
-          <h1>Comments</h1>
-          <form onSubmit={e => submitComment(e)}>
-            <textarea></textarea>
-            <div>
-              <p>{comments.length} { comments.length === 1 ? 'person' : 'people' } have responded.</p>
-              <button>Comment</button>
-            </div>
-          </form>
-        </section>
+      </div>
+      
+      <section className="comments">
+        <h1>Comments</h1>
+        <form onSubmit={e => submitComment(e)}>
+          <textarea></textarea>
+          <div>
+            <p>{comments.length} { comments.length === 1 ? 'person' : 'people' } have responded.</p>
+            <button>Comment</button>
+          </div>
+        </form>
+      </section>
 
-      </article>
     </div>
   )
 }

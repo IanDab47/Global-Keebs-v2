@@ -30,7 +30,6 @@
 }
     
 html, body, #root {
-  overflow-y: overlay;
   min-height: 100vh;
   scroll-behavior: smooth;
   z-index: -99;
@@ -125,29 +124,30 @@ button {
   }
 }
 
-::-webkit-scrollbar {
-  width: 12px;
-}
-::-webkit-scrollbar-thumb {
-  background: @sb-clr-1;
-  border-right: 4px solid @sb-bg;
-  border-radius: 4px 6px 6px 4px;
+// // CUSTOM SCROLLBAR (Disabled due to overflow compatibility)
+// ::-webkit-scrollbar {
+//   width: 12px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background: @sb-clr-1;
+//   border-right: 4px solid @sb-bg;
+//   border-radius: 4px 6px 6px 4px;
 
-  &:hover {
-    background: @sb-clr-2;
-  }
-}
-::-webkit-scrollbar-track {
-  margin-top: calc(@navbar-height + 4px);
-  margin-bottom: 4px;
-}
-::-webkit-scrollbar-corner {
- background: transparent;
-}
-* {
-  scrollbar-width: auto;
-  scrollbar-color: @sb-clr-1 transparent;
-}
+//   &:hover {
+//     background: @sb-clr-2;
+//   }
+// }
+// ::-webkit-scrollbar-track {
+//   margin-top: calc(@navbar-height + 4px);
+//   margin-bottom: 4px;
+// }
+// ::-webkit-scrollbar-corner {
+//  background: transparent;
+// }
+// * {
+//   scrollbar-width: auto;
+//   scrollbar-color: @sb-clr-1 transparent;
+// }
 
 .clear {
   opacity: 0;

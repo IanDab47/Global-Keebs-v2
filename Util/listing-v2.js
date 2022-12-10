@@ -9,12 +9,9 @@ const getLocation = (title) => {
   const titleText = re_local.exec(title) || ['ha', null];
   const location = !titleText[1]
     ? ''
-    : titleText[1].toLowerCase().includes('bulk') ||
-      titleText[1].toLowerCase().includes('meta') ||
-      titleText[1].toLowerCase().includes('store') ||
-      titleText[1].toLowerCase().includes('service') ||
-      titleText[1].includes('IC') ||
-      titleText[1].includes('GB')
+    : !titleText[1].toLowerCase().includes('buying') ||
+      !titleText[1].toLowerCase().includes('selling') ||
+      !titleText[1].toLowerCase().includes('trading')
     ? ''
     : titleText[1];
 
@@ -23,13 +20,14 @@ const getLocation = (title) => {
 
 const replacePattern = (patterns, text, fill = '', filter = null) => {
   let newText = text;
-  filter
+  !filter
     ? patterns.map((pattern) => (newText = newText.replace(pattern[0], fill)))
     : patterns.map(
         (pattern) =>
-          (newText = patterns.includes(filter)
-            ? newText.replace(pattern[0], fill)
-            : newText)
+          (newText =
+            pattern.includes(filter) && pattern.includes('(')
+              ? newText.replace(pattern, fill)
+              : newText)
       );
 
   return newText;
@@ -38,16 +36,13 @@ const replacePattern = (patterns, text, fill = '', filter = null) => {
 const findTimestamps = (text) => {
   const re_imgur = /\(([^)]+)\)/g;
   let timestamps = [];
-  // const listingText = re_imgur.exec(text) || ['ha', ''];
-  // let timestamps = listingText[1].includes('imgur') ? listingText[1] : '';
-  // return [timestamps];
 
   let timestampFetch = [...text.matchAll(re_imgur)];
 
   // Filter for imgur links
   timestampFetch.map((timestamp) =>
     timestamp.map((pattern) =>
-      pattern.includes('imgur') && !pattern.includes('(')
+      pattern.includes('img') && !pattern.includes('(')
         ? timestamps.push(pattern)
         : null
     )
@@ -57,23 +52,23 @@ const findTimestamps = (text) => {
   const self_text =
     timestampFetch.length > 0
       ? timestampFetch.map((timestamp) =>
-          replacePattern(timestamp, text, '', 'imgur')
+          replacePattern(timestamp, text, '', 'img')
         )
       : text;
 
-  console.log(self_text[0]);
+  console.log(self_text);
 
-  return [''];
+  return { self_text, timestamps };
 };
 
 const formatSelfText = (text) => {
   // Find and remove timestamps from text
-  const timestamps = findTimestamps(text);
+  let { self_text, timestamps } = findTimestamps(text);
 
   // Remove all &amp; patterns
   const re_linePattern = /&amp;.{1,};/g;
   const checkLinePattern = [...text.matchAll(re_linePattern)];
-  let self_text =
+  self_text =
     checkLinePattern.length > 0 ? replacePattern(checkLinePattern, text) : text;
 
   // Replace all '\n' with <br>

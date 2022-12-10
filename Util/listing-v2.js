@@ -21,20 +21,63 @@ const getLocation = (title) => {
   return location;
 };
 
+const replacePattern = (patterns, text, fill = '', filter = null) => {
+  let newText = text;
+  filter
+    ? patterns.map((pattern) => (newText = newText.replace(pattern[0], fill)))
+    : patterns.map(
+        (pattern) =>
+          (newText = patterns.includes(filter)
+            ? newText.replace(pattern[0], fill)
+            : newText)
+      );
+
+  return newText;
+};
+
 const findTimestamps = (text) => {
   const re_imgur = /\(([^)]+)\)/g;
-  let timestamps = '';
-  const listingText = re_imgur.exec(text) || ['ha', ''];
-  timestamps = listingText[1].includes('imgur') ? listingText[1] : '';
+  let timestamps = [];
+  // const listingText = re_imgur.exec(text) || ['ha', ''];
+  // let timestamps = listingText[1].includes('imgur') ? listingText[1] : '';
+  // return [timestamps];
 
-  return [timestamps];
+  let timestampFetch = [...text.matchAll(re_imgur)];
+
+  // Filter for imgur links
+  timestampFetch.map((timestamp) =>
+    timestamp.map((pattern) =>
+      pattern.includes('imgur') && !pattern.includes('(')
+        ? timestamps.push(pattern)
+        : null
+    )
+  );
+
+  // Remove timestamp from text
+  const self_text =
+    timestampFetch.length > 0
+      ? timestampFetch.map((timestamp) =>
+          replacePattern(timestamp, text, '', 'imgur')
+        )
+      : text;
+
+  console.log(self_text[0]);
+
+  return [''];
 };
 
 const formatSelfText = (text) => {
+  // Find and remove timestamps from text
   const timestamps = findTimestamps(text);
 
+  // Remove all &amp; patterns
+  const re_linePattern = /&amp;.{1,};/g;
+  const checkLinePattern = [...text.matchAll(re_linePattern)];
+  let self_text =
+    checkLinePattern.length > 0 ? replacePattern(checkLinePattern, text) : text;
+
   // Replace all '\n' with <br>
-  let self_text = text.replaceAll('\n', '<br>');
+  self_text = self_text.replaceAll('\n', '<br>');
 
   return { self_text, timestamps };
 };

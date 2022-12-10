@@ -104,13 +104,9 @@
     &:has(.timestamp) {
       display: grid;
       gap: 2rem; 
-      grid-template-columns: 1fr 1fr; 
+      grid-template-columns: 1fr 1fr;
       @media (max-width: 768px) { 
-        grid-template-columns: 1fr; 
-
-        .timestamp {
-          grid-column: span 3;
-        }
+        grid-template-columns: 1fr;
       }
       font-size: 1rem;
       text-align: center;
@@ -122,7 +118,7 @@
       margin: 1rem 0 3rem;
 
       &.comments {
-        grid-column: span 2;
+        @media (min-width: 769px) { grid-column: span 2; }
       }
     }
 
@@ -160,6 +156,7 @@
       img {
         aspect-ratio: 16 / 9;
         width: 100%;
+        user-select: none;
         object-fit: cover;
         padding: .3rem;
         transition: padding 300ms @quick-n-slow;
@@ -172,7 +169,6 @@
       div {
         display: flex;
         width: 100%;
-        user-select: none;
       
         > img {
           aspect-ratio: 1;

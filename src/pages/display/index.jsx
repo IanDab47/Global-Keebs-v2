@@ -34,6 +34,7 @@ export default function Display(...props) {
   const [ups, setUps] = useState('')
   const [upvoteRatio, setUpvoteRatio] = useState('')
   const [url, setUrl] = useState('')
+  const [currThumbnail, setCurrThumbnail] = useState(thumbnails[0])
   const { pageId } = useParams()
   const navigate = useNavigate()
 
@@ -106,8 +107,22 @@ export default function Display(...props) {
 
         {timestamps && (
           <section className="timestamp">
-            <a href={timestamps[0]} target="_blank"><h1>Gallery</h1></a>
-            {thumbnails.map((url, i) => <img src={url} alt={`keyboard_${i}`} title={`keyboard_${i}`}/>) }
+            {/* <a href={timestamps[0]} target="_blank"><h1>Gallery</h1></a> */}
+            <img src={currThumbnail} alt={`timestamp`} />
+            <div>
+              {thumbnails.map((url, i) => {
+                return (
+                  <img
+                    key={`keyboard_${i}`}
+                    src={url}
+                    alt={`keyboard_${i}`}
+                    title={`keyboard_${i}`}
+                    onClick={e => setCurrThumbnail(url)}
+                  />
+                )
+              })}
+            </div>
+
           </section>
         )}
         
@@ -121,8 +136,8 @@ export default function Display(...props) {
           <form onSubmit={e => submitComment(e)}>
             <textarea></textarea>
             <div>
-              <button>Comment</button>
               <p>{comments.length} { comments.length === 1 ? 'person' : 'people' } have responded.</p>
+              <button>Comment</button>
             </div>
           </form>
         </section>

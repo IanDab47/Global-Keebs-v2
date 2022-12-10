@@ -103,23 +103,26 @@
   article {
     &:has(.timestamp) {
       display: grid;
-      gap: .75rem; 
-      grid-template-columns: 
-        minmax(40%, 35rem) 
-        calc(25vw - 20.75rem) 
-        minmax(50%, 50rem)
-      ; 
+      gap: 2rem; 
+      grid-template-columns: 1fr 1fr; 
+      @media (max-width: 768px) { 
+        grid-template-columns: 1fr; 
+
+        .timestamp {
+          grid-column: span 3;
+        }
+      }
+      font-size: 1rem;
+      text-align: center;
     }
-    @media (max-width: 768px) { grid-template-columns: 1fr !important; }
-    font-size: 1rem;
+    
 
     section {
       width: 100%;
       margin: 1rem 0 3rem;
 
-      &.timestamp {
-        grid-row: span 2;
-        width: 100%;
+      &.comments {
+        grid-column: span 2;
       }
     }
 
@@ -142,7 +145,7 @@
       padding-bottom: .35rem;
       @media (min-width: 769px) { 
         padding: 0 1em .15rem; 
-        margin-left: .5em; 
+        margin-inline: auto; 
       }
       margin-bottom: .5em;
     }
@@ -165,10 +168,25 @@
           padding: 0;
         }
       }
+
+      div {
+        display: flex;
+        width: 100%;
+        user-select: none;
+      
+        > img {
+          aspect-ratio: 1;
+          width: calc(100% / 5);
+
+          &:hover {
+            cursor: pointer;
+            padding: .3rem;
+          }
+        }
+      }
     }
 
     .self-text {
-      @media (min-width: 769px) { grid-column: 3; }
       max-width: 50rem;
       text-align: justify;
 
@@ -178,11 +196,12 @@
     }
 
     .comments {
-      @media (min-width: 769px) { grid-column: 3; }
+      width: min(100%, 60rem);
+      margin-inline: auto;
       user-select: none;
 
       textarea {
-        width: min(100%, 60rem);
+        width: 100%;
         height: ~"max(12rem, calc(45rem - 100vw))";
         font-family: lato;
         font-size: 1.2rem;
@@ -194,8 +213,8 @@
       div {
         display: flex;
         gap: 1rem;
-        @media (max-width: 768px) { justify-content: space-around; }
-        @media (min-width: 769px) { padding-inline: 1.2rem; }
+        @media (max-width: 768px) { justify-content: space-between; }
+        @media (min-width: 769px) { justify-content: flex-end; }
         margin-top: 1rem;
 
         button {

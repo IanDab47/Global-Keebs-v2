@@ -52,7 +52,7 @@
       }
       
       &:hover {
-        -webkit-line-clamp: 99;
+        -webkit-line-clamp: 10;
       }
     }
 
@@ -64,7 +64,7 @@
       font-family: Montserrat;
       font-size: 2.4rem;
       white-space: nowrap;
-      margin-left: auto;
+      @media (min-width: 769px) { margin-left: auto };
 
       // Selects inner text rows
       & > :not(:first-child, :last-child) {
@@ -154,11 +154,11 @@
     }
 
     .timestamp {
+      margin-top: 6rem;
       @media (min-width: 769px) {
         position: sticky;
-        top: 5rem;
+        top: 8rem; width: calc(50% - @gap / 2); 
       }
-      @media (min-width: 769px) { width: calc(50% - @gap / 2); }
 
       a h1 {
         margin-inline: auto;
@@ -178,11 +178,13 @@
 
       div {
         display: flex;
+        justify-content: center;
         width: 100%;
+        margin-top: .5rem;
       
         > img {
           aspect-ratio: 1;
-          width: calc(100% / 5);
+          width: ~"min(calc(100% / 5), 8rem)";
           object-fit: cover;
           padding: .5rem;
 

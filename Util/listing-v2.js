@@ -34,10 +34,12 @@ const replacePattern = (patterns, text, fill = '', filter = null) => {
 };
 
 const findTimestamps = (text) => {
-  const re_imgur = /\(([^)]+)\)/g;
+  const re_imgur = /\(http([^)]+)\)/g;
   let timestamps = [];
 
   let timestampFetch = [...text.matchAll(re_imgur)];
+
+  console.log(timestampFetch);
 
   // Filter for imgur links
   timestampFetch.map((timestamp) =>
@@ -64,7 +66,7 @@ const formatSelfText = (text) => {
   let { self_text, timestamps } = findTimestamps(text);
 
   // Remove all &amp; patterns
-  const re_linePattern = /&amp.{1,};|&amp;/g;
+  const re_linePattern = /&amp\S;|&amp;|&\S+;/g;
   const checkLinePattern = [self_text.matchAll(re_linePattern)];
   self_text =
     checkLinePattern.length > 0

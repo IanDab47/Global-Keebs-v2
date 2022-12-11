@@ -43,8 +43,9 @@ export default function Display(...props) {
     const fetchListing = async () => {
       try {
         const response = await axios.get(`/api/v1/listings/${pageId}`)
-        console.log(response.data.self_text)
         const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
+        
+        console.log(response.data.timestamps)
         
         setId(res_id)
         setAuthor(res_author)

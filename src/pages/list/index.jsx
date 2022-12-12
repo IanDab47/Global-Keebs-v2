@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
@@ -16,6 +16,7 @@ import { setTime } from '../../util/time'
 import "./style.less"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { parse } from 'dotenv'
 
 export default function List() {
   // States
@@ -161,13 +162,20 @@ export default function List() {
                 {window.innerWidth > 640 && (
                   <>
                     <label>Select View Type: </label>
-                    <select
-                      name='view-type'
-                      onClick={e => setListType(Number(e.target.value))}
-                    >
-                      <option value={1}>Card</option>
-                      <option value={0}>List</option>
-                    </select>
+                    <div>
+                      {[{ value: 1, name: 'Card' },
+                        { value: 0, name: 'List' }].map(view => (
+                          <button
+                            className={listType === view.value ? 'on' : ''}
+                            onClick={e => listType !== view.value ?
+                              setListType(view.value)
+                              :
+                              e.preventDefault()}
+                          >
+                            {view.name}
+                          </button>
+                      ))}
+                    </div>
                   </>
                 )}
               </div>

@@ -81,13 +81,64 @@
 
     label {
       cursor: text;
+      font-family: Montserrat;
+      font-weight: 500;
       text-transform: capitalize;
       vertical-align: top;
 
       &:has(+ .fluid) {
-        font-family: Montserrat;
         font-size: 1.2em;
-        font-weight: 500;
+      }
+    }
+
+    > div:last-of-type {
+      width: max-content; 
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .view-type > div {
+      display: flex;
+      justify-content: flex-end;
+      cursor: pointer;
+
+      > button {
+        position: relative;
+        display: inline-block;
+        min-width: 55%;
+        height: 100%;
+        isolation: isolate;
+        overflow: clip;
+        background: @ntl-light;
+        mix-blend-mode: multiply;
+        opacity: .5;
+        font-size: 1rem;
+        color: @ntl-heavy;
+        text-align: center;
+        outline: none;
+        padding: 25% 0;
+        transition: background 1000ms @quick-n-slow,
+                    opacity 100ms @quick-n-slow;
+        
+        &.on {
+          background: @pri-dark;
+          mix-blend-mode: normal;
+          color: @pri-bright;
+          opacity: 1;
+        }
+      }
+
+      :first-child {
+        clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+        border-radius: .2em 0 0 1em;
+        padding-right: 10%;
+        transform: translate(17.5%);
+      }
+
+      :last-child {
+        clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+        border-radius: 0 1em .2em 0;
+        padding-left: 10%;
       }
     }
   }

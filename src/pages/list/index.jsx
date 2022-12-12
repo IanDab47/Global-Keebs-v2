@@ -58,7 +58,7 @@ export default function List() {
       try {
         // Request content from API
         const response = await axios.get(listAPIURL)
-        // console.log(response.data)
+        console.log(response.data)
         setList(response.data)
       } catch (err) {
         console.warn(err)
@@ -75,9 +75,7 @@ export default function List() {
     // set search queries as params
     const url = new URL(`http://localhost:3030/listings?${searchInput !== '' ? 'search=' + searchInput : ''}${!filterInput.includes('') ? '&category=' + filterInput : ''}${!locationInput.includes('') ? '&location=' + locationInput : ''}${listType === 1 ? '' : '&view-type=list'}`)
     const params = new URLSearchParams(url.search)
-    console.log(params.entries())
     setSearchParams(params)
-
     
     try {
       // Remove space following search term

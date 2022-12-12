@@ -20,9 +20,10 @@ const locations = [
   { value: 'EU', name: 'Europe' },
   { value: 'JP', name: 'Japan' },
   { value: 'KR', name: 'Korea' },
-  { value: 'US', name: 'USA' },
+  { value: 'NO', name: 'Norway' },
   { value: 'TH', name: 'Thailand' },
   { value: 'TW', name: 'Taiwan' },
+  { value: 'US', name: 'USA' },
   { value: 'VN', name: 'Vietnam' },
 ]
 

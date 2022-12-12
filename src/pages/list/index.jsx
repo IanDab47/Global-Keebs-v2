@@ -47,7 +47,7 @@ export default function List() {
   const fetchListings = async (e, page = 0) => {
     e.preventDefault()
     setLoading(true)
-
+    
     try {
       // Remove space following search term
       searchInput[searchInput.length - 1] === ' ' &&
@@ -58,8 +58,12 @@ export default function List() {
       page !== 0 ? setList([...list, ...response.data]) : setList(response.data)
       setCategory(filterInput)
       setPage(page)
+      setLoading(false)
     } catch (err) {
       console.warn(err)
+    }
+
+    return () => {
     }
   }
 
@@ -90,7 +94,7 @@ export default function List() {
   
   return (
     <>
-      <Loading clear={list ? true : false} /> 
+      <Loading clear={loading ? false : true} /> 
 
       {list && (
         <section className='list-page'>
@@ -141,16 +145,19 @@ export default function List() {
             </section>
           </form>
           
-          <div className={`listings ${listType ? 'cards' : 'list'}`}>
-            {listType ? cards : listings}
-          </div>
+          {!loading && (
+            <div className={`listings ${listType ? 'cards' : 'list'}`}>
+              {listType ? cards : listings}
+            </div>
           
-          {/* TODO: Add auto fetch to load more component. 
-              TODO: Toggle hidden if no results */}
-          {list.length ?
-            <button onClick={e => fetchListings(e, page + 1)}>Load More . . .</button>
-            :
-            <p className={`${!loading ? '' : 'search-error'}`}><span>ERROR</span>: No More Keebs D:</p>}
+            // {/* TODO: Add auto fetch to load more component. 
+            //     TODO: Toggle hidden if no results */}
+            // {list.length ?
+            //   <button onClick={e => fetchListings(e, page + 1)}>Load More . . .</button>
+            //   :
+            // loading && <p className={'search-error'}><span>ERROR</span>: No More Keebs D:</p>
+            // }
+          )}
 
         </section>
       )}

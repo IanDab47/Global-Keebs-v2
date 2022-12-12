@@ -39,14 +39,15 @@ const findTimestamps = (text) => {
 
   let timestampFetch = [...text.matchAll(re_imgur)];
 
-  console.log(timestampFetch);
+  // console.log(timestampFetch);
 
   // Filter for imgur links
   timestampFetch.map((timestamp) =>
-    timestamp.map((pattern) =>
-      pattern.includes('img') && !pattern.includes('(')
-        ? timestamps.push(pattern)
-        : null
+    timestamp.map(
+      (pattern) => console.log(pattern)
+      // pattern.includes('img') && !pattern.includes('(')
+      //   ? timestamps.push(pattern)
+      //   : null
     )
   );
 

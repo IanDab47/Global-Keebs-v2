@@ -12,7 +12,6 @@
   -webkit-mask-image: radial-gradient(transparent 37.75%, black 38.25%);
   mask-image: radial-gradient(transparent 37.75%, black 38.25%);
   transform: translate(-50%, -50%);
-  transition: opacity 3000ms;
 }
 
 .loading-anim::before {
@@ -27,6 +26,15 @@
   mix-blend-mode: darken;
   z-index: 1;
   animation: loop 2s cubic-bezier(.2,.6,.5,.97) infinite;
+}
+
+.hide-anim {
+  animation: hide 3s forwards;
+}
+
+@keyframes hide {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes loop {

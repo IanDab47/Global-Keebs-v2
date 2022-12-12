@@ -1,4 +1,8 @@
+// React
 import React from 'react'
+
+// Styles
+import './style.less'
 
 const views = [
   { value: 1, name: 'Card' },

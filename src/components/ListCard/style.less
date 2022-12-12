@@ -52,14 +52,21 @@
     .top {
       position: relative;
       height: 100%;
+      transition: transform 300ms @quick-n-slow;
 
-      > :first-child {
+      > div:first-child {
         position: absolute;
         top: 50%; left: 50%;
+        width: 100%; height: 100%;
         font-size: 4rem;
         color: @sec-fair;
         text-align: center;
-        transform: translate(-50%, -37.5%);
+        transform: scale(100%) translate(-50%, -12.5%);
+        transition: transform 300ms @bounce;
+        
+        &:hover {
+          transform: scale(110%) translate(-45.5%, -9%);
+        }
 
         p {
           font-family: "Montserrat Alternates";
@@ -70,6 +77,7 @@
           color: @sec-dark;
           margin-block: -.25rem;
         }
+
       }
     }
 

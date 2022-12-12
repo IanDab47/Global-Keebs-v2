@@ -24,7 +24,9 @@ const replacePattern = (patterns, text, fill = '', filter = null) => {
     ? patterns.map(
         (pattern) =>
           (newText =
-            pattern.includes(filter) && pattern.includes('(')
+            pattern !== undefined &&
+            pattern.includes(filter) &&
+            pattern.includes('(')
               ? newText.replace(pattern, fill)
               : newText)
       )
@@ -34,20 +36,19 @@ const replacePattern = (patterns, text, fill = '', filter = null) => {
 };
 
 const findTimestamps = (text) => {
-  const re_imgur = /\(http([^)]+)\)/g;
+  const re_imgur = /\(http([^)]+)\)|http.+img\S+/g;
   let timestamps = [];
 
   let timestampFetch = [...text.matchAll(re_imgur)];
 
-  // console.log(timestampFetch);
-
   // Filter for imgur links
   timestampFetch.map((timestamp) =>
-    timestamp.map(
-      (pattern) => console.log(pattern)
-      // pattern.includes('img') && !pattern.includes('(')
-      //   ? timestamps.push(pattern)
-      //   : null
+    timestamp.map((pattern) =>
+      pattern !== undefined &&
+      pattern.includes('img') &&
+      !pattern.includes('http')
+        ? timestamps.push('http' + pattern)
+        : null
     )
   );
 

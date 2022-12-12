@@ -8,6 +8,7 @@ import Loading from '../../components/Loading'
 import ListTab from '../../components/ListTab'
 import ListCard from '../../components/ListCard'
 import FluidFilter from '../../components/FluidFilter'
+import ViewFilter from '../../components/ViewFilter'
 
 // Utils
 import { setTime } from '../../util/time'
@@ -16,8 +17,6 @@ import { setTime } from '../../util/time'
 import "./style.less"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { parse } from 'dotenv'
-import ViewFilter from '../../components/ViewFilter'
 
 export default function List() {
   // States

@@ -6,6 +6,8 @@ import { timeSincePost } from '../../util/time'
 
 // Styles
 import './style.less'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faKeyboard } from '@fortawesome/free-solid-svg-icons'
 
 export default function ListCard({ currTime, listing, i }) {
   // Animate grid diagonally
@@ -27,7 +29,10 @@ export default function ListCard({ currTime, listing, i }) {
     >
       <div className='top'>
         {!listing.timestamps.length ?
-          <p>...No Keeb For You!</p>
+          (<div>
+            <FontAwesomeIcon icon={faKeyboard} />
+            <p>Global Keebs</p>
+          </div>)
           : 
           <img src='' />
         }

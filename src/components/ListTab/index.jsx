@@ -42,8 +42,8 @@ export default function ListTab({ currTime, listing, i }) {
         <div>
           <p>u/{listing.author}</p>
           
-          {listing.timestamp && (
-            <span onClick={e => showTimestamp(listing)}>Timestamp</span>
+          {listing.timestamps && (
+            <span onClick={e => showTimestamps(listing)}>{listing.timestamps.length === 1 ? 'Timestamp' : 'Timestamps'}</span>
           )}
 
         </div>

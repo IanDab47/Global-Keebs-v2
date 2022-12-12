@@ -26,7 +26,7 @@ export default function ListCard({ currTime, listing, i }) {
       style={{ '--order': gridAnimMath, '--length': '1.5s' }}
     >
       <div className='top'>
-        {!listing.timestamp ?
+        {!listing.timestamps.length ?
           <p>...No Keeb For You!</p>
           : 
           <img src='' />

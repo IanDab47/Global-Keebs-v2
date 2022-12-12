@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
   locationValue = locationValue.map((locale) => {
     return {
       location: {
-        [Op.iLike]: '%' + locale + '%',
+        [Op.iLike]: locale + '%',
       },
     };
   });
@@ -35,15 +35,21 @@ router.get('/', async (req, res) => {
   const list = await db.listing.findAll({
     where: {
       self_text: { [Op.iLike]: `%${searchValue}%` },
-      [Op.or]: filterValue,
-      [Op.and]: locationValue,
+      [Op.and]: {
+        [Op.and]: {
+          [Op.or]: filterValue,
+        },
+        [Op.or]: {
+          [Op.or]: locationValue,
+        },
+      },
     },
     order: [[sequelize.col('created_utc'), 'DESC']],
     offset: 30 * pageNumber,
     limit: 30,
   });
 
-  console.log(list[0]);
+  // console.log(list[0]);
 
   res.json(list);
 });

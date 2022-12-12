@@ -100,11 +100,24 @@ const saveData = async (data) => {
 
   try {
     const timestampPromises = timestamps.map(async (timestamp) => {
-      const [newTimestamp, created] = await db.timestamp.findOrCreate({
+      const [createdTimestamp, created] = await db.timestamp.findOrCreate({
         where: {
           url: timestamp,
         },
       });
+
+      const [updatedColumnsAmount, newTimestamp] = !created
+        ? await db.timestamp.update(
+            { url: timestamp },
+            {
+              where: {
+                id: createdTimestamp.id,
+              },
+              returning: true,
+            }
+          )
+        : [0, createdTimestamp];
+
       return newTimestamp;
     });
 
@@ -117,8 +130,8 @@ const saveData = async (data) => {
       defaults: {
         author: author,
         author_ref: author_ref,
-        date: date,
         created_utc: created_utc,
+        date: date,
         downs: downs,
         flair_text: flair_text,
         location: location,
@@ -131,27 +144,31 @@ const saveData = async (data) => {
       },
     });
 
-    if (!created) {
-      await db.listing.update(
-        {
-          author: author,
-          author_ref: author_ref,
-          date: date,
-          downs: downs,
-          location: location,
-          self_text: self_text,
-          title: title,
-          ups: ups,
-          upvote_ratio: upvote_ratio,
-          url: url,
-        },
-        {
-          where: {
-            page_id: page_id,
+    const [columnsUpdated, updatedListing] = !created
+      ? await db.listing.update(
+          {
+            author: author,
+            author_ref: author_ref,
+            created_utc: created_utc,
+            date: date,
+            downs: downs,
+            flair_text: flair_text,
+            location: location,
+            page_name: page_name,
+            self_text: self_text,
+            title: title,
+            ups: ups,
+            upvote_ratio: upvote_ratio,
+            url: url,
           },
-        }
-      );
-    }
+          {
+            where: {
+              page_id: page_id,
+            },
+            returning: true,
+          }
+        )
+      : [0, newListing];
 
     timestampModels.map(
       async (timestamp) => await newListing.addTimestamp(timestamp)
@@ -173,8 +190,6 @@ const fetchReddit = async (
   type = 'major',
   url = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100'
 ) => {
-  let finishRequests = false;
-
   console.log(url);
 
   try {

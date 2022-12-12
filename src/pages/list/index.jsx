@@ -146,17 +146,20 @@ export default function List() {
           </form>
           
           {!loading && (
-            <div className={`listings ${listType ? 'cards' : 'list'}`}>
-              {listType ? cards : listings}
-            </div>
-          
-            // {/* TODO: Add auto fetch to load more component. 
-            //     TODO: Toggle hidden if no results */}
-            // {list.length ?
-            //   <button onClick={e => fetchListings(e, page + 1)}>Load More . . .</button>
-            //   :
-            // loading && <p className={'search-error'}><span>ERROR</span>: No More Keebs D:</p>
-            // }
+            <>
+              <div className={`listings ${listType ? 'cards' : 'list'}`}>
+                {listType ? cards : listings}
+              </div>
+            
+              {/* TODO: Add auto fetch to load more component. 
+                  TODO: Toggle hidden if no results */}
+              
+              {list.length ?
+                <button onClick={e => fetchListings(e, page + 1)}>Load More . . .</button>
+                :
+                !loading && <p className={'search-error'}><span>ERROR</span>: No More Keebs D:</p>
+              }
+            </>
           )}
 
         </section>

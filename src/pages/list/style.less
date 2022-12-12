@@ -96,8 +96,11 @@
     margin-top: 1rem;
   }
 
-  > button, > p:last-of-type {
+  > button {
     user-select: none;
+  }
+
+  > button, > p:last-of-type {
     font-size: 1.2rem;
     padding: .6em 1em;
     margin: 2rem auto;
@@ -109,13 +112,13 @@
 
     &:is(.search-error) {
       position: absolute;
-      top: calc((100vh - @navbar-height) / 2); left: 50%;
+      top: calc((100% - @navbar-height) / 2); left: 50%;
       width: max-content;
       background: @sec-dark;
       color: @ntl-bright;
       border-radius: .1em .8em .1em .8em;
       box-shadow: .25rem .15rem .1rem 0rem @sec-heavy;
-      transform: translate(-50%);
+      transform: translateY(-50%);
       animation: error 500ms forwards;
     }
 

@@ -19,6 +19,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 export default function List() {
   // States
+  const currTime = setTime()
   const [searchParams, setSearchParams] = useSearchParams()
   const [list, setList] = useState([])
   const [page, setPage] = useState(0)
@@ -28,19 +29,36 @@ export default function List() {
   const [searchInput, setSearchInput] = useState('')
   const [filterInput, setFilterInput] = useState([''])
   const [locationInput, setLocationInput] = useState([''])
-  const currTime = setTime()
-  const listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}`
+  let listAPIURL = null
   
   // Hooks
   useEffect(() => {
+    const getQuery = () => {
+        // Check query for search inputs
+        const searchQuery = searchParams.get('search') ? searchParams.get('search') : ''
+        const categoryQuery = searchParams.get('category') ?
+          searchParams.get('category').split(',') : ['']
+        const locationQuery = searchParams.get('location') ?
+          searchParams.get('location').split(',') : ['']
+        
+        // Select view type based on query
+        searchParams.get('view-type') ? setListType(0) : null
+
+        // Set queries to respective states
+        setSearchInput(searchQuery)
+        setFilterInput(categoryQuery)
+        setLocationInput(locationQuery)
+
+        // Assign any queries to API URL
+        listAPIURL = `/api/v1/listings?search=${searchQuery}&filter=${categoryQuery}&location=${locationQuery}`
+    }
+    getQuery()
+
     const getList = async () => {
       try {
-        // Check query for search inputs
-        setSearchInput(searchParams.getAll('search')[0])
-
         // Request content from API
         const response = await axios.get(listAPIURL)
-        console.log(response.data)
+        // console.log(response.data)
         setList(response.data)
       } catch (err) {
         console.warn(err)
@@ -52,6 +70,7 @@ export default function List() {
   // Handlers
   const fetchListings = async (e, page = 0) => {
     e.preventDefault()
+    setLoading(true)
 
     // set search queries as params
     const url = new URL(`http://localhost:3030/listings?${searchInput !== '' ? 'search=' + searchInput : ''}${!filterInput.includes('') ? '&category=' + filterInput : ''}${!locationInput.includes('') ? '&location=' + locationInput : ''}${listType === 1 ? '' : '&view-type=list'}`)
@@ -59,14 +78,14 @@ export default function List() {
     console.log(params.entries())
     setSearchParams(params)
 
-    setLoading(true)
     
     try {
       // Remove space following search term
       searchInput[searchInput.length - 1] === ' ' &&
         setSearchInput(searchInput.substring(0, searchInput.length - 1))
       
-      const response = await axios.get(listAPIURL + `&page=${page}`)
+      listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}&page=${page}`
+      const response = await axios.get(listAPIURL)
       page === 0 && setList([])
       page !== 0 ? setList([...list, ...response.data]) : setList(response.data)
       setCategory(filterInput)

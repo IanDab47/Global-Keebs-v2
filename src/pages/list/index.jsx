@@ -17,6 +17,7 @@ import "./style.less"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { parse } from 'dotenv'
+import ViewFilter from '../../components/ViewFilter'
 
 export default function List() {
   // States
@@ -159,25 +160,12 @@ export default function List() {
               />
             
               <div className='view-type'>
-                {window.innerWidth > 640 && (
-                  <>
-                    <label>Select View Type: </label>
-                    <div>
-                      {[{ value: 1, name: 'Card' },
-                        { value: 0, name: 'List' }].map(view => (
-                          <button
-                            className={listType === view.value ? 'on' : ''}
-                            onClick={e => listType !== view.value ?
-                              setListType(view.value)
-                              :
-                              e.preventDefault()}
-                          >
-                            {view.name}
-                          </button>
-                      ))}
-                    </div>
-                  </>
-                )}
+                {window.innerWidth > 640 && 
+                  <ViewFilter
+                    listType={listType}
+                    setListType={setListType}
+                  />
+                }
               </div>
 
             </section>

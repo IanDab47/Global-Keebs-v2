@@ -36,7 +36,7 @@ const replacePattern = (patterns, text, fill = '', filter = null) => {
 };
 
 const findTimestamps = (text) => {
-  const re_imgur = /\(http([^)]+)\)|http.+img\S+/g;
+  const re_imgur = /\(http([^)]+)\)|http.+imgu\S+/g;
   let timestamps = [];
 
   let timestampFetch = [...text.matchAll(re_imgur)];
@@ -96,6 +96,7 @@ const saveData = async (data) => {
   const upvote_ratio = data.upvote_ratio;
   const url = data.url;
 
+  // Custom Date format
   const date = time.makeDate(created_utc);
 
   try {
@@ -106,7 +107,7 @@ const saveData = async (data) => {
         },
       });
 
-      const [updatedColumnsAmount, newTimestamp] = !created
+      const [updatedColumnsAmount, [newTimestamp]] = !created
         ? await db.timestamp.update(
             { url: timestamp },
             {
@@ -144,7 +145,7 @@ const saveData = async (data) => {
       },
     });
 
-    const [columnsUpdated, updatedListing] = !created
+    const [columnsUpdated, [updatedListing]] = !created
       ? await db.listing.update(
           {
             author: author,
@@ -170,8 +171,13 @@ const saveData = async (data) => {
         )
       : [0, newListing];
 
+    console.log(
+      updatedListing.id,
+      timestampModels.map((timestamp) => timestamp.listingId)
+    );
+
     timestampModels.map(
-      async (timestamp) => await newListing.addTimestamp(timestamp)
+      async (timestamp) => await updatedListing.addTimestamp(timestamp)
     );
   } catch (err) {
     console.warn(err);

@@ -30,8 +30,6 @@ router.get('/', async (req, res) => {
     };
   });
 
-  console.log([...filterValue, ...locationValue]);
-
   const list = await db.listing.findAll({
     where: {
       self_text: { [Op.iLike]: `%${searchValue}%` },
@@ -44,12 +42,11 @@ router.get('/', async (req, res) => {
         },
       },
     },
+    include: [db.timestamp],
     order: [[sequelize.col('created_utc'), 'DESC']],
     offset: 30 * pageNumber,
     limit: 30,
   });
-
-  // console.log(list[0]);
 
   res.json(list);
 });

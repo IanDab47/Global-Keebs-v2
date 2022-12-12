@@ -71,19 +71,20 @@ export default function List() {
   // Handlers
   const fetchListings = async (e, page = 0) => {
     e.preventDefault()
-    setLoading(true)
+    page === 0 && setLoading(true)
+
+    // Remove space following search term
+    searchInput[searchInput.length - 1] === ' ' &&
+      setSearchInput(prevState => prevState.substring(0, prevState.length - 1))
 
     // set search queries as params
     const url = new URL(`http://localhost:3030/listings?${searchInput !== '' ? 'search=' + searchInput : ''}${!filterInput.includes('') ? '&category=' + filterInput : ''}${!locationInput.includes('') ? '&location=' + locationInput : ''}${listType === 1 ? '' : '&view-type=list'}`)
     const params = new URLSearchParams(url.search)
     setSearchParams(params)
     
+    listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}&page=${page}`
+    
     try {
-      // Remove space following search term
-      searchInput[searchInput.length - 1] === ' ' &&
-        setSearchInput(searchInput.substring(0, searchInput.length - 1))
-      
-      listAPIURL = `/api/v1/listings?search=${searchInput}&filter=${filterInput}&location=${locationInput}&page=${page}`
       const response = await axios.get(listAPIURL)
       page === 0 && setList([])
       page !== 0 ? setList([...list, ...response.data]) : setList(response.data)

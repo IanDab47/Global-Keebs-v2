@@ -124,7 +124,9 @@
       color: @ntl-bright;
       border-radius: .1em .8em .1em .8em;
       box-shadow: .25rem .15rem .1rem 0rem @sec-heavy;
-      transform: translateY(-50%);
+      @media (max-width: 768px) {
+        top: calc((100% - @navbar-height) * 2 / 3)
+      }
       animation: error 500ms forwards;
     }
 

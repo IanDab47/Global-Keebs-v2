@@ -171,11 +171,6 @@ const saveData = async (data) => {
         )
       : [0, newListing];
 
-    console.log(
-      updatedListing.id,
-      timestampModels.map((timestamp) => timestamp.listingId)
-    );
-
     timestampModels.map(
       async (timestamp) => await updatedListing.addTimestamp(timestamp)
     );

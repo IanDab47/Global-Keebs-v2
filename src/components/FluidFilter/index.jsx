@@ -51,7 +51,7 @@ export default function FluidFilter({
       <label>{filterType}</label>
       <div
         className='fluid'
-        name={`${filterType}-filter`}
+        name={`${filterType}`}
         onClick={
           e => setSearchInput(searchInput[searchInput.length - 1] === ' '
             ? searchInput

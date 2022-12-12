@@ -1,5 +1,6 @@
 // React
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
 // Components
@@ -18,6 +19,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 export default function List() {
   // States
+  const [searchParams, setSearchParams] = useSearchParams()
   const [list, setList] = useState([])
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -33,6 +35,10 @@ export default function List() {
   useEffect(() => {
     const getList = async () => {
       try {
+        // Check query for search inputs
+        setSearchInput(searchParams.getAll('search')[0])
+
+        // Request content from API
         const response = await axios.get(listAPIURL)
         console.log(response.data)
         setList(response.data)
@@ -46,6 +52,13 @@ export default function List() {
   // Handlers
   const fetchListings = async (e, page = 0) => {
     e.preventDefault()
+
+    // set search queries as params
+    const url = new URL(`http://localhost:3030/listings?${searchInput !== '' ? 'search=' + searchInput : ''}${!filterInput.includes('') ? '&category=' + filterInput : ''}${!locationInput.includes('') ? '&location=' + locationInput : ''}${listType === 1 ? '' : '&view-type=list'}`)
+    const params = new URLSearchParams(url.search)
+    console.log(params.entries())
+    setSearchParams(params)
+
     setLoading(true)
     
     try {
@@ -103,7 +116,7 @@ export default function List() {
               <h1>{category.length !== 1 || category.includes('') ? 'Listings' : category}</h1>
 
               <div className='searchbar'>
-                <input type='text' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
+                <input type='text' name='search' value={searchInput} onChange={e => setSearchInput(e.target.value)} />
                 <label>Search</label>
                 <button className={searchInput ? null : 'clear'}>{ innerWidth <= 768 ? <FontAwesomeIcon icon={faMagnifyingGlass} /> : 'Submit' }</button>
               </div>

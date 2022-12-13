@@ -11,6 +11,12 @@ module.exports = {
       url: {
         type: Sequelize.STRING,
       },
+      type: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        type: Sequelize.STRING,
+      },
       listingId: {
         type: Sequelize.INTEGER,
       },

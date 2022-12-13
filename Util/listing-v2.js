@@ -101,45 +101,32 @@ const saveData = async (data) => {
   const date = time.makeDate(created_utc);
 
   try {
-    const timestampPromises = timestamps.map(async (timestamp, i, arr) => {
-      const arrayOfImageLinks =
-        !timestamp.includes('.png') &&
-        !timestamp.includes('.jpg') &&
-        !timestamp.includes('.jpeg')
-          ? await fetchImageLinks(timestamp)
-          : [timestamp];
+    const timestampPromises = timestamps.map(async (timestamp) => {
+      try {
+        const [createdTimestamp, created] = await db.timestamp.findOrCreate({
+          where: {
+            url: timestamp,
+          },
+        });
 
-      const newTimestamp = arrayOfImageLinks.map(async (newTimestamp) => {
-        try {
-          const [createdTimestamp, created] = await db.timestamp.findOrCreate({
-            where: {
-              url: newTimestamp,
-            },
-          });
-
-          const [updatedColumnsAmount, [updatedTimestamp]] = !created
-            ? await db.timestamp.update(
-                {
-                  url: newTimestamp,
+        const [updatedColumnsAmount, [updatedTimestamp]] = !created
+          ? await db.timestamp.update(
+              {
+                url: timestamp,
+              },
+              {
+                where: {
+                  id: createdTimestamp.id,
                 },
-                {
-                  where: {
-                    id: createdTimestamp.id,
-                  },
-                  returning: true,
-                }
-              )
-            : [0, createdTimestamp];
+                returning: true,
+              }
+            )
+          : [0, createdTimestamp];
 
-          return updatedTimestamp;
-        } catch (err) {
-          console.warn(err);
-        }
-      });
-
-      const resolvedTimestamps = await Promise.all(newTimestamp);
-
-      return resolvedTimestamps;
+        return updatedTimestamp;
+      } catch (err) {
+        console.warn(err);
+      }
     });
 
     const timestampModels = await Promise.all(timestampPromises);
@@ -212,6 +199,7 @@ const fetchReddit = async (
   type = 'major',
   url = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100'
 ) => {
+  // DISPLAY API URL INFO IN LOG
   console.log(url);
 
   try {

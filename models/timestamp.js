@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   timestamp.init(
     {
       url: DataTypes.STRING,
+      type: DataTypes.STRING,
+      status: DataTypes.STRING,
       listingId: DataTypes.INTEGER,
     },
     {

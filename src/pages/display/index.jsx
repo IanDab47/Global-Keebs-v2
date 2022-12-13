@@ -7,14 +7,14 @@ import DOMPurify from "dompurify"
 // Styles
 import "./style.less"
 
-const imgFiller = [
-  '/imgs/filler/switches.jpg',
-  '/imgs/filler/iron180.jpg',
-  '/imgs/filler/space65.jpg',
-  '/imgs/filler/thera.jpg',
-  '/imgs/filler/suit.jpg',
-]
-let thumbnails = []
+// const imgFiller = [
+//   '/imgs/filler/switches.jpg',
+//   '/imgs/filler/iron180.jpg',
+//   '/imgs/filler/space65.jpg',
+//   '/imgs/filler/thera.jpg',
+//   '/imgs/filler/suit.jpg',
+// ]
+// let thumbnails = []
 
 export default function Display(...props) {
   // State
@@ -29,12 +29,12 @@ export default function Display(...props) {
   const [location, setLocation] = useState('')
   const [pageName, setPageName] = useState('')
   const [selfText, setSelfText] = useState('')
-  const [timestamps, setTimestamps] = useState('')
+  const [timestamps, setTimestamps] = useState([''])
   const [title, setTitle] = useState('')
   const [ups, setUps] = useState('')
   const [upvoteRatio, setUpvoteRatio] = useState('')
   const [url, setUrl] = useState('')
-  const [currThumbnail, setCurrThumbnail] = useState(thumbnails[0])
+  const [currThumbnail, setCurrThumbnail] = useState(timestamps[0])
   const { pageId } = useParams()
   const navigate = useNavigate()
 
@@ -63,6 +63,8 @@ export default function Display(...props) {
         setUpvoteRatio(res_upvote_ratio)
         setUrl(res_url)
 
+        setCurrThumbnail(timestamps[0])
+
       } catch (err) {
         console.warn(err)
       }
@@ -77,10 +79,10 @@ export default function Display(...props) {
 
   // Output
   // Add random amount of unique images to display
-  while (thumbnails.length <= createdUTC % 5) {
-    const rndArrPos = Math.ceil(Math.random() * 5) % 5
-    thumbnails.includes(imgFiller[rndArrPos]) ? null : thumbnails.push(imgFiller[rndArrPos])
-  }
+  // while (thumbnails.length <= createdUTC % 5) {
+  //   const rndArrPos = Math.ceil(Math.random() * 5) % 5
+  //   thumbnails.includes(imgFiller[rndArrPos]) ? null : thumbnails.push(imgFiller[rndArrPos])
+  // }
 
   return (
     <div className="listing-display-page">
@@ -110,8 +112,8 @@ export default function Display(...props) {
           <section className="timestamp">
             <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} />
-            <div>
-              {thumbnails.map((url, i) => {
+            {timestamps.length > 1 && <div>
+              {timestamps.map((url, i) => {
                 return (
                   <img
                     key={`keyboard_${i}`}
@@ -122,7 +124,7 @@ export default function Display(...props) {
                   />
                 )
               })}
-            </div>
+            </div>}
 
           </section>
         )}

@@ -16,6 +16,7 @@ export default function ViewFilter({ listType, setListType }) {
       <div>
         {views.map(view => (
           <button
+            key={view.name + '_' + view.value}
             className={listType === view.value ? 'on' : ''}
             onClick={e => listType !== view.value ?
               setListType(view.value)

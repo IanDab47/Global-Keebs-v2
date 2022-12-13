@@ -12,7 +12,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 
 // Major Fetch
-fetchReddit();
+// fetchReddit();
 setInterval(minorFetch, 300_000);
 
 // BACKEND ROUTES

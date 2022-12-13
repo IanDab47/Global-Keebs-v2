@@ -1,17 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const listingsRoute = require('./listings');
+const imgurRoute = require('./imgur');
 
 router.use('/listings', listingsRoute);
-// router.get('/listings', async (req, res) => {
-//   try {
-//     const list = await db.listings.findAll();
-//     console.log(list);
-//     res.json(list);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
+router.use('/imgur', imgurRoute);
 
 router.get('/', (req, res) => {
   res.json({

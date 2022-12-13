@@ -102,10 +102,23 @@ const saveData = async (data) => {
 
   try {
     const timestampPromises = timestamps.map(async (timestamp) => {
+      const type =
+        timestamp.includes('.jpg') ||
+        timestamp.includes('.jpeg') ||
+        timestamp.includes('.png')
+          ? 'FILE'
+          : !timestamp.includes('/gallery/') || !timestamp.includes('/a/')
+          ? 'IMAGE'
+          : 'ALBUM';
+
       try {
         const [createdTimestamp, created] = await db.timestamp.findOrCreate({
           where: {
             url: timestamp,
+          },
+          defaults: {
+            type: type,
+            status: timestamp === 'FILE' ? 'NONE' : 'CLOSED',
           },
         });
 
@@ -113,6 +126,8 @@ const saveData = async (data) => {
           ? await db.timestamp.update(
               {
                 url: timestamp,
+                type: type,
+                status: timestamp === 'FILE' ? 'NONE' : 'CLOSED',
               },
               {
                 where: {

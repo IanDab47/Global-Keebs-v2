@@ -171,7 +171,7 @@
         aspect-ratio: 16 / 9;
         width: 100%;
         user-select: none;
-        object-fit: contain;
+        object-fit: cover;
         transition: padding 300ms @quick-n-slow;
 
         &:hover {
@@ -183,11 +183,14 @@
         display: flex;
         justify-content: center;
         width: 100%;
+        overflow: auto;
+        scroll-snap-type: inline mandatory;
         margin-top: .5rem;
       
         > img {
           aspect-ratio: 1;
           width: ~"min(calc(100% / 5), 8rem)";
+          scroll-snap-align: center;
           object-fit: cover;
           padding: .5rem;
 

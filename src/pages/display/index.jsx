@@ -7,15 +7,6 @@ import DOMPurify from "dompurify"
 // Styles
 import "./style.less"
 
-// const imgFiller = [
-//   '/imgs/filler/switches.jpg',
-//   '/imgs/filler/iron180.jpg',
-//   '/imgs/filler/space65.jpg',
-//   '/imgs/filler/thera.jpg',
-//   '/imgs/filler/suit.jpg',
-// ]
-// let thumbnails = []
-
 export default function Display(...props) {
   // State
   const [id, setId] = useState(null)
@@ -45,7 +36,7 @@ export default function Display(...props) {
         const response = await axios.get(`/api/v1/listings/${pageId}`)
         const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
         
-        console.log(...response.data.timestamps.map(timestamp => timestamp.url))
+        console.log(response.data.timestamps.map(timestamp => timestamp.url))
         
         setId(res_id)
         setAuthor(res_author)
@@ -75,13 +66,6 @@ export default function Display(...props) {
   const submitComment = e => {
     e.preventDefault()
   }
-
-  // Output
-  // Add random amount of unique images to display
-  // while (thumbnails.length <= createdUTC % 5) {
-  //   const rndArrPos = Math.ceil(Math.random() * 5) % 5
-  //   thumbnails.includes(imgFiller[rndArrPos]) ? null : thumbnails.push(imgFiller[rndArrPos])
-  // }
 
   return (
     <div className="listing-display-page">

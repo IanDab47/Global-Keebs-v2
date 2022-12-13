@@ -105,9 +105,10 @@ const saveData = async (data) => {
       const type =
         timestamp.includes('.jpg') ||
         timestamp.includes('.jpeg') ||
-        timestamp.includes('.png')
+        timestamp.includes('.png') ||
+        timestamp.includes('.mp4')
           ? 'FILE'
-          : !timestamp.includes('/gallery/') || !timestamp.includes('/a/')
+          : !timestamp.includes('/gallery/') && !timestamp.includes('/a/')
           ? 'IMAGE'
           : 'ALBUM';
 

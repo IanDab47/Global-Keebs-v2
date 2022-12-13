@@ -154,15 +154,24 @@
     }
 
     .timestamp {
-      margin-top: 5.8rem;
       @media (min-width: 769px) {
         position: sticky;
         top: 8rem; width: calc(50% - @gap / 2); 
+        margin-top: 5.8rem;
+      }
+      @media (max-width: 768px) {
+        position: relative;
+        margin-block: 2.2rem;
       }
 
       a p {
         position: absolute;
         top: -4.5rem;
+        @media (max-width: 768px) { 
+          top: -1.5rem;
+          left: 50%; 
+          transform: translate(-50%); 
+        }
         margin-bottom: .5rem;
         color: @pri-dark;
       }
@@ -171,7 +180,7 @@
         aspect-ratio: 16 / 9;
         width: 100%;
         user-select: none;
-        object-fit: cover;
+        object-fit: contain;
         transition: padding 300ms @quick-n-slow;
 
         &:hover {
@@ -192,11 +201,11 @@
           width: ~"min(calc(100% / 5), 8rem)";
           scroll-snap-align: center;
           object-fit: cover;
-          padding: .5rem;
+          padding: .75vw;
 
           &:hover {
             cursor: default;
-            padding: .3rem;
+            padding: .55vw;
           }
         }
       }

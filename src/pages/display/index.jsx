@@ -53,6 +53,7 @@ export default function Display(...props) {
         setUps(res_ups)
         setUpvoteRatio(res_upvote_ratio)
         setUrl(res_url)
+
         setCurrThumbnail(response.data.timestamps[0].url)
 
       } catch (err) {
@@ -65,6 +66,10 @@ export default function Display(...props) {
   // Handlers
   const submitComment = e => {
     e.preventDefault()
+  }
+
+  const thumbnailModal = () => {
+    console.log('MAKE IT BIG!!!')
   }
 
   return (
@@ -94,7 +99,7 @@ export default function Display(...props) {
         {timestamps.length > 0 && (
           <section className="timestamp">
             <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
-            <img src={currThumbnail} alt={`timestamp`} />
+            <img src={currThumbnail} alt={`timestamp`} onClick={thumbnailModal} />
             {timestamps.length > 1 && <div>
               {timestamps.map((url, i) => {
                 return (

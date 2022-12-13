@@ -28,7 +28,7 @@ const createTimestampFile = async (url) => {
             url: url,
           },
         })
-      : [0, timestamp];
+      : [0, [timestamp]];
 
     return newTimestamp;
   } catch (err) {
@@ -40,6 +40,11 @@ const fetchAlbumImages = async (albumHash) => {
   try {
     const url = `https://api.imgur.com/3/album/${albumHash}`;
     const response = await axios.get(url, options);
+
+    console.log(
+      albumHash,
+      response.data.data.images.map((image) => image.link)
+    );
 
     return response.data.data.images.map((image) => image.link);
   } catch (err) {
@@ -58,20 +63,20 @@ const fetchImgurImage = async (imageHash) => {
   }
 };
 
-const grabImgurId = (link, type) => {
-  const re_albumHash = /.+gallery\/|.+\/a\//;
-  const re_imageHash = /.+com\//;
+// const grabImgurId = (link, type) => {
+//   const re_albumHash = /.+gallery\/|.+\/a\//;
+//   const re_imageHash = /.+com\//;
 
-  const hash =
-    type === 'IMAGE'
-      ? link.replace(re_imageHash, '')
-      : link.replace(re_albumHash, '');
+//   const hash =
+//     type === 'IMAGE'
+//       ? link.replace(re_imageHash, '')
+//       : link.replace(re_albumHash, '');
 
-  return hash;
-};
+//   return hash;
+// };
 
 module.exports = {
-  grabImgurId,
+  // grabImgurId,
   fetchAlbumImages,
   fetchImgurImage,
   createTimestampFile,

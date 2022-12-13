@@ -14,7 +14,7 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 
 // Major Fetch
-minorFetch();
+fetchReddit();
 setInterval(minorFetch, 300_000);
 
 // BACKEND ROUTES

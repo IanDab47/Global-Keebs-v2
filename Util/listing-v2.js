@@ -1,7 +1,6 @@
 const axios = require('axios');
 const db = require('../models');
 const time = require('./time');
-const { fetchImageLinks } = require('./imgur.js');
 
 const apiURL = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100';
 
@@ -137,7 +136,7 @@ const saveData = async (data) => {
                 returning: true,
               }
             )
-          : [0, createdTimestamp];
+          : [0, [createdTimestamp]];
 
         return updatedTimestamp;
       } catch (err) {

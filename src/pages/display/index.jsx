@@ -29,12 +29,12 @@ export default function Display(...props) {
   const [location, setLocation] = useState('')
   const [pageName, setPageName] = useState('')
   const [selfText, setSelfText] = useState('')
-  const [timestamps, setTimestamps] = useState([''])
+  const [timestamps, setTimestamps] = useState([])
   const [title, setTitle] = useState('')
   const [ups, setUps] = useState('')
   const [upvoteRatio, setUpvoteRatio] = useState('')
   const [url, setUrl] = useState('')
-  const [currThumbnail, setCurrThumbnail] = useState(timestamps[0])
+  const [currThumbnail, setCurrThumbnail] = useState('')
   const { pageId } = useParams()
   const navigate = useNavigate()
 
@@ -45,7 +45,7 @@ export default function Display(...props) {
         const response = await axios.get(`/api/v1/listings/${pageId}`)
         const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
         
-        console.log(response.data.timestamps)
+        console.log(...response.data.timestamps.map(timestamp => timestamp.url))
         
         setId(res_id)
         setAuthor(res_author)
@@ -62,8 +62,7 @@ export default function Display(...props) {
         setUps(res_ups)
         setUpvoteRatio(res_upvote_ratio)
         setUrl(res_url)
-
-        setCurrThumbnail(timestamps[0])
+        setCurrThumbnail(response.data.timestamps[0].url)
 
       } catch (err) {
         console.warn(err)
@@ -108,7 +107,7 @@ export default function Display(...props) {
 
       <div className="grid-row">
 
-        {timestamps && (
+        {timestamps.length > 0 && (
           <section className="timestamp">
             <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} />

@@ -101,7 +101,7 @@ const saveData = async (data) => {
   const date = time.makeDate(created_utc);
 
   try {
-    const timestampPromises = timestamps.map(async (timestamp, i) => {
+    const timestampPromises = timestamps.map(async (timestamp, i, arr) => {
       const arrayOfImageLinks =
         !timestamp.includes('.png') &&
         !timestamp.includes('.jpg') &&
@@ -109,7 +109,7 @@ const saveData = async (data) => {
           ? await fetchImageLinks(timestamp)
           : [timestamp];
 
-      const newTimestamp = await arrayOfImageLinks.map(async (newTimestamp) => {
+      const newTimestamp = arrayOfImageLinks.map(async (newTimestamp) => {
         try {
           const [createdTimestamp, created] = await db.timestamp.findOrCreate({
             where: {
@@ -137,12 +137,20 @@ const saveData = async (data) => {
         }
       });
 
-      const [resolvedTimestamps] = await Promise.all(newTimestamp);
+      const resolvedTimestamps = await Promise.all(newTimestamp);
 
       return resolvedTimestamps;
     });
 
     const timestampModels = await Promise.all(timestampPromises);
+
+    console.log(
+      'Length 1:',
+      timestampModels.length,
+      ' | ',
+      'Length 2:',
+      timestampModels.length
+    );
 
     const [newListing, created] = await db.listing.findOrCreate({
       where: {
@@ -191,9 +199,10 @@ const saveData = async (data) => {
         )
       : [0, newListing];
 
-    timestampModels.map(
-      async (timestamp) => await updatedListing.addTimestamp(timestamp)
-    );
+    timestampModels.length &&
+      timestampModels.map(async (timestampModel) => {
+        await updatedListing.addTimestamp(timestampModel);
+      });
   } catch (err) {
     console.warn(err);
   }

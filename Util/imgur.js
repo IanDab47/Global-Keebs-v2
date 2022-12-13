@@ -11,8 +11,7 @@ const fetchAlbumImages = async (albumHash) => {
   const url = `https://api.imgur.com/3/album/${albumHash}`;
   const response = await axios.get(url, options);
 
-  const dataArray = await response.data.data.images.map((image) => image.link);
-  return dataArray;
+  return response.data.data.images.map((image) => image.link);
 };
 
 const fetchImgurImage = async (imageHash) => {
@@ -37,7 +36,7 @@ const grabImgurId = async (link) => {
 const fetchImageLinks = async (link) => {
   const array = await grabImgurId(link);
 
-  return array || [''];
+  return array;
 };
 
 module.exports = {

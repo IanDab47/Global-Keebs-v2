@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 const APIRouter = require('./API/index');
@@ -9,6 +10,7 @@ const { fetchReddit, minorFetch } = require('./Util/listing-v2');
 const app = express();
 
 app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 
 // Major Fetch

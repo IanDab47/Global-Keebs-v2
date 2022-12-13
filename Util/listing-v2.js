@@ -140,7 +140,7 @@ const saveData = async (data) => {
 
         return updatedTimestamp;
       } catch (err) {
-        console.warn(err);
+        console.warn('ERROR DURING FETCH CREATION OF TIMESTAMP:', err);
       }
     });
 
@@ -198,7 +198,7 @@ const saveData = async (data) => {
         await updatedListing.addTimestamp(timestampModel);
       });
   } catch (err) {
-    console.warn(err);
+    console.warn('ERROR DURING FETCH MODEL CREATION', err);
   }
 };
 
@@ -206,7 +206,7 @@ const nextPage = async (nextId) => {
   try {
     await fetchReddit('major', `${apiURL}&after=${nextId}`);
   } catch (err) {
-    console.warn(err);
+    console.warn('ERROR RETRIEVING NEXT PAGE:', err);
   }
 };
 
@@ -245,7 +245,7 @@ const fetchReddit = async (
 
     return;
   } catch (err) {
-    console.warn(err);
+    console.warn('ERROR FETCHING DATA:', err);
   }
 };
 

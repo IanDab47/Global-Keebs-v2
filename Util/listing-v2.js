@@ -144,14 +144,6 @@ const saveData = async (data) => {
 
     const timestampModels = await Promise.all(timestampPromises);
 
-    console.log(
-      'Length 1:',
-      timestampModels.length,
-      ' | ',
-      'Length 2:',
-      timestampModels.length
-    );
-
     const [newListing, created] = await db.listing.findOrCreate({
       where: {
         page_id: page_id,

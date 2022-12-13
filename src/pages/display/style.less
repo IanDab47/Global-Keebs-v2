@@ -133,16 +133,23 @@
       display: table;
       clear: both;
     }
+    
+    > :only-child {
+      display: block;
+      width: ~"min(100%, calc(60rem - 12vw + 6rem))";
+      max-width: initial !important;
+      margin: 0 auto;
+    }
 
     &:has(.timestamp) {
-      font-size: 1rem;
-      text-align: center;
-
+    font-size: 1rem;
+    
       .self-text {
         display: inline-block;
         @media (min-width: 769px) { 
           width: calc(50% - @gap / 2); 
           margin-left: @gap;
+          float: left;
         }
       }
     }
@@ -150,7 +157,6 @@
     section {
       width: 100%;
       margin: 1rem 0 0;
-      float: left;
     }
 
     .timestamp {
@@ -177,7 +183,6 @@
       }
 
       img {
-        aspect-ratio: 16 / 9;
         width: 100%;
         user-select: none;
         object-fit: contain;

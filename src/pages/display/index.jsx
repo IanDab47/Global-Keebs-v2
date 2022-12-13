@@ -100,7 +100,9 @@ export default function Display(...props) {
           <section className="timestamp">
             <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} onClick={thumbnailModal} />
-            {timestamps.length > 1 && <div>
+            {timestamps.length > 1 && <div
+              style={timestamps.length < 5 ? { justifyContent: 'center' } : null}
+            >
               {timestamps.map((url, i) => {
                 return (
                   <img

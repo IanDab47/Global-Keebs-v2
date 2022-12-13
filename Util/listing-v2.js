@@ -191,7 +191,7 @@ const saveData = async (data) => {
             returning: true,
           }
         )
-      : [0, newListing];
+      : [0, [newListing]];
 
     timestampModels.length &&
       timestampModels.map(async (timestampModel) => {

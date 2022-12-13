@@ -1,6 +1,7 @@
 const axios = require('axios');
 const db = require('../models');
 const time = require('./time');
+const { fetchImageLinks } = require('./imgur.js');
 
 const apiURL = 'https://www.reddit.com/r/mechmarket/new/.json?limit=100';
 
@@ -45,7 +46,7 @@ const findTimestamps = (text) => {
   timestampFetch.map((timestamp) =>
     timestamp.map((pattern) =>
       pattern !== undefined &&
-      pattern.includes('img') &&
+      pattern.includes('imgu') &&
       !pattern.includes('http')
         ? timestamps.push('http' + pattern)
         : null
@@ -100,26 +101,45 @@ const saveData = async (data) => {
   const date = time.makeDate(created_utc);
 
   try {
-    const timestampPromises = timestamps.map(async (timestamp) => {
-      const [createdTimestamp, created] = await db.timestamp.findOrCreate({
-        where: {
-          url: timestamp,
-        },
+    const timestampPromises = timestamps.map(async (timestamp, i) => {
+      const arrayOfImageLinks =
+        !timestamp.includes('.png') &&
+        !timestamp.includes('.jpg') &&
+        !timestamp.includes('.jpeg')
+          ? await fetchImageLinks(timestamp)
+          : [timestamp];
+
+      const newTimestamp = await arrayOfImageLinks.map(async (newTimestamp) => {
+        try {
+          const [createdTimestamp, created] = await db.timestamp.findOrCreate({
+            where: {
+              url: newTimestamp,
+            },
+          });
+
+          const [updatedColumnsAmount, [updatedTimestamp]] = !created
+            ? await db.timestamp.update(
+                {
+                  url: newTimestamp,
+                },
+                {
+                  where: {
+                    id: createdTimestamp.id,
+                  },
+                  returning: true,
+                }
+              )
+            : [0, createdTimestamp];
+
+          return updatedTimestamp;
+        } catch (err) {
+          console.warn(err);
+        }
       });
 
-      const [updatedColumnsAmount, [newTimestamp]] = !created
-        ? await db.timestamp.update(
-            { url: timestamp },
-            {
-              where: {
-                id: createdTimestamp.id,
-              },
-              returning: true,
-            }
-          )
-        : [0, createdTimestamp];
+      const [resolvedTimestamps] = await Promise.all(newTimestamp);
 
-      return newTimestamp;
+      return resolvedTimestamps;
     });
 
     const timestampModels = await Promise.all(timestampPromises);

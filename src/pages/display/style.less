@@ -147,7 +147,6 @@
       }
     }
     
-
     section {
       width: 100%;
       margin: 1rem 0 0;
@@ -191,22 +190,22 @@
 
       div {
         display: flex;
-        justify-content: center;
-        width: 100%;
+        width: min(100%);
         overflow: auto;
         scroll-snap-type: inline mandatory;
         margin-top: .5rem;
+        margin-inline: auto;
       
         > img {
           aspect-ratio: 1;
           width: ~"min(calc(100% / 5), 8rem)";
           scroll-snap-align: center;
           object-fit: cover;
-          padding: .75vw;
+          padding: .55vw;
 
           &:hover {
             cursor: default;
-            padding: .55vw;
+            padding: .35vw;
           }
         }
       }

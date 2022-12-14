@@ -152,13 +152,11 @@ export default function Display(...props) {
         )}
         
         <section className="self-text">
-          <div className="radio">
             <RadioButton
               clickedEl={clickedEl}
               title={timestampLinks.length > 1 ? 'timestamps' : 'timestamp'}
               links={timestampLinks}
             />
-          </div>
           <h1>Listing Details</h1>
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
         </section>

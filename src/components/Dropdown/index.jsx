@@ -9,8 +9,6 @@ export default function Dropdown({ clickedEl, title, links }) {
   const dropdownEl = useRef(null)
 
   useEffect(() => {
-    console.log(clickedEl, dropdownEl.current.parentNode)
-
     clickedEl === dropdownEl.current.parentNode ? setIsOpen(true) : setIsOpen(false)
   }, [clickedEl])
 

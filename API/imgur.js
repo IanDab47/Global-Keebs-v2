@@ -36,11 +36,11 @@ router.get('/image/:hash/:listingId', async (req, res) => {
     const imageFile = await fetchImgurImage(hash);
 
     // Update listing with new file
-    const timestampModel = await createTimestampFile(imageFile);
+    const timestampModel = await createTimestampFile(imageFile.url);
     const listingModel = await db.listing.findByPk(listingId);
     listingModel.addTimestamp(timestampModel);
 
-    res.json({ hash, imageFile, timestampModel, listingModel });
+    res.json({ imageFile });
   } catch (err) {
     console.warn('ERROR DURING IMAGE REQUEST', err);
     res.send({ message: 'ERROR DURING IMAGE REQUEST: ' + err });
@@ -77,7 +77,7 @@ router.get('/album/:hash/:listingId', async (req, res) => {
       listingModel.addTimestamp(timestampModel)
     );
 
-    res.send({ imageFiles, timestampModels });
+    res.send({ imageFiles });
   } catch (err) {
     console.warn('ERROR DURING ALBUM REQUEST', err);
     res.send({ message: 'ERROR DURING ALBUM REQUEST: ' + err });

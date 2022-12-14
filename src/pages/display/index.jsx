@@ -37,7 +37,7 @@ export default function Display(...props) {
         const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
         
         const resTimestamps = response.data.timestamps
-        // console.log(resTimestamps.map(timestamp => timestamp))
+        console.log(resTimestamps.map(timestamp => timestamp))
         
         setId(res_id)
         setAuthor(res_author)
@@ -64,8 +64,6 @@ export default function Display(...props) {
 
   // Find first file type
   useEffect(() => {
-    console.log(timestamps)
-
     for (let i = 0; i < timestamps.length; i++) {
       console.log(`Timestamp_${i} is file: ${timestamps[i].type === 'FILE'}`)
       if (timestamps[i].type === 'FILE')
@@ -115,15 +113,13 @@ export default function Display(...props) {
               style={timestamps.length < 5 ? { justifyContent: 'center' } : null}
             >
               {timestamps.map((data, i) => {
-                return (
-                  <img
+                return !data.url.includes('.mp4') && <img
                     key={`keyboard_${i}`}
                     src={data.url}
                     alt={`keyboard_${i}`}
                     title={`keyboard_${i}`}
                     onClick={e => setCurrThumbnail(data.url)}
                   />
-                )
               })}
             </div>}
 
@@ -184,11 +180,14 @@ const fetchImageFiles = async (timestamps) => {
         file.data.albumModel || file.data.imageModel ?
           null
           :
-          file.data.imageFiles.map(fetchedFile =>
-            !arrayOfLinks.includes(fetchedFile) ?
-              arrayOfLinks.push(fetchedFile)
-              :
-              null
+          file.data.imageFile ?
+            !arrayOfLinks.includes(file.data.imageFile.url) && arrayOfLinks.push(file.data.imageFile)
+            :
+            file.data.imageFiles.map(fetchedFile =>
+              !arrayOfLinks.includes(fetchedFile.url) ?
+                arrayOfLinks.push(fetchedFile)
+                :
+                null
     ))
 
     return arrayOfLinks

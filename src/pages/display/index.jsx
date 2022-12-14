@@ -13,8 +13,8 @@ import "./style.less"
 export default function Display(...props) {  
   // States
   const pageEl = useRef(null)
-  const [clickedEl, setClickedEl] = useState(null)
   const thumbnailScroll = useRef(null)
+  const [clickedEl, setClickedEl] = useState(null)
   const [id, setId] = useState(null)
   const [author, setAuthor] = useState('')
   const [authorRef, setAuthorRef] = useState('')
@@ -89,9 +89,7 @@ export default function Display(...props) {
   // Handlers
   const handleClick = (e) => {
     // Display dropdown
-    clickedEl = e.target
-
-    // console.log(clickedEl)
+    setClickedEl(e.target)
   }
   
   const thumbnailModal = () => {
@@ -155,7 +153,11 @@ export default function Display(...props) {
         
         <section className="self-text">
           <div className="radio">
-            <RadioButton clickedEl={clickedEl} title={'timestamps'} links={timestampLinks} />
+            <RadioButton
+              clickedEl={clickedEl}
+              title={timestampLinks.length > 1 ? 'timestamps' : 'timestamp'}
+              links={timestampLinks}
+            />
           </div>
           <h1>Listing Details</h1>
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>

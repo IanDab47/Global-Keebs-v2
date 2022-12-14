@@ -26,10 +26,11 @@
     margin-block: @dot-gap;
   }
 
-  .drop-down {
+  .drop-down:not(:empty) {
     position: absolute;
     top: 0; right: 0;
     width: max-content;
+    cursor: initial;
     background: white;
     font-family: Montserrat;
     font-style: italic;
@@ -50,6 +51,7 @@
       list-style-type: none;
 
       li {
+        cursor: pointer;
         padding: .55rem .5rem .25rem;
         margin: 0;
         transition: padding 120ms @quick-n-slow;

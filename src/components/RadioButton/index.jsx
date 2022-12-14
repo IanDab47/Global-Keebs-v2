@@ -29,7 +29,7 @@ export default function RadioButton({ clickedEl, title, links }) {
   return (
     <div className='radio-button' ref={radio}>
       {radioDots()}
-      <Dropdown clickedEl={radio} title={title} links={links} />
+      <Dropdown clickedEl={clickedEl} title={title} links={links} />
     </div>
   )
 }

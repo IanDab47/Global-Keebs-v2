@@ -70,7 +70,7 @@ router.get('/album/:hash/:listingId', async (req, res) => {
 
     // Update listing with new files
     const timestampModels = await Promise.all(
-      imageFiles.map((imageFile) => createTimestampFile(imageFile))
+      imageFiles.map((imageFile) => createTimestampFile(imageFile.url))
     );
     const listingModel = await db.listing.findByPk(listingId);
     timestampModels.map((timestampModel) =>

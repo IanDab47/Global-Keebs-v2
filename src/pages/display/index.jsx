@@ -37,7 +37,7 @@ export default function Display(...props) {
         const [res_id, res_author, res_author_ref, res_created_utc, res_date, res_downs, res_flair_text, res_location, res_page_id, res_page_name, res_self_text, res_title, res_ups, res_upvote_ratio, res_url] = Object.values(response.data)
         
         const resTimestamps = response.data.timestamps
-        console.log(resTimestamps.map(timestamp => timestamp))
+        // console.log(resTimestamps.map(timestamp => timestamp))
         
         setId(res_id)
         setAuthor(res_author)
@@ -55,19 +55,24 @@ export default function Display(...props) {
         setUpvoteRatio(res_upvote_ratio)
         setUrl(res_url)
 
-        // Find first file type
-        for (let i = 0; i < resTimestamps.length; i++) {
-          console.log(`Timestamp_${i} is file: ${resTimestamps[i].type === 'FILE'}`)
-          if (resTimestamps[i].type === 'FILE')
-            return setCurrThumbnail(resTimestamps[i].url)
-        }
-
       } catch (err) {
         console.warn(err)
       }
     }
     fetchListing()
   }, [])
+
+  // Find first file type
+  useEffect(() => {
+    console.log(timestamps)
+
+    for (let i = 0; i < timestamps.length; i++) {
+      console.log(`Timestamp_${i} is file: ${timestamps[i].type === 'FILE'}`)
+      if (timestamps[i].type === 'FILE')
+        return setCurrThumbnail(timestamps[i].url)
+    }
+
+  }, [timestamps])
 
   // Handlers
   const submitComment = e => {
@@ -104,19 +109,19 @@ export default function Display(...props) {
 
         {timestamps.length > 0 && (
           <section className="timestamp">
-            <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
+            <a href={timestamps[0].url} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} onClick={thumbnailModal} />
             {timestamps.length > 1 && <div
               style={timestamps.length < 5 ? { justifyContent: 'center' } : null}
             >
-              {timestamps.map((url, i) => {
+              {timestamps.map((data, i) => {
                 return (
                   <img
                     key={`keyboard_${i}`}
-                    src={url}
+                    src={data.url}
                     alt={`keyboard_${i}`}
                     title={`keyboard_${i}`}
-                    onClick={e => setCurrThumbnail(url)}
+                    onClick={e => setCurrThumbnail(data.url)}
                   />
                 )
               })}
@@ -157,7 +162,10 @@ const fetchImageFiles = async (timestamps) => {
 
       try {
         const imagePromise = timestamp.type === 'FILE' ?
-          { data: timestamp.url }
+          {
+            data: 
+              { url: timestamp.url, type: 'FILE' }
+          }
           :
           timestamp.type === 'IMAGE' ?
             await axios.get(`/api/v1/imgur/image/${hash}/${timestamp.listingId}`)
@@ -170,17 +178,17 @@ const fetchImageFiles = async (timestamps) => {
       }
     }))
 
-    imageFiles.map(file => typeof file.data === 'string' ?
-      !arrayOfLinks.includes(file.data) && arrayOfLinks.push(file.data)
-      :
-      file.data.albumModel || file.data.imageModel ?
-        null
+    imageFiles.map(file => typeof file.data.url === 'string' ?
+        !arrayOfLinks.includes(file.data.url) && arrayOfLinks.push(file.data)
         :
-        file.data.imageFiles.map(fetchedFile =>
-          !arrayOfLinks.includes(fetchedFile) ?
-            arrayOfLinks.push(fetchedFile)
-            :
-            null
+        file.data.albumModel || file.data.imageModel ?
+          null
+          :
+          file.data.imageFiles.map(fetchedFile =>
+            !arrayOfLinks.includes(fetchedFile) ?
+              arrayOfLinks.push(fetchedFile)
+              :
+              null
     ))
 
     return arrayOfLinks

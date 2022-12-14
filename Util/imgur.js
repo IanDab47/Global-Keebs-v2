@@ -58,7 +58,9 @@ const fetchAlbumImages = async (albumHash) => {
       }
     );
 
-    return response.data.data.images.map((image) => image.link);
+    return response.data.data.images.map((image) => {
+      return { url: image.link, type: 'FILE' };
+    });
   } catch (err) {
     console.warn('ERROR DURING ALBUM API REQ:', err);
   }
@@ -81,7 +83,7 @@ const fetchImgurImage = async (imageHash) => {
       }
     );
 
-    return [response.data.data.link];
+    return { url: response.data.data.link, type: 'FILE' };
   } catch (err) {
     console.warn('ERROR DURING IMAGE API REQ:', err);
   }

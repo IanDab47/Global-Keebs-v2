@@ -118,7 +118,7 @@ const saveData = async (data) => {
           },
           defaults: {
             type: type,
-            status: timestamp === 'FILE' ? 'NONE' : 'CLOSED',
+            status: type === 'FILE' ? 'NONE' : 'CLOSED',
           },
         });
 

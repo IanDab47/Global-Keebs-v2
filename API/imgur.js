@@ -30,7 +30,7 @@ router.get('/image/:hash/:listingId', async (req, res) => {
         type: 'IMAGE',
       },
     });
-    if (imageModel.status === 'OPENED') return res.send({ albumModel });
+    if (imageModel.status === 'OPENED') return res.send({ imageModel });
 
     // Grab image file from imgur post
     const imageFile = await fetchImgurImage(hash);

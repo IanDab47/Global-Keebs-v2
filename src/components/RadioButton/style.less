@@ -1,0 +1,43 @@
+@import '../../sharedStyles/anim.less';
+@import '../../sharedStyles/colors.less';
+
+@dot-size: .4rem;
+@dot-gap: .25rem;
+
+.radio-button {
+  position: relative;
+  float: right;
+  cursor: pointer;
+  padding: .2rem;
+  
+  &:hover svg {
+    fill: @ntl-dark;
+  }
+
+  svg {
+    box-sizing: content-box;
+    display: block;
+    width: @dot-size;
+    height: @dot-size;
+    pointer-events: none;
+    fill: @ntl-fair;
+    mix-blend-mode: multiply;
+    margin-left: auto;
+    margin-block: @dot-gap;
+  }
+
+  .drop-down {
+    position: absolute;
+    top: 0; right: 0;
+    background: white;
+    padding: 1rem;
+
+    ul {
+      list-style-type: none;
+
+      li {
+
+      }
+    }
+  }
+}

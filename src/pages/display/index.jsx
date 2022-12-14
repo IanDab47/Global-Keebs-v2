@@ -1,14 +1,22 @@
 // React 
 import { Link, useParams, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import DOMPurify from "dompurify"
+
+// Components
+import RadioButton from "../../components/RadioButton"
 
 // Styles
 import "./style.less"
 
 export default function Display(...props) {
-  // State
+  // Refs
+  const pageEl = useRef(null)
+  let clickedEl = null
+
+  // States
+  const thumbnailScroll = useRef(null)
   const [id, setId] = useState(null)
   const [author, setAuthor] = useState('')
   const [authorRef, setAuthorRef] = useState('')
@@ -17,6 +25,7 @@ export default function Display(...props) {
   const [date, setDate] = useState('')
   const [downs, setDowns] = useState('')
   const [flairText, setFlairText] = useState('')
+  const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState('')
   const [pageName, setPageName] = useState('')
   const [selfText, setSelfText] = useState('')
@@ -27,6 +36,7 @@ export default function Display(...props) {
   const [url, setUrl] = useState('')
   const [currThumbnail, setCurrThumbnail] = useState('')
   const { pageId } = useParams()
+  let timestampLinks = []
   // const navigate = useNavigate()
 
   // Hooks
@@ -69,20 +79,38 @@ export default function Display(...props) {
       if (timestamps[i].type === 'FILE')
         return setCurrThumbnail(timestamps[i].url)
     }
-
   }, [timestamps])
 
+  // Stop loading and render page
+  useEffect(() => {
+    timestampLinks =
+      timestamps.map((timestamp, i) => { return { href: timestamp.url, text: `${i + 1}. Timestamp` }})
+
+    setLoading(false)
+  }, [currThumbnail])
+
   // Handlers
+  const handleClick = (e) => {
+    // Display dropdown
+    clickedEl = e.target
+
+    // console.log(clickedEl)
+  }
+  
+  const thumbnailModal = () => {
+    console.log('TODO: MAKE IT BIG!!!')
+  }
+  
   const submitComment = e => {
     e.preventDefault()
   }
 
-  const thumbnailModal = () => {
-    console.log('TODO: MAKE IT BIG!!!')
-  }
-
   return (
-    <div className="listing-display-page">
+    <div
+      className={`${loading && 'loading'} listing-display-page`}
+      ref={pageEl}
+      onClick={e => handleClick(e)}
+    >
       <header>
         <a href={url} target='_blank'>{title}</a>
 
@@ -107,26 +135,31 @@ export default function Display(...props) {
 
         {timestamps.length > 0 && (
           <section className="timestamp">
-            <a href={timestamps[0].url} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} onClick={thumbnailModal} />
             {timestamps.length > 1 && <div
               style={timestamps.length < 5 ? { justifyContent: 'center' } : null}
             >
               {timestamps.map((data, i) => {
-                return !data.url.includes('.mp4') && <img
+                return !data.url.includes('.mp4') && (
+                  <img
                     key={`keyboard_${i}`}
                     src={data.url}
+                    ref={thumbnailScroll}
+                    loading='lazy'
                     alt={`keyboard_${i}`}
                     title={`keyboard_${i}`}
                     onClick={e => setCurrThumbnail(data.url)}
                   />
-              })}
+              )})}
             </div>}
 
           </section>
         )}
         
         <section className="self-text">
+          <div className="radio">
+            <RadioButton clickedEl={clickedEl} links={timestampLinks} />
+          </div>
           <h1>Listing Details</h1>
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
         </section>

@@ -20,15 +20,19 @@ const createTimestampFile = async (url) => {
       },
     });
 
-    const [columns, [newTimestamp]] = !created
-      ? await db.listing.update({
-          type: 'FILE',
-          status: 'NONE',
-          where: {
+    const [columns, newTimestamp] = !created
+      ? await db.listing.update(
+          {
             url: url,
           },
-        })
-      : [0, [timestamp]];
+          {
+            where: {
+              id: timestamp.id,
+            },
+            returning: true,
+          }
+        )
+      : [0, timestamp];
 
     return newTimestamp;
   } catch (err) {
@@ -40,11 +44,6 @@ const fetchAlbumImages = async (albumHash) => {
   try {
     const url = `https://api.imgur.com/3/album/${albumHash}`;
     const response = await axios.get(url, options);
-
-    console.log(
-      albumHash,
-      response.data.data.images.map((image) => image.link)
-    );
 
     return response.data.data.images.map((image) => image.link);
   } catch (err) {

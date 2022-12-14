@@ -150,13 +150,15 @@ const fetchImageFiles = async (timestamps) => {
       const hash = splitURL[splitURL.length - 1]
 
       try {
-        timestamp.type === 'FILE' ?
-          arrayOfLinks.push(timestamp.url)
+        const imagePromise = timestamp.type === 'FILE' ?
+          { data: timestamp.url }
           :
           timestamp.type === 'IMAGE' ?
             await axios.get(`/api/v1/imgur/image/${hash}/${timestamp.listingId}`)
             :
             await axios.get(`/api/v1/imgur/album/${hash}/${timestamp.listingId}`)
+        
+        return imagePromise
       } catch (err) {
         console.warn('ERROR DURING TIMESTAMP MAP:', err)
       }

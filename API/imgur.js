@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const db = require('../models');
 const {
@@ -10,6 +11,8 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.json({ message: 'Hiya! This route is working.' });
 });
+
+router.get('/oauth/callback', (req, res) => {});
 
 router.get('/image/:hash/:listingId', async (req, res) => {
   const hash = req.params.hash || 'BAD REQUEST';
@@ -56,7 +59,7 @@ router.get('/album/:hash/:listingId', async (req, res) => {
       listingModel.addTimestamp(timestampModel)
     );
 
-    res.send({ hash, imageFiles, timestampModels, listingModel });
+    res.send({ imageFiles, timestampModels });
   } catch (err) {
     console.warn('ERROR DURING ALBUM REQUEST', err);
     res.send({ message: 'ERROR DURING ALBUM REQUEST: ' + err });

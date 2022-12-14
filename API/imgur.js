@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const db = require('../models');
+const { Op } = require('sequelize');
 const {
   fetchImgurImage,
   fetchAlbumImages,
@@ -23,6 +24,14 @@ router.get('/image/:hash/:listingId', async (req, res) => {
     res.json({ message: hash });
 
   try {
+    const imageModel = await db.timestamp.findOne({
+      where: {
+        url: { [Op.like]: '%' + hash },
+        type: 'IMAGE',
+      },
+    });
+    if (imageModel.status === 'OPENED') return res.send({ albumModel });
+
     // Grab image file from imgur post
     const imageFile = await fetchImgurImage(hash);
 
@@ -47,6 +56,15 @@ router.get('/album/:hash/:listingId', async (req, res) => {
     res.json({ message: hash });
 
   try {
+    // Check if album is opened
+    const albumModel = await db.timestamp.findOne({
+      where: {
+        url: { [Op.like]: '%' + hash },
+        type: 'ALBUM',
+      },
+    });
+    if (albumModel.status === 'OPENED') return res.send({ albumModel });
+
     // Grab image files from imgur album
     const imageFiles = await fetchAlbumImages(hash);
 

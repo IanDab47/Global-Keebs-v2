@@ -1,6 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const db = require('../models');
+const { Op } = require('sequelize');
 
 const options = {
   headers: {
@@ -45,6 +46,18 @@ const fetchAlbumImages = async (albumHash) => {
     const url = `https://api.imgur.com/3/album/${albumHash}`;
     const response = await axios.get(url, options);
 
+    await db.timestamp.update(
+      {
+        status: 'OPENED',
+      },
+      {
+        where: {
+          url: { [Op.like]: '%' + albumHash },
+          type: 'ALBUM',
+        },
+      }
+    );
+
     return response.data.data.images.map((image) => image.link);
   } catch (err) {
     console.warn('ERROR DURING ALBUM API REQ:', err);
@@ -55,6 +68,18 @@ const fetchImgurImage = async (imageHash) => {
   try {
     const url = `https://api.imgur.com/3/image/${imageHash}`;
     const response = await axios.get(url, options);
+
+    await db.timestamp.update(
+      {
+        status: 'OPENED',
+      },
+      {
+        where: {
+          url: { [Op.like]: '%' + imageHash },
+          type: 'IMAGE',
+        },
+      }
+    );
 
     return [response.data.data.link];
   } catch (err) {

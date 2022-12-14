@@ -69,7 +69,7 @@ export default function Display(...props) {
   }
 
   const thumbnailModal = () => {
-    console.log('MAKE IT BIG!!!')
+    console.log('TODO: MAKE IT BIG!!!')
   }
 
   return (
@@ -96,7 +96,7 @@ export default function Display(...props) {
 
       <div className="grid-row">
 
-        {/* {timestamps.length > 0 && (
+        {timestamps.length > 0 && (
           <section className="timestamp">
             <a href={timestamps[0]} target="_blank"><p>[TIMESTAMP]</p></a>
             <img src={currThumbnail} alt={`timestamp`} onClick={thumbnailModal} />
@@ -117,7 +117,7 @@ export default function Display(...props) {
             </div>}
 
           </section>
-        )} */}
+        )}
         
         <section className="self-text">
           <h1>Listing Details</h1>
@@ -163,7 +163,22 @@ const fetchImageFiles = async (timestamps) => {
         console.warn('ERROR DURING TIMESTAMP MAP:', err)
       }
     }))
-    console.log(imageFiles)
+
+    imageFiles.map(file => typeof file.data === 'string' ?
+      !arrayOfLinks.includes(file.data) && arrayOfLinks.push(file.data)
+      :
+      file.data.albumModel || file.data.imageModel ?
+        null
+        :
+        file.data.imageFiles.map(fetchedFile =>
+          !arrayOfLinks.includes(fetchedFile) ?
+            arrayOfLinks.push(fetchedFile)
+            :
+            null
+    ))
+
+    return arrayOfLinks
+
   } catch (err) {
     console.warn('ERROR DURING IMAGE FETCH:', err)
   }

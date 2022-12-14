@@ -112,7 +112,7 @@ const saveData = async (data) => {
           : 'ALBUM';
 
       try {
-        const [createdTimestamp, created] = await db.timestamp.findOrCreate({
+        const [newTimestamp, created] = await db.timestamp.findOrCreate({
           where: {
             url: timestamp,
           },
@@ -122,23 +122,7 @@ const saveData = async (data) => {
           },
         });
 
-        const [updatedColumnsAmount, [updatedTimestamp]] = !created
-          ? await db.timestamp.update(
-              {
-                url: timestamp,
-                type: type,
-                status: timestamp === 'FILE' ? 'NONE' : 'CLOSED',
-              },
-              {
-                where: {
-                  id: createdTimestamp.id,
-                },
-                returning: true,
-              }
-            )
-          : [0, [createdTimestamp]];
-
-        return updatedTimestamp;
+        return newTimestamp;
       } catch (err) {
         console.warn('ERROR DURING FETCH CREATION OF TIMESTAMP:', err);
       }

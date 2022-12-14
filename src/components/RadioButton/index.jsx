@@ -5,9 +5,9 @@ import Dropdown from '../Dropdown'
 // Styles
 import './style.less'
 
-export default function RadioButton({ clickedEl, links }) {
+export default function RadioButton({ clickedEl, title, links }) {
   // Ref
-  const radio = useRef(null)
+  const radio = useRef()
 
   // Output
   const radioDots = () => {
@@ -29,7 +29,7 @@ export default function RadioButton({ clickedEl, links }) {
   return (
     <div className='radio-button' ref={radio}>
       {radioDots()}
-      <Dropdown clickedEl={radio} links={links} />
+      <Dropdown clickedEl={radio} title={title} links={links} />
     </div>
   )
 }

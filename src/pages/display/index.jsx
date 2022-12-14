@@ -10,12 +10,10 @@ import RadioButton from "../../components/RadioButton"
 // Styles
 import "./style.less"
 
-export default function Display(...props) {
-  // Refs
-  const pageEl = useRef(null)
-  let clickedEl = null
-
+export default function Display(...props) {  
   // States
+  const pageEl = useRef(null)
+  const [clickedEl, setClickedEl] = useState(null)
   const thumbnailScroll = useRef(null)
   const [id, setId] = useState(null)
   const [author, setAuthor] = useState('')
@@ -30,13 +28,13 @@ export default function Display(...props) {
   const [pageName, setPageName] = useState('')
   const [selfText, setSelfText] = useState('')
   const [timestamps, setTimestamps] = useState([])
+  const [timestampLinks, setTimestampLinks] = useState([])
   const [title, setTitle] = useState('')
   const [ups, setUps] = useState('')
   const [upvoteRatio, setUpvoteRatio] = useState('')
   const [url, setUrl] = useState('')
   const [currThumbnail, setCurrThumbnail] = useState('')
   const { pageId } = useParams()
-  let timestampLinks = []
   // const navigate = useNavigate()
 
   // Hooks
@@ -83,8 +81,7 @@ export default function Display(...props) {
 
   // Stop loading and render page
   useEffect(() => {
-    timestampLinks =
-      timestamps.map((timestamp, i) => { return { href: timestamp.url, text: `${i + 1}. Timestamp` }})
+    setTimestampLinks(timestamps.map((timestamp, i) => { return { href: timestamp.url, text: `${i + 1}. Timestamp` }}))
 
     setLoading(false)
   }, [currThumbnail])
@@ -158,7 +155,7 @@ export default function Display(...props) {
         
         <section className="self-text">
           <div className="radio">
-            <RadioButton clickedEl={clickedEl} links={timestampLinks} />
+            <RadioButton clickedEl={clickedEl} title={'timestamps'} links={timestampLinks} />
           </div>
           <h1>Listing Details</h1>
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>

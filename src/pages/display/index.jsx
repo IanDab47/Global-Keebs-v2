@@ -156,11 +156,13 @@ export default function Display(...props) {
         )}
         
         <section className="self-text">
+          {timestamps.length > 0 && (
             <RadioButton
               clickedEl={clickedEl}
               title={timestampLinks.length > 1 ? 'timestamps' : 'timestamp'}
               links={timestampLinks}
             />
+          )}
           <h1>Listing Details</h1>
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
         </section>
@@ -193,7 +195,9 @@ const fetchImageFiles = async (timestamps) => {
   try {
     const imageFiles = await Promise.all(timestamps.map(async timestamp => {
       const splitURL = timestamp.url.split('/')
-      const hash = splitURL[splitURL.length - 1]
+      const hash = encodeURIComponent(splitURL[splitURL.length - 1])
+
+      console.log(hash)
 
       try {
         const imagePromise = timestamp.type === 'FILE' ?

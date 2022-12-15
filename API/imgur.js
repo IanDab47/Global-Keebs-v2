@@ -48,9 +48,8 @@ router.get('/image/:hash/:listingId', async (req, res) => {
 });
 
 router.get('/album/:hash/:listingId', async (req, res) => {
-  const hash = req.params.hash || 'BAD REQUEST';
+  const hash = decodeURIComponent(req.params.hash) || 'BAD REQUEST';
   const listingId = req.params.listingId || 'BAD REQUEST';
-
   // Send Error if bad request
   (hash === 'BAD REQUEST' || listingId === 'BAD REQUEST') &&
     res.json({ message: hash });
@@ -78,6 +77,7 @@ router.get('/album/:hash/:listingId', async (req, res) => {
     );
 
     res.send({ imageFiles });
+    // res.send({ imageFiles, albumModel, timestampModels }); // Test send
   } catch (err) {
     console.warn('ERROR DURING ALBUM REQUEST', err);
     res.send({ message: 'ERROR DURING ALBUM REQUEST: ' + err });

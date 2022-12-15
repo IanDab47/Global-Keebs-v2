@@ -16,7 +16,7 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
   useEffect(() => {
     // Hamburger
     if (type === 'hamburger') {
-      
+      clickedEl !== dropdownEl.current.parentNode && isOpen && setIsOpen(!isOpen)
     }
 
     // Radio

@@ -1,6 +1,7 @@
 // React
 import { useState, useRef } from 'react'
 import DropdownMenu from '../Dropdown'
+import Hamburger from '../Hamburger'
 
 // Styles
 import './style.less'
@@ -35,6 +36,7 @@ export default function RadioButton({ clickedEl, title, links }) {
       <DropdownMenu
         clickedEl={clickedEl}
         title={title}
+        type={'radio'}
         links={links}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

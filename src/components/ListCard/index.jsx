@@ -8,6 +8,7 @@ import { timeSincePost } from '../../util/time'
 import './style.less'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons'
+import RadioButton from '../RadioButton'
 
 export default function ListCard({ currTime, listing, i }) {
   // Animate grid diagonally
@@ -51,6 +52,7 @@ export default function ListCard({ currTime, listing, i }) {
         <div>
           <p>u/{listing.author}</p>
           <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
+          <RadioButton />
         </div>
         
       </div>

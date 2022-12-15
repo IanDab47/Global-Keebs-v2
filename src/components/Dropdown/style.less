@@ -2,7 +2,9 @@
 @import '../../sharedStyles/colors.less';
 
 .drop-down {
-  p {
+  width: max-content;
+
+  > p {
     font-size: 1.2em;
     font-weight: 500;
     text-transform: capitalize;
@@ -16,8 +18,8 @@
   
     li {
       cursor: pointer;
+      height: 2rem;
       padding: .55rem .5rem .25rem;
-      margin: 0;
       transition: padding 120ms @quick-n-slow;
   
       &:hover {
@@ -28,6 +30,30 @@
       
       &:not(:first-of-type) {
         border-top: .1rem solid @pri-fair;
+      }
+    }
+  }
+
+  > div {
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+    text-align: center;
+    margin-block: .5rem;
+
+    p {
+      display: grid;
+      place-items: center;
+      width: 2em;
+      height: 2.2rem;
+      cursor: pointer;
+      user-select: none;
+      background: @ntl-light;
+      border-radius: .2rem;
+      transition: background 300ms @quick-n-slow;
+
+      &.active {
+        background: @pri-fair;
       }
     }
   }

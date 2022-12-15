@@ -94,9 +94,6 @@ export default function List() {
     } catch (err) {
       console.warn(err)
     }
-
-    return () => {
-    }
   }
 
   // Output

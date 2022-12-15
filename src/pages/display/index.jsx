@@ -10,6 +10,11 @@ import RadioButton from "../../components/RadioButton"
 // Styles
 import "./style.less"
 
+const commentLinks = [
+  { href: '#', text: 'Edit Comment' },
+  { href: '#', text: 'Delete Comment' },
+]
+
 export default function Display(...props) {  
   // States
   const pageEl = useRef(null)
@@ -81,14 +86,13 @@ export default function Display(...props) {
 
   // Stop loading and render page
   useEffect(() => {
-    setTimestampLinks(timestamps.map((timestamp, i) => { return { href: timestamp.url, text: `${i + 1}. Timestamp` }}))
+    setTimestampLinks(timestamps.map((timestamp, i) => { return { href: timestamp.url, text: timestamp.url }}))
 
     setLoading(false)
   }, [currThumbnail])
 
   // Handlers
-  const handleClick = (e) => {
-    // Display dropdown
+  const selectElement = (e) => {
     setClickedEl(e.target)
   }
   
@@ -104,7 +108,7 @@ export default function Display(...props) {
     <div
       className={`${loading && 'loading'} listing-display-page`}
       ref={pageEl}
-      onClick={e => handleClick(e)}
+      onClick={e => selectElement(e)}
     >
       <header>
         <a href={url} target='_blank'>{title}</a>
@@ -164,6 +168,11 @@ export default function Display(...props) {
       </div>
       
       <section className="comments">
+        <RadioButton
+          clickedEl={clickedEl}
+          title={'Options'}
+          links={commentLinks}
+        />
         <h1>Comments</h1>
         <form onSubmit={e => submitComment(e)}>
           <textarea></textarea>

@@ -1,6 +1,6 @@
 // React
 import { useState, useRef } from 'react'
-import Dropdown from '../Dropdown'
+import DropdownMenu from '../Dropdown'
 
 // Styles
 import './style.less'
@@ -29,7 +29,7 @@ export default function RadioButton({ clickedEl, title, links }) {
   return (
     <div className='radio-button' ref={radio}>
       {radioDots()}
-      <Dropdown clickedEl={clickedEl} title={title} links={links} />
+      <DropdownMenu clickedEl={clickedEl} title={title} links={links} />
     </div>
   )
 }

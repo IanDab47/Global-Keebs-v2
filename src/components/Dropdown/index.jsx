@@ -17,7 +17,7 @@ export default function DropdownMenu({ clickedEl, title, links }) {
     clickedEl === dropdownEl.current.parentNode ||
     clickedEl?.classList.value === `pages ${title}` ||
     clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
-      setIsOpen(true)
+      setIsOpen(!isOpen)
       :
       setIsOpen(false)
   }, [clickedEl])
@@ -30,7 +30,7 @@ export default function DropdownMenu({ clickedEl, title, links }) {
           {links.length > 10 &&
             <DropdownPages
             page={page}
-            pages={Math.floor(links.length / 10)}
+            pages={Math.ceil(links.length / 10)}
             title={title}
             setPage={setPage}
             currentEl={dropdownPageEl}

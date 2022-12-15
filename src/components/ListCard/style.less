@@ -8,7 +8,11 @@
   gap: .5rem;
   grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   padding-inline: ~"max(1rem, calc(25vw - 18rem))";
-  @media (max-width: 640px) { padding-inline: 1.2rem; grid-template-columns: 1fr;}
+  @media (max-width: 640px) { 
+    display: block; 
+    padding-inline: 1.2rem; 
+    margin-block: .25rem;
+  }
 
   .card {
     display: grid;
@@ -91,8 +95,8 @@
       justify-content: space-between;
       isolation: isolate;
       background: @ntl-light;
+      word-break: break-word;
       padding: 2rem 1.5rem 1rem;
-      overflow: clip;
 
       &:hover {
         h1 {

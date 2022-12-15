@@ -15,6 +15,7 @@ export default function DropdownMenu({ clickedEl, title, links }) {
 
   useEffect(() => {
     clickedEl === dropdownEl.current.parentNode ||
+    clickedEl?.classList.value === 'pages' ||
     clickedEl?.classList.value.includes('dropdown-page') ?
       setIsOpen(true)
       :
@@ -73,10 +74,11 @@ const DropdownList = ({ title, links, page }) => {
 
 const DropdownListItem = ({ href, text, page, i }) => {
   return (
-    <li key={text} className={Math.floor(i / 10) === page ? 'show' : 'hide' }>
-      <a
-        href={href} target="_blank">{text}</a>
-    </li>
+    <a href={href} target="_blank">
+      <li key={text} className={Math.floor(i / 10) === page ? 'show' : 'hide' }>
+        {text}
+      </li>
+    </a>
   )
 }
 

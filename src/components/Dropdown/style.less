@@ -15,11 +15,15 @@
   
   ul {
     list-style-type: none;
+
+    > a:not(:first-of-type) li {
+      border-top: .1rem solid @pri-fair;
+    }
   
     li {
       cursor: pointer;
-      height: 2rem;
-      padding: .55rem .5rem .25rem;
+      height: 2.2rem;
+      padding: .65rem .5rem 0;
       transition: padding 120ms @quick-n-slow;
   
       &:hover {
@@ -27,14 +31,10 @@
         background: @ntl-bright;
         transition: padding 0ms @quick-n-slow;
       }
-      
-      &:not(:first-of-type) {
-        border-top: .1rem solid @pri-fair;
-      }
     }
   }
 
-  > div {
+  .pages {
     display: flex;
     gap: .75rem;
     justify-content: center;
@@ -48,12 +48,15 @@
       height: 2.2rem;
       cursor: pointer;
       user-select: none;
-      background: @ntl-light;
+      border: .1rem solid @pri-light;
+      font-family: "Montserrat Alternates";
       border-radius: .2rem;
       transition: background 300ms @quick-n-slow;
 
       &.active {
-        background: @pri-fair;
+        background: @act-main;
+        color: @ntl-bright;
+        border: none;
       }
     }
   }

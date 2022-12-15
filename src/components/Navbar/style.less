@@ -7,7 +7,7 @@
 .navbar {
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   @media (max-width: @screen-transition) { justify-content: space-between; }
   align-items: center;
   width: 100%;
@@ -21,7 +21,7 @@
   font-weight: 300;
   color: @pri-bright;
   word-spacing: .5rem;
-  padding: .6rem .25rem;
+  padding: .6rem 3.5vw;
   z-index: 99;
 
   > a {
@@ -54,6 +54,12 @@
         white-space: normal;
       }
       transition: all 300ms @bounce;
+    }
+
+    @media (min-width: @screen-transition) {
+      &:first-of-type {
+        margin-right: auto;
+      }
     }
 
     @media (max-width: @screen-transition) {      

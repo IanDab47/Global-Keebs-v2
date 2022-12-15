@@ -109,25 +109,29 @@
       }
 
       > div {
-
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: flex-end;
 
         > p {
           border-radius: .5rem;
+          margin-right: 1rem;
           transition: padding 300ms @quick-n-slow, 
                       background 300ms @quick-n-slow,
                       color 300ms @quick-n-slow;
 
-          &:first-child:hover {
-            cursor: pointer;
-            background: @act-main;
-            color: @pri-bright;
-            padding: .3rem 1.2rem;
-            transition: padding 300ms @quick-n-slow, 
-                        background 300ms @quick-n-slow,
-                        color 200ms @quick-n-slow;
+          &:first-child {
+            margin-right: auto;
+          
+            &:hover {
+              cursor: pointer;
+              background: @act-main;
+              color: @pri-bright;
+              padding: .3rem 1.2rem;
+              transition: padding 300ms @quick-n-slow, 
+                          background 300ms @quick-n-slow,
+                          color 200ms @quick-n-slow;
+            }
           }
         }
 

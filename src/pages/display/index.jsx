@@ -197,8 +197,6 @@ const fetchImageFiles = async (timestamps) => {
       const splitURL = timestamp.url.split('/')
       const hash = encodeURIComponent(splitURL[splitURL.length - 1])
 
-      console.log(hash)
-
       try {
         const imagePromise = timestamp.type === 'FILE' ?
           {
@@ -218,19 +216,19 @@ const fetchImageFiles = async (timestamps) => {
     }))
 
     imageFiles.map(file => typeof file.data.url === 'string' ?
-        !arrayOfLinks.includes(file.data.url) && arrayOfLinks.push(file.data)
+      !arrayOfLinks.includes(file.data.url) && arrayOfLinks.push(file.data)
+      :
+      file.data.albumModel || file.data.imageModel ?
+        null
         :
-        file.data.albumModel || file.data.imageModel ?
-          null
+        file.data.imageFile ?
+          !arrayOfLinks.includes(file.data.imageFile.url) && arrayOfLinks.push(file.data.imageFile)
           :
-          file.data.imageFile ?
-            !arrayOfLinks.includes(file.data.imageFile.url) && arrayOfLinks.push(file.data.imageFile)
-            :
-            file.data.imageFiles.map(fetchedFile =>
-              !arrayOfLinks.includes(fetchedFile.url) ?
-                arrayOfLinks.push(fetchedFile)
-                :
-                null
+          file.data.imageFiles.map(fetchedFile =>
+            !arrayOfLinks.includes(fetchedFile.url) ?
+              arrayOfLinks.push(fetchedFile)
+              :
+              null
     ))
 
     return arrayOfLinks

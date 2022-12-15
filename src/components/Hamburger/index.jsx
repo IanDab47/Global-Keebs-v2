@@ -31,14 +31,14 @@ export default function Hamburger({ clickedEl, title, links }) {
         :
         menuButton()
       }
-      {/* <DropdownMenu
+      <DropdownMenu
         clickedEl={clickedEl}
         title={title}
         type={'hamburger'}
         links={links}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-      /> */}
+      />
     </div>
   )
 }

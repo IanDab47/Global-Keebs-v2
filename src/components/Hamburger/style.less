@@ -45,4 +45,19 @@
   .hb-cross:last-of-type {
     transform: translate(15%, -50%) rotate(-45deg);
   }
+
+  .drop-down:not(:empty) {
+    position: absolute;
+    top: 100%; right: 0;
+    width: max-content;
+    cursor: initial;
+    background: white;
+    font-family: Montserrat;
+    font-style: italic;
+    color: @ntl-dark;
+    border-radius: .5rem;
+    box-shadow: .25rem .25rem .06rem @pri-heavy,
+                0 0 1rem -.95rem @ntl-heavy;
+    padding: .35rem .75rem .5rem;
+  }
 }

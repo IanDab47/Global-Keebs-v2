@@ -1,22 +1,28 @@
+@import '../../sharedStyles/colors.less';
+
 .hb-menu {
   aspect-ratio: 1;
   position: relative;
-  flex-direction: column;
-  justify-content: center;
-  width: clamp(4rem, 7.5vw, 7rem);
-  border-radius: .3rem;
-  padding: clamp(.2rem, calc(5vw - 3rem), 1rem);
+  width: 4vw;
+  max-height: min-content;
   user-select: none;
+  border-radius: .3rem;
 
-  &:is(:hover, :focus, :active) {
-    outline: .2rem solid #404040f0;
+  .hb-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:has(.hb-cross) {
+      outline: .2rem solid @ntl-bright;
+    }
   }
 
   .hb-line, .hb-cross {
     display: block;
     width: 100%;
-    height: 12%;
-    background: black;
+    height: .5vh;
+    background: @ntl-bright;
     border-radius: 2vw;
   }
 
@@ -32,7 +38,7 @@
     transform: translateY(-50%) rotate(45deg);
   }
 
-  .hb-cross:nth-of-type(2) {
+  .hb-cross:last-of-type {
     transform: translateY(-50%) rotate(-45deg);
   }
 }

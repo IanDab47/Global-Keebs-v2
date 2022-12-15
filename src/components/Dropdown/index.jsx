@@ -4,22 +4,29 @@ import { useState, useEffect, useRef } from 'react'
 // Styles
 import './style.less'
 
-export default function DropdownMenu({ clickedEl, title, links }) {
+export default function DropdownMenu({ clickedEl, type, title, links, isOpen, setIsOpen }) {
   // Refs
   const dropdownEl = useRef(null)
   const dropdownPageEl = useRef(null)
 
   // States
   const [page, setPage] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    clickedEl === dropdownEl.current.parentNode ||
-    clickedEl?.classList.value === `pages ${title}` ||
-    clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
-      setIsOpen(!isOpen)
-      :
-      setIsOpen(false)
+    // Hamburger
+    if (type === 'hamburger') {
+      
+    }
+
+    // Radio
+    if (type === 'radio') {
+      clickedEl === dropdownEl.current.parentNode ||
+      clickedEl?.classList.value === `pages ${title}` ||
+      clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
+        setIsOpen(!isOpen)
+        :
+        setIsOpen(false)
+    }
   }, [clickedEl])
 
   return (

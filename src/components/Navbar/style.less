@@ -2,10 +2,14 @@
 @import '../../sharedStyles/fonts.less';
 @import '../../sharedStyles/anim.less';
 
+@screen-transition: 768px;
+
 .navbar {
   position: relative;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  @media (max-width: @screen-transition) { justify-content: space-between; }
+  align-items: center;
   width: 100%;
   background: linear-gradient(
     -0deg,
@@ -17,7 +21,7 @@
   font-weight: 300;
   color: @pri-bright;
   word-spacing: .5rem;
-  padding: .6rem 0;
+  padding: .6rem .25rem;
   z-index: 99;
 
   > a {
@@ -30,7 +34,7 @@
       box-shadow, 300ms @quick-n-slow;
     box-shadow: 0 0 0 #604040;
 
-    &:is(:hover, :focus, :focus-visible), &.active {
+    &:is(:hover, :focus, :focus-visible, .active):has:not(span) {
       background: @sec-bright;
       color: @act-main;
       outline: none;
@@ -40,5 +44,27 @@
         box-shadow, 300ms @quick-n-slow;
       box-shadow: inset .1rem .1rem .3rem -.16rem #604040;
     }
+
+    span {
+      .title(2.5rem, @ntl-bright);
+      width: min-content;
+      line-height: 2.4rem;
+      text-align: left;
+      @media (max-width: @screen-transition) {
+        white-space: normal;
+      }
+      transition: all 300ms @bounce;
+    }
+
+    @media (max-width: @screen-transition) {      
+      & ~:is(a) {
+        display: none;
+      }
+    }
+  }
+  
+  .hb-menu {
+    display: none;
+    @media (max-width: @screen-transition) { display: block; }
   }
 }

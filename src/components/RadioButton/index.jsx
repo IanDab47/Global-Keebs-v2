@@ -9,6 +9,9 @@ export default function RadioButton({ clickedEl, title, links }) {
   // Ref
   const radio = useRef()
 
+  // State
+  const [isOpen, setIsOpen] = useState(false)
+
   // Output
   const radioDots = () => {
     return (
@@ -29,7 +32,13 @@ export default function RadioButton({ clickedEl, title, links }) {
   return (
     <div className='radio-button' ref={radio}>
       {radioDots()}
-      <DropdownMenu clickedEl={clickedEl} title={title} links={links} />
+      <DropdownMenu
+        clickedEl={clickedEl}
+        title={title}
+        links={links}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </div>
   )
 }

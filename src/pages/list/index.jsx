@@ -25,7 +25,7 @@ export default function List() {
   const [list, setList] = useState([])
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [category, setCategory] = useState([])
+  const [category, setCategory] = useState([''])
   const [listType, setListType] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [filterInput, setFilterInput] = useState([''])

@@ -15,15 +15,15 @@ export default function DropdownMenu({ clickedEl, title, links }) {
 
   useEffect(() => {
     clickedEl === dropdownEl.current.parentNode ||
-    clickedEl?.classList.value === 'pages' ||
-    clickedEl?.classList.value.includes('dropdown-page') ?
+    clickedEl?.classList.value === `pages ${title}` ||
+    clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
       setIsOpen(true)
       :
       setIsOpen(false)
   }, [clickedEl])
 
   return (
-    <div ref={dropdownEl} className='drop-down'>
+    <div ref={dropdownEl} className={`drop-down`}>
       {isOpen && (
         <>
           <DropdownList title={title} links={links} page={page} />
@@ -31,6 +31,7 @@ export default function DropdownMenu({ clickedEl, title, links }) {
             <DropdownPages
             page={page}
             pages={Math.floor(links.length / 10)}
+            title={title}
             setPage={setPage}
             currentEl={dropdownPageEl}
           />
@@ -41,14 +42,15 @@ export default function DropdownMenu({ clickedEl, title, links }) {
   )
 }
 
-const DropdownPages = ({ page, pages, setPage, currentEl }) => {
+const DropdownPages = ({ page, pages, setPage, title, currentEl }) => {
   const pageList = [...Array(pages).keys()]
 
   return (
-    <div className='pages' >
+    <div className={`pages ${title}`} >
       {pageList.map((pageNumber) =>
         <p
-          className={`dropdown-page ${page === pageNumber ? 'active' : ''}`}
+          key={`page_${pageNumber}`}
+          className={`dropdown-page ${title} ${page === pageNumber ? 'active' : ''}`}
           ref={currentEl}
           onClick={() => setPage(pageNumber)}
         >

@@ -1,5 +1,6 @@
 // React
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 // Styles
 import './style.less'
@@ -82,13 +83,14 @@ const DropdownList = ({ title, links, page }) => {
 }
 
 const DropdownListItem = ({ href, text, page, i }) => {
-  return (
-    <a href={href} target="_blank">
-      <li key={text} className={Math.floor(i / 10) === page ? 'show' : 'hide' }>
-        {text}
-      </li>
-    </a>
-  )
+  const listItem =
+    <li key={text} className={Math.floor(i / 10) === page ? 'show' : 'hide'}>{text}</li>
+
+  return href[0] === '/' ? 
+    <Link to={href}>{listItem}</Link>
+    :
+    <a href={href} target="_blank">{listItem}</a>
+
 }
 
 const animateHide = () => {

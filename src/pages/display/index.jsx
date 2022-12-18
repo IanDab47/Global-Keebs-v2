@@ -195,7 +195,9 @@ const fetchImageFiles = async (timestamps) => {
   try {
     const imageFiles = await Promise.all(timestamps.map(async timestamp => {
       const splitURL = timestamp.url.split('/')
-      const hash = encodeURIComponent(splitURL[splitURL.length - 1])
+      const hash = encodeURIComponent(
+        splitURL[splitURL.length - 1] || splitURL[splitURL.length - 2]
+      )
 
       try {
         const imagePromise = timestamp.type === 'FILE' ?

@@ -56,9 +56,9 @@ router.get('/album/:hash/:listingId', async (req, res) => {
 
   try {
     // Check if album is opened
-    const albumModel = await db.timestamp.findOne({
+    const albumModel = await db.timestamp.findOrCreate({
       where: {
-        url: { [Op.like]: '%' + hash },
+        url: { [Op.like]: '%' + hash + '%' },
         type: 'ALBUM',
       },
     });

@@ -3,7 +3,7 @@ import DropdownMenu from "../Dropdown";
 import "./style.less";
 
 export default function Hamburger({ clickedEl, title, links }) {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   const menuButton = () => {
     return (

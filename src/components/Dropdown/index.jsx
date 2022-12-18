@@ -14,21 +14,40 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
   const [page, setPage] = useState(0)
 
   useEffect(() => {
-    // Hamburger
-    if (type === 'hamburger') {
-      clickedEl !== dropdownEl.current.parentNode && isOpen && setIsOpen(!isOpen)
+    // ::: REFACTOR :::
+    const clearDropdown = (e) => {
+      e.stopPropagation()
+      setIsOpen(!isOpen)
+      
+      document.body.addEventListener('click', () => {
+        setIsOpen(false)
+      })
     }
 
-    // Radio
-    if (type === 'radio') {
-      clickedEl === dropdownEl.current.parentNode ||
-      clickedEl?.classList.value === `pages ${title}` ||
-      clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
-        setIsOpen(!isOpen)
-        :
-        setIsOpen(false)
-    }
-  }, [clickedEl])
+    dropdownEl.current.parentNode.addEventListener('click', clearDropdown)
+
+      // document.body.addEventListener('click', e => {
+      //   setIsOpen(false)
+      // })
+    // })
+
+    // // Hamburger
+    // if (type === 'hamburger') {
+    //   clickedEl !== dropdownEl.current.parentNode && isOpen && setIsOpen(!isOpen)
+    // }
+
+    // // Radio
+    // if (type === 'radio') {
+    //   clickedEl === dropdownEl.current.parentNode ||
+    //   clickedEl?.classList.value === `pages ${title}` ||
+    //   clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
+    //     setIsOpen(!isOpen)
+    //     :
+    //     setIsOpen(false)
+    // }
+
+    return () => dropdownEl.current.parentNode.removeEventListener('click', clearDropdown)
+  }, [])
 
   return (
     <div ref={dropdownEl} className={`drop-down`}>
@@ -84,7 +103,7 @@ const DropdownList = ({ title, links, page }) => {
 
 const DropdownListItem = ({ href, text, page, i }) => {
   const listItem =
-    <li key={text} className={Math.floor(i / 10) === page ? 'show' : 'hide'}>{text}</li>
+    <li key={`${text}_${i}`} className={Math.floor(i / 10) === page ? 'show' : 'hide'}>{text}</li>
 
   return href[0] === '/' ? 
     <Link to={href}>{listItem}</Link>

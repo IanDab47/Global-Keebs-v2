@@ -218,24 +218,37 @@ const fetchImageFiles = async (timestamps) => {
     }))
 
     imageFiles.map(file => typeof file.data.url === 'string' ?
-      !arrayOfLinks.includes(file.data.url) && arrayOfLinks.push(file.data)
+      !checkForExistingURL(arrayOfLinks, file.data.url) && arrayOfLinks.push(file.data)
       :
       file.data.albumModel || file.data.imageModel ?
         null
         :
         file.data.imageFile ?
-          !arrayOfLinks.includes(file.data.imageFile.url) && arrayOfLinks.push(file.data.imageFile)
+          !checkForExistingURL(arrayOfLinks, file.data.imageFile.url) && arrayOfLinks.push(file.data.imageFile)
           :
           file.data.imageFiles.map(fetchedFile =>
-            !arrayOfLinks.includes(fetchedFile.url) ?
+            !checkForExistingURL(arrayOfLinks, fetchedFile.url) ?
               arrayOfLinks.push(fetchedFile)
               :
               null
-    ))
+          )
+    )
+    
+    console.log(arrayOfLinks.includes(), arrayOfLinks)
 
     return arrayOfLinks
 
   } catch (err) {
     console.warn('ERROR DURING IMAGE FETCH:', err)
   }
+}
+
+const checkForExistingURL = (linkArr, url) => {
+  let urlExists = false
+
+  linkArr.map(data => {
+    data.url.includes(url) ? (urlExists = true) : null
+  })
+
+  return urlExists
 }

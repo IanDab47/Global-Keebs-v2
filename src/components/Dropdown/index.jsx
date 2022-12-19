@@ -1,22 +1,24 @@
 // React
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
 // Styles
 import './style.less'
 
 export default function DropdownMenu({ clickedEl, type, title, links, isOpen, setIsOpen }) {
   // Refs
   const dropdownEl = useRef(null)
-  const dropdownPageEl = useRef(null)
+  const pagesEl = useRef(null)
 
   // States
   const [page, setPage] = useState(0)
 
+  const stopProp = (e) => e.stopPropagation()
+
   useEffect(() => {
-    // ::: REFACTOR :::
-    const clearDropdown = (e) => {
-      e.stopPropagation()
+    const currEl = dropdownEl.current
+
+    const toggleDropdown = (e) => {
+      // stopProp(e)
       setIsOpen(!isOpen)
       
       document.body.addEventListener('click', () => {
@@ -24,29 +26,11 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
       })
     }
 
-    dropdownEl.current.parentNode.addEventListener('click', clearDropdown)
+    currEl.parentNode.addEventListener('click', toggleDropdown)
 
-      // document.body.addEventListener('click', e => {
-      //   setIsOpen(false)
-      // })
-    // })
-
-    // // Hamburger
-    // if (type === 'hamburger') {
-    //   clickedEl !== dropdownEl.current.parentNode && isOpen && setIsOpen(!isOpen)
-    // }
-
-    // // Radio
-    // if (type === 'radio') {
-    //   clickedEl === dropdownEl.current.parentNode ||
-    //   clickedEl?.classList.value === `pages ${title}` ||
-    //   clickedEl?.classList.value.includes(`dropdown-page ${title}`) ?
-    //     setIsOpen(!isOpen)
-    //     :
-    //     setIsOpen(false)
-    // }
-
-    return () => dropdownEl.current.parentNode.removeEventListener('click', clearDropdown)
+    return () => {
+      currEl.parentNode.removeEventListener('click', toggleDropdown)
+    }
   }, [])
 
   return (
@@ -60,7 +44,6 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
             pages={Math.ceil(links.length / 10)}
             title={title}
             setPage={setPage}
-            currentEl={dropdownPageEl}
           />
           }
         </>
@@ -69,17 +52,16 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
   )
 }
 
-const DropdownPages = ({ page, pages, setPage, title, currentEl }) => {
+const DropdownPages = ({ page, pages, setPage, title }) => {
   const pageList = [...Array(pages).keys()]
 
   return (
-    <div className={`pages ${title}`} >
+    <div className={`pages ${title}`}>
       {pageList.map((pageNumber) =>
         <p
           key={`page_${pageNumber}`}
           className={`dropdown-page ${title} ${page === pageNumber ? 'active' : ''}`}
-          ref={currentEl}
-          onClick={() => setPage(pageNumber)}
+          onClick={() => console.log(pageNumber)}
         >
           {pageNumber + 1}
         </p>
@@ -94,7 +76,7 @@ const DropdownList = ({ title, links, page }) => {
       <p>{title}</p>
       <ul>
         {links.map(({ href, text }, i) =>
-          <DropdownListItem key={text} href={href} text={text} page={page} i={i} />
+          <DropdownListItem key={`${text}_${i}`} href={href} text={text} page={page} i={i} />
         )}
       </ul>
     </>

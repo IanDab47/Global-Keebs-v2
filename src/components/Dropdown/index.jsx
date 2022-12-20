@@ -12,27 +12,6 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
   // States
   const [page, setPage] = useState(0)
 
-  const stopProp = (e) => e.stopPropagation()
-
-  useEffect(() => {
-    const currEl = dropdownEl.current
-
-    const toggleDropdown = (e) => {
-      // stopProp(e)
-      setIsOpen(!isOpen)
-      
-      document.body.addEventListener('click', () => {
-        setIsOpen(false)
-      })
-    }
-
-    currEl.parentNode.addEventListener('click', toggleDropdown)
-
-    return () => {
-      currEl.parentNode.removeEventListener('click', toggleDropdown)
-    }
-  }, [])
-
   return (
     <div ref={dropdownEl} className={`drop-down`}>
       {isOpen && (
@@ -44,6 +23,7 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
             pages={Math.ceil(links.length / 10)}
             title={title}
             setPage={setPage}
+            pagesEl={pagesEl}
           />
           }
         </>
@@ -52,7 +32,7 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
   )
 }
 
-const DropdownPages = ({ page, pages, setPage, title }) => {
+const DropdownPages = ({ page, pages, setPage, title, pagesEl }) => {
   const pageList = [...Array(pages).keys()]
 
   return (
@@ -61,7 +41,9 @@ const DropdownPages = ({ page, pages, setPage, title }) => {
         <p
           key={`page_${pageNumber}`}
           className={`dropdown-page ${title} ${page === pageNumber ? 'active' : ''}`}
-          onClick={() => console.log(pageNumber)}
+          onClick={() => setPage(pageNumber)}
+          value={pageNumber}
+          ref={pagesEl}
         >
           {pageNumber + 1}
         </p>

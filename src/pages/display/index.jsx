@@ -233,8 +233,6 @@ const fetchImageFiles = async (timestamps) => {
               null
           )
     )
-    
-    console.log(arrayOfLinks.includes(), arrayOfLinks)
 
     return arrayOfLinks
 

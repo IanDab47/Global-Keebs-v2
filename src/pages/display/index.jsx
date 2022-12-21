@@ -154,7 +154,7 @@ export default function Display(...props) {
             <RadioButton
               title={timestampLinks.length > 1 ? 'timestamps' : 'timestamp'}
               links={timestampLinks}
-            />
+            >Timestamps</RadioButton>
           )}
           <h1>Listing Details</h1>
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
@@ -166,7 +166,7 @@ export default function Display(...props) {
         <RadioButton
           title={'Options'}
           links={commentLinks}
-        />
+        >Options</RadioButton>
         <h1>Comments</h1>
         <form onSubmit={e => submitComment(e)}>
           <textarea></textarea>

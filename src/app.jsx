@@ -3,7 +3,7 @@ import axios from "axios";
 
 // React
 import { useState, useEffect } from "react";
-import { ClickProvider, useClickUpdate } from "./context/ClickContext";
+import { ClickProvider } from "./context/ClickContext";
 import logo from "/logo.svg";
 
 // Components

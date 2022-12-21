@@ -1,15 +1,11 @@
 // React
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import DropdownMenu from '../Dropdown'
-import Hamburger from '../Hamburger'
 
 // Styles
 import './style.less'
 
-export default function RadioButton({ title, links }) {
-  // Ref
-  const radio = useRef()
-
+export default function RadioButton({ children, links }) {
   // State
   const [isOpen, setIsOpen] = useState(false)
 
@@ -31,15 +27,13 @@ export default function RadioButton({ title, links }) {
   }
 
   return (
-    <div className='radio-button' ref={radio}>
+    <div className='radio-button' onClick={() => setIsOpen(!isOpen)}>
       {radioDots()}
       <DropdownMenu
-        title={title}
-        type={'radio'}
         links={links}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-      />
+      >{children}</DropdownMenu>
     </div>
   )
 }

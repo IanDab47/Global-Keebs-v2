@@ -2,12 +2,12 @@ import { useState } from "react";
 import DropdownMenu from "../Dropdown";
 import "./style.less";
 
-export default function Hamburger({ title, links }) {
+export default function Hamburger({ links }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuButton = () => {
     return (
-      <div className="hb-button" onClick={e => setIsOpen(!isOpen)}>
+      <div className="hb-button">
         <span className="hb-line"></span>
         <span className="hb-line"></span>
         <span className="hb-line"></span>
@@ -17,7 +17,7 @@ export default function Hamburger({ title, links }) {
 
   const clickedButton = () => {
     return (
-      <div className="hb-button" onClick={e => setIsOpen(!isOpen)}>
+      <div className="hb-button">
         <span className="hb-cross"></span>
         <span className="hb-cross"></span>
       </div>
@@ -25,15 +25,13 @@ export default function Hamburger({ title, links }) {
   }
 
   return (
-    <div className="hb-menu">
+    <div className="hb-menu" onClick={() => setIsOpen(!isOpen)}>
       {isOpen ?
         clickedButton()
         :
         menuButton()
       }
       <DropdownMenu
-        title={title}
-        type={'hamburger'}
         links={links}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

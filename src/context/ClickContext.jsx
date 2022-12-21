@@ -1,23 +1,17 @@
-import { createContext, useMemo, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ClickContext = createContext()
-const ClickUpdateContext = createContext()
 
 export const useClick = () => useContext(ClickContext)
-export const useClickUpdate = () => useContext(ClickUpdateContext)
 
 export const ClickProvider = ({ children }) => {
   const [clickTarget, setClickTarget] = useState(null)
 
-  const memoizedClickTarget = useMemo(() => clickTarget, [clickTarget])
-
-  const selectTarget = (e) => {
-    setClickTarget(e.target)
-  }
+  useEffect(() => console.log(clickTarget), [clickTarget])
 
   return (
-    <ClickContext.Provider value={memoizedClickTarget}>
-        <div onClick={selectTarget}>
+    <ClickContext.Provider value={clickTarget}>
+        <div onClick={e => setClickTarget(e.target)}>
           {children}
         </div>
     </ClickContext.Provider>

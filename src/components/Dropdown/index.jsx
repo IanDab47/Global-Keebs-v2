@@ -1,31 +1,40 @@
 // React
 import { useState, useEffect, useRef } from 'react'
+import { useClick } from '../../context/ClickContext'
 import { Link } from 'react-router-dom'
 
 // Styles
 import './style.less'
 
-export default function DropdownMenu({ type, title, links, isOpen, setIsOpen }) {
+export default function DropdownMenu({ children, links, isOpen, setIsOpen }) {
   // Refs
   const dropdownEl = useRef(null)
   const pagesEl = useRef(null)
 
   // States
   const [page, setPage] = useState(0)
+  const currentTarget = useClick()
+  
+  useEffect(() => {
+    const parentEl = dropdownEl.current.parentNode
+
+    console.log(currentTarget !== parentEl, isOpen)
+
+    currentTarget !== parentEl && isOpen && setIsOpen(false)
+  }, [currentTarget])
 
   return (
     <div ref={dropdownEl} className={`drop-down`}>
       {isOpen && (
         <>
-          <DropdownList title={title} links={links} page={page} />
+          <DropdownList links={links} page={page}>{children}</DropdownList>
           {links.length > 10 &&
             <DropdownPages
               page={page}
               pages={Math.ceil(links.length / 10)}
-              title={title}
               setPage={setPage}
               pagesEl={pagesEl}
-            />
+            >{children}</DropdownPages>
           }
         </>
       )}
@@ -33,15 +42,15 @@ export default function DropdownMenu({ type, title, links, isOpen, setIsOpen }) 
   )
 }
 
-const DropdownPages = ({ page, pages, setPage, title, pagesEl }) => {
+const DropdownPages = ({ page, pages, setPage, children, pagesEl }) => {
   const pageList = [...Array(pages).keys()]
 
   return (
-    <div className={`pages ${title}`}>
+    <div className={`pages ${children}`}>
       {pageList.map((pageNumber) =>
         <p
           key={`page_${pageNumber}`}
-          className={`dropdown-page ${title} ${page === pageNumber ? 'active' : ''}`}
+          className={`dropdown-page ${children} ${page === pageNumber ? 'active' : ''}`}
           onClick={() => setPage(pageNumber)}
           value={pageNumber}
           ref={pagesEl}
@@ -53,10 +62,10 @@ const DropdownPages = ({ page, pages, setPage, title, pagesEl }) => {
   )
 }
 
-const DropdownList = ({ title, links, page }) => {
+const DropdownList = ({ children, links, page }) => {
   return (
     <>
-      <p>{title}</p>
+      <p>{children}</p>
       <ul>
         {links.map(({ href, text }, i) =>
           <DropdownListItem key={`${text}_${i}`} href={href} text={text} page={page} i={i} />

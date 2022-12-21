@@ -6,7 +6,7 @@ import Hamburger from '../Hamburger'
 // Styles
 import './style.less'
 
-export default function RadioButton({ clickedEl, title, links }) {
+export default function RadioButton({ title, links }) {
   // Ref
   const radio = useRef()
 
@@ -34,7 +34,6 @@ export default function RadioButton({ clickedEl, title, links }) {
     <div className='radio-button' ref={radio}>
       {radioDots()}
       <DropdownMenu
-        clickedEl={clickedEl}
         title={title}
         type={'radio'}
         links={links}

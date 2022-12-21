@@ -1,10 +1,11 @@
 // React
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+
 // Styles
 import './style.less'
 
-export default function DropdownMenu({ clickedEl, type, title, links, isOpen, setIsOpen }) {
+export default function DropdownMenu({ type, title, links, isOpen, setIsOpen }) {
   // Refs
   const dropdownEl = useRef(null)
   const pagesEl = useRef(null)
@@ -19,12 +20,12 @@ export default function DropdownMenu({ clickedEl, type, title, links, isOpen, se
           <DropdownList title={title} links={links} page={page} />
           {links.length > 10 &&
             <DropdownPages
-            page={page}
-            pages={Math.ceil(links.length / 10)}
-            title={title}
-            setPage={setPage}
-            pagesEl={pagesEl}
-          />
+              page={page}
+              pages={Math.ceil(links.length / 10)}
+              title={title}
+              setPage={setPage}
+              pagesEl={pagesEl}
+            />
           }
         </>
       )}

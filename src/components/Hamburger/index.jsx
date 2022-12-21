@@ -2,7 +2,7 @@ import { useState } from "react";
 import DropdownMenu from "../Dropdown";
 import "./style.less";
 
-export default function Hamburger({ clickedEl, title, links }) {
+export default function Hamburger({ title, links }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuButton = () => {
@@ -32,7 +32,6 @@ export default function Hamburger({ clickedEl, title, links }) {
         menuButton()
       }
       <DropdownMenu
-        clickedEl={clickedEl}
         title={title}
         type={'hamburger'}
         links={links}

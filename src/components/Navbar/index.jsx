@@ -21,7 +21,7 @@ export default function NavBar() {
       <Link to={'/user/sign'}>Login</Link>
       <Link to={'/listings'}>Browse</Link>
       <Link to={'/listings/test'}>Listing</Link>
-      <Hamburger clickedEl={clickedEl} title={'Global Keebs'} links={hamburgerLinks} />
+      <Hamburger title={'Global Keebs'} links={hamburgerLinks} />
     </nav>
   )
 }

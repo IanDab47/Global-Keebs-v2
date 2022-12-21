@@ -1,17 +1,14 @@
-import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom"
+// Dependencies
 import axios from "axios";
+
+// React
+import { useState, useEffect } from "react";
+import { ClickProvider, useClickUpdate } from "./context/ClickContext";
 import logo from "/logo.svg";
 
 // Components
 import Navbar from "./components/Navbar";
-
-// Pages
-import Home from './pages/home'
-import Auth from './pages/auth'
-import User from './pages/profile'
-import List from './pages/list'
-import Listing from './pages/display'
+import RouteList from "./components/RouteList.jsx"
 
 export default function App() {
   // State
@@ -28,16 +25,9 @@ export default function App() {
 
   // Output
   return (
-    <>
-      <Navbar />
-
-      <Routes>
-        <Route path="/" element={ <Home /> } />
-        <Route path="/user/sign" element={ <Auth /> } />
-        <Route path="/user/:userId" element={ <User /> } />
-        <Route path="/listings" element={ <List /> } />
-        <Route path="/listings/:pageId" element={ <Listing /> } />
-      </Routes>
-    </>
+    <ClickProvider>
+        <Navbar />
+        <RouteList />
+    </ClickProvider>
   );
 }

@@ -19,7 +19,6 @@ export default function Display(...props) {
   // States
   const pageEl = useRef(null)
   const thumbnailScroll = useRef(null)
-  const [clickedEl, setClickedEl] = useState(null)
   const [id, setId] = useState(null)
   const [author, setAuthor] = useState('')
   const [authorRef, setAuthorRef] = useState('')
@@ -92,10 +91,6 @@ export default function Display(...props) {
   }, [currThumbnail])
 
   // Handlers
-  const selectElement = (e) => {
-    setClickedEl(e.target)
-  }
-  
   const thumbnailModal = () => {
     console.log('TODO: MAKE IT BIG!!!')
   }
@@ -108,7 +103,6 @@ export default function Display(...props) {
     <div
       className={`${loading && 'loading'} listing-display-page`}
       ref={pageEl}
-      onClick={e => selectElement(e)}
     >
       <header>
         <a href={url} target='_blank'>{title}</a>
@@ -150,15 +144,14 @@ export default function Display(...props) {
                     onClick={e => setCurrThumbnail(data.url)}
                   />
               )})}
-            </div>}
-
+            </div>
+            }
           </section>
         )}
         
         <section className="self-text">
           {timestamps.length > 0 && (
             <RadioButton
-              clickedEl={clickedEl}
               title={timestampLinks.length > 1 ? 'timestamps' : 'timestamp'}
               links={timestampLinks}
             />
@@ -171,7 +164,6 @@ export default function Display(...props) {
       
       <section className="comments">
         <RadioButton
-          clickedEl={clickedEl}
           title={'Options'}
           links={commentLinks}
         />

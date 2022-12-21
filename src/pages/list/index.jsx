@@ -23,6 +23,7 @@ export default function List() {
   const currTime = setTime()
   const [searchParams, setSearchParams] = useSearchParams()
   const [list, setList] = useState([])
+  const listMemoized = useMemo(() => list, [list])
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
   const [category, setCategory] = useState([''])
@@ -86,7 +87,7 @@ export default function List() {
     
     try {
       const response = await axios.get(listAPIURL)
-      page === 0 && setList([])
+      // page === 0 && setList([])
       page !== 0 ? setList([...list, ...response.data]) : setList(response.data)
       setCategory(filterInput)
       setPage(page)
@@ -97,7 +98,7 @@ export default function List() {
   }
 
   // Output
-  const listings = list.map((listing, i) => {
+  const listings = listMemoized.map((listing, i) => {
     return (
       <ListTab
         key={`tab_GK${i}_${listing.pageId}`}
@@ -109,7 +110,7 @@ export default function List() {
     )}
   )
 
-  const cards = list.map((listing, i) => {
+  const cards = listMemoized.map((listing, i) => {
     return (
       <ListCard
         key={`tab_GK${i}_${listing.pageId}`}
@@ -125,7 +126,7 @@ export default function List() {
     <>
       <Loading clear={loading ? false : true} /> 
 
-      {list && (
+      {listMemoized && (
         <section className='list-page'>
           <form onSubmit={e => fetchListings(e)}>
             <header>

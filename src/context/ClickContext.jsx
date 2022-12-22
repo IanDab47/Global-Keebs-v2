@@ -7,8 +7,6 @@ export const useClick = () => useContext(ClickContext)
 export const ClickProvider = ({ children }) => {
   const [clickTarget, setClickTarget] = useState(null)
 
-  useEffect(() => console.log(clickTarget), [clickTarget])
-
   return (
     <ClickContext.Provider value={clickTarget}>
         <div onClick={e => setClickTarget(e.target)}>

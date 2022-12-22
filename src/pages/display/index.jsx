@@ -8,6 +8,8 @@ import DOMPurify from "dompurify"
 import RadioButton from "../../components/RadioButton"
 
 // Styles
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 import "./style.less"
 
 const commentLinks = [
@@ -157,7 +159,9 @@ export default function Display(...props) {
             >Timestamps</RadioButton>
           )}
           <h1>Listing Details</h1>
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selfText) }}></p>
+          <div className="details">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{selfText}</ReactMarkdown>
+          </div>
         </section>
 
       </div>

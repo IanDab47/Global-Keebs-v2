@@ -52,31 +52,31 @@ const findTimestamps = (text) => {
     )
   );
 
-  // Remove timestamp from text
-  const [self_text] =
-    timestampFetch.length > 0
-      ? timestampFetch.map((timestamp) =>
-          replacePattern(timestamp, text, '', 'img')
-        )
-      : [text];
+  // // Remove timestamp from text
+  // const [self_text] =
+  //   timestampFetch.length > 0
+  //     ? timestampFetch.map((timestamp) =>
+  //         replacePattern(timestamp, text, '', 'img')
+  //       )
+  //     : [text];
 
-  return { self_text, timestamps };
+  return { self_text: text, timestamps };
 };
 
 const formatSelfText = (text) => {
   // Find and remove timestamps from text
   let { self_text, timestamps } = findTimestamps(text);
 
-  // Remove all &amp; patterns
-  const re_linePattern = /&amp\S;|&amp;|&\S+;/g;
-  const checkLinePattern = [self_text.matchAll(re_linePattern)];
-  self_text =
-    checkLinePattern.length > 0
-      ? replacePattern(checkLinePattern, self_text)
-      : self_text;
+  // // Remove all &amp; patterns
+  // const re_linePattern = /&amp\S;|&amp;|&\S+;/g;
+  // const checkLinePattern = [self_text.matchAll(re_linePattern)];
+  // self_text =
+  //   checkLinePattern.length > 0
+  //     ? replacePattern(checkLinePattern, self_text)
+  //     : self_text;
 
-  // Replace all '\n' with <br>
-  self_text = self_text.replaceAll('\n', '<br>');
+  // // Replace all '\n' with <br>
+  // self_text = self_text.replaceAll('\n', '<br>');
 
   return { self_text, timestamps };
 };

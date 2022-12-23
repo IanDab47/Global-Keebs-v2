@@ -40,13 +40,13 @@ export default function ListCard({ currTime, listing, i }) {
       style={{ '--order': gridAnimMath, '--length': '1.5s' }}
     >
       <div className='top'>
-        {!listing.timestamps.length ?
+        {!timestamps.length ?
           (<div>
             <FontAwesomeIcon icon={faKeyboard} />
             <p>Global Keebs</p>
           </div>)
           : 
-          <img src='' />
+          <img src={timestamps[0].url} />
         }
 
         <div

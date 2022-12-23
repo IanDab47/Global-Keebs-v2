@@ -8,6 +8,8 @@ import { timeSincePost } from '../../util/time'
 import './style.less'
 
 export default function ListTab({ currTime, listing, i }) {
+  const showTimestamps = (e) => console.log(e)
+
   return (
     <div
       className='tab'

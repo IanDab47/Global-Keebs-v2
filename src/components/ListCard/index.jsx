@@ -1,8 +1,13 @@
 // React
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+// Components
+import Loading from '../Loading'
+
 // Util
-import { timeSincePost } from '../../util/time'
+import { setTime, timeSincePost } from '../../util/time'
+import { fetchImageFiles } from '../../util/requests'
 
 // Styles
 import './style.less'
@@ -11,6 +16,12 @@ import { faKeyboard } from '@fortawesome/free-solid-svg-icons'
 import RadioButton from '../RadioButton'
 
 export default function ListCard({ currTime, listing, i }) {
+  const [timestamps, setTimestamps] = useState([])
+
+  useEffect(async () => setTimestamps(await fetchImageFiles(listing.timestamps)), [])
+
+  useEffect(() => console.log(timestamps), [timestamps])
+
   // Animate grid diagonally
   // (...) = order
   // % 30 = reset count based on page size

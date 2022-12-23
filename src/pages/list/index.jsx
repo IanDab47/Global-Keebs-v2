@@ -14,9 +14,9 @@ import ViewFilter from '../../components/ViewFilter'
 import { setTime } from '../../util/time'
 
 // Styles
-import "./style.less"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import "./style.less"
 
 export default function List() {
   // States

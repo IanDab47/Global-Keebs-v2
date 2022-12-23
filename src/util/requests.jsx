@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 const checkForExistingURL = (linkArr, url) => {
   let urlExists = false;
 
@@ -9,6 +11,8 @@ const checkForExistingURL = (linkArr, url) => {
 
   return urlExists;
 };
+
+
 
 export const fetchImageFiles = async (timestamps) => {
   const arrayOfLinks = [];

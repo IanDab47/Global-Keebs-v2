@@ -57,7 +57,7 @@ const findTimestamps = (text) => {
 
 const removeUnicode = (text, init = '') => {
   // Remove all Non-ASCII characters
-  const newText = text.replace(/&amp;.+;|&.+; /g, '');
+  const newText = text.replace(/&amp;.+;|&.+; |&.+;/g, '');
 
   init && console.log(text, newText);
 

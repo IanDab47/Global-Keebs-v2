@@ -18,9 +18,13 @@ import RadioButton from '../RadioButton'
 export default function ListCard({ currTime, listing, i }) {
   const [timestamps, setTimestamps] = useState([])
 
-  useEffect(async () => setTimestamps(await fetchImageFiles(listing.timestamps)), [])
+  useEffect(async () => {
+    const response = await fetchImageFiles(listing.timestamps)
 
-  useEffect(() => console.log(timestamps), [timestamps])
+    setTimestamps(response.map((timestamp) => ({ href: timestamp.url, text: timestamp.url })))
+  }, [])
+
+  // useEffect(() => console.log(timestamps), [timestamps])
 
   // Animate grid diagonally
   // (...) = order
@@ -46,7 +50,7 @@ export default function ListCard({ currTime, listing, i }) {
             <p>Global Keebs</p>
           </div>)
           : 
-          <img src={timestamps[0].url} />
+          <img src={timestamps[Math.floor(Math.random() * timestamps.length)].href} />
         }
 
         <div
@@ -63,7 +67,7 @@ export default function ListCard({ currTime, listing, i }) {
         <div>
           <p>u/{listing.author}</p>
           <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
-          <RadioButton />
+          {!!timestamps.length && <RadioButton links={timestamps}>Timestamps</RadioButton>}
         </div>
         
       </div>

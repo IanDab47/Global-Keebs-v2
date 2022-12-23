@@ -221,9 +221,21 @@
       max-width: 50rem;
       text-align: left;
 
-      p {
+      .details {
+        font-size: 1.2rem;
         line-height: 1.5rem;
-        word-break: break-word;
+
+        tr > th {
+          border-bottom: .1rem solid @ntl-fair;
+        }
+
+        td ~ td, th ~ th {
+          padding-left: .35rem;
+        }
+
+        :is(td, th):last-of-type {
+          padding-right: 2vmax;
+        }
       }
     }
   }

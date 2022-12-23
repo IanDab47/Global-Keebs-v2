@@ -52,33 +52,16 @@ const findTimestamps = (text) => {
     )
   );
 
-  // // Remove timestamp from text
-  // const [self_text] =
-  //   timestampFetch.length > 0
-  //     ? timestampFetch.map((timestamp) =>
-  //         replacePattern(timestamp, text, '', 'img')
-  //       )
-  //     : [text];
-
-  return { self_text: text, timestamps };
+  return timestamps;
 };
 
-const formatSelfText = (text) => {
-  // Find and remove timestamps from text
-  let { self_text, timestamps } = findTimestamps(text);
+const removeUnicode = (text, init = '') => {
+  // Remove all Non-ASCII characters
+  const newText = text.replace(/&amp;.+;|&.+; /g, '');
 
-  // // Remove all &amp; patterns
-  // const re_linePattern = /&amp\S;|&amp;|&\S+;/g;
-  // const checkLinePattern = [self_text.matchAll(re_linePattern)];
-  // self_text =
-  //   checkLinePattern.length > 0
-  //     ? replacePattern(checkLinePattern, self_text)
-  //     : self_text;
+  init && console.log(text, newText);
 
-  // // Replace all '\n' with <br>
-  // self_text = self_text.replaceAll('\n', '<br>');
-
-  return { self_text, timestamps };
+  return newText;
 };
 
 const saveData = async (data) => {
@@ -90,8 +73,9 @@ const saveData = async (data) => {
   const location = getLocation(data.title, flair_text);
   const page_id = data.id || null;
   const page_name = data.name;
-  const { self_text, timestamps } = formatSelfText(data.selftext);
-  const title = data.title;
+  const self_text = removeUnicode(data.selftext);
+  const timestamps = findTimestamps(data.selftext);
+  const title = removeUnicode(data.title, 'title');
   const ups = data.ups;
   const upvote_ratio = data.upvote_ratio;
   const url = data.url;
@@ -143,6 +127,7 @@ const saveData = async (data) => {
         flair_text: flair_text,
         location: location,
         page_name: page_name,
+        page_id: page_id,
         self_text: self_text,
         title: title,
         ups: ups,

@@ -62,15 +62,14 @@ export default function ListCard({ currTime, listing, i }) {
       </div>
 
       <div className='bottom'>
-        <Link to={`${listing.page_id}`}><h1>{listing.title}</h1></Link>
-
-        <div>
-          <p>u/{listing.author}</p>
-          <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
-          {!!timestamps.length && <RadioButton links={timestamps}>Timestamps</RadioButton>}
-        </div>
-        
+        <Link to={`${listing.page_id}`}><h1>{listing.title}</h1></Link>        
       </div>
-    </div>
+
+      <div className='info'>
+        <p>u/{listing.author}</p>
+        <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
+        {!!timestamps.length && <RadioButton links={timestamps}>Timestamps</RadioButton>}
+      </div>
+  </div>
   )
 }

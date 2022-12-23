@@ -1,11 +1,10 @@
 // React
 import { useState, useEffect, useRef } from 'react'
-import { useClick } from '../../context/ClickContext'
+import { useClick, useClickPosition } from '../../context/ClickContext'
 import { Link } from 'react-router-dom'
 
 // Styles
 import './style.less'
-import e from 'cors'
 
 export default function DropdownMenu({ children, links, isOpen, setIsOpen }) {
   // Refs
@@ -15,6 +14,7 @@ export default function DropdownMenu({ children, links, isOpen, setIsOpen }) {
   // States
   const [page, setPage] = useState(0)
   const currentTarget = useClick()
+  const { xPos, yPos } = useClickPosition()
 
   // Handlers
   const selectPage = (e, pageNumber) => {
@@ -26,27 +26,33 @@ export default function DropdownMenu({ children, links, isOpen, setIsOpen }) {
   useEffect(() => {
     const parentEl = dropdownEl.current.parentNode
 
-    // console.log(currentTarget?.classList)
-
+    // Check clicked element to close dropdown
     currentTarget !== parentEl && !currentTarget?.classList.value.includes('pages') && !currentTarget?.classList.value.includes('page') && isOpen && setIsOpen(false)
-
   }, [currentTarget])
 
+  useEffect(() => {
+    // Stop scroll on radio click
+    document.body.style.overflowY = isOpen ? 'clip' : 'auto'
+    return () => document.body.style.overflowY = 'auto'
+  }, [isOpen])
+
   return (
-    <div ref={dropdownEl} className={`drop-down`}>
-      {isOpen && (
-        <>
-          <DropdownList links={links} page={page}>{children}</DropdownList>
-          {links.length > 10 &&
-            <DropdownPages
-              page={page}
-              pages={Math.ceil(links.length / 10)}
-              handleClick={selectPage}
-              pagesEl={pagesEl}
-            >{children}</DropdownPages>
-          }
-        </>
-      )}
+    <div className="fixed-wrapper">
+      <div style={{ '--xPos': xPos, '--yPos': yPos }} ref={dropdownEl} className={`drop-down`}>
+        {isOpen && (
+          <>
+            <DropdownList links={links} page={page}>{children}</DropdownList>
+            {links.length > 10 &&
+              <DropdownPages
+                page={page}
+                pages={Math.ceil(links.length / 10)}
+                handleClick={selectPage}
+                pagesEl={pagesEl}
+              >{children}</DropdownPages>
+            }
+          </>
+        )}
+      </div>
     </div>
   )
 }

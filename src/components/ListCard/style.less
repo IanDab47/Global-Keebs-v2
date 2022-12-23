@@ -3,7 +3,6 @@
 @import '../../sharedStyles/fonts.less';
 
 .cards {
-  position: relative;
   display: grid;
   gap: .5rem;
   grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
@@ -15,20 +14,19 @@
   }
 
   .card {
+    position: relative;
     display: grid;
     height: 30rem;
     grid-template-rows: 55% 45%;
     isolation: isolate;
     overflow: clip;
-    backdrop-filter: blur(.5rem);
+    // backdrop-filter: blur(.5rem);
     box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000,
                 inset 0 5rem 10rem -8rem @sec-light;
     margin-bottom: .5rem;
-    opacity: 0;
     transition: background 300ms @quick-n-slow,
                 color 300ms @quick-n-slow,
                 box-shadow 300ms @quick-n-slow;
-    animation: @fade-in, @drop-in;
 
     &:has(.top:is(:hover, :focus, :focus-within)) {
       box-shadow: 0rem 0.125rem 0.5rem -0.5rem #000000,
@@ -129,37 +127,36 @@
         line-height: 2rem;
         transition: transform 300ms @quick-n-slow;
       }
+    }
 
-      > div {
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
+    .info {
+      position: absolute;
+      bottom: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      width: 100%;
+      padding-inline: 1.5rem;
 
-        > p {
-          border-radius: .5rem;
-          margin-right: 1rem;
-          transition: padding 300ms @quick-n-slow, 
-                      background 300ms @quick-n-slow,
-                      color 300ms @quick-n-slow;
+      > p {
+        border-radius: .5rem;
+        margin-right: 1rem;
+        transition: padding 300ms @quick-n-slow, 
+                    background 300ms @quick-n-slow,
+                    color 300ms @quick-n-slow;
 
-          &:first-child {
-            margin-right: auto;
-          
-            &:hover {
-              cursor: pointer;
-              background: @act-main;
-              color: @pri-bright;
-              padding: .3rem 1.2rem;
-              transition: padding 300ms @quick-n-slow, 
-                          background 300ms @quick-n-slow,
-                          color 200ms @quick-n-slow;
-            }
+        &:first-child {
+          margin-right: auto;
+        
+          &:hover {
+            cursor: pointer;
+            background: @act-main;
+            color: @pri-bright;
+            padding: .3rem 1.2rem;
+            transition: padding 300ms @quick-n-slow, 
+                        background 300ms @quick-n-slow,
+                        color 200ms @quick-n-slow;
           }
-        }
-
-        .radio-button {
-          @dot-size: .25rem;
-          @dot-gap: .15rem;
         }
       }
     }

@@ -36,12 +36,12 @@ const replacePattern = (patterns, text, fill = '', filter = null) => {
 };
 
 const findTimestamps = (text) => {
-  const re_imgur = /\(http([^)]+)\)|http.+imgu\S+/g;
-  let timestamps = [];
+  const re_imgur = /\(http([^)]+)\)|http.+imgu.+/g;
 
   let timestampFetch = [...text.matchAll(re_imgur)];
 
   // Filter for imgur links
+  let timestamps = [];
   timestampFetch.map((timestamp) =>
     timestamp.map((pattern) =>
       pattern !== undefined &&
@@ -55,11 +55,9 @@ const findTimestamps = (text) => {
   return timestamps;
 };
 
-const removeUnicode = (text, init = '') => {
+const removeUnicode = (text) => {
   // Remove all Non-ASCII characters
   const newText = text.replace(/&amp;.+;|&.+; |&.+;/g, '');
-
-  init && console.log(text, newText);
 
   return newText;
 };

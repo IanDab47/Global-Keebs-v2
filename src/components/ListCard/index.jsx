@@ -44,6 +44,13 @@ export default function ListCard({ currTime, listing, i }) {
       style={{ '--order': gridAnimMath, '--length': '1.5s' }}
     >
       <div className='top'>
+        <div
+          className='flair'
+          data-color={listing.flair_text}
+        >
+          {listing.flair_text.toLowerCase()}
+        </div>
+
         {!timestamps.length ?
           (<div>
             <FontAwesomeIcon icon={faKeyboard} />
@@ -52,24 +59,18 @@ export default function ListCard({ currTime, listing, i }) {
           : 
           <img src={timestamps[Math.floor(Math.random() * timestamps.length)].href} />
         }
-
-        <div
-          className='flair'
-          data-color={listing.flair_text}
-        >
-          {listing.flair_text.toLowerCase()}
-        </div>
       </div>
 
       <div className='bottom'>
-        <Link to={`${listing.page_id}`}><h1>{listing.title}</h1></Link>        
+        <Link to={`${listing.page_id}`}><h1>{listing.title}</h1></Link>
+        
+        <div className='info'>
+          <p>u/{listing.author}</p>
+          <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
+          {!!timestamps.length && <RadioButton links={timestamps}>Timestamps</RadioButton>}
+        </div>
       </div>
 
-      <div className='info'>
-        <p>u/{listing.author}</p>
-        <p className='time'>{timeSincePost(currTime, listing.created_utc)}</p>
-        {!!timestamps.length && <RadioButton links={timestamps}>Timestamps</RadioButton>}
-      </div>
   </div>
   )
 }

@@ -143,7 +143,7 @@ export default function Display(...props) {
                     loading='lazy'
                     alt={`keyboard_${i}`}
                     title={`keyboard_${i}`}
-                    onClick={e => setCurrThumbnail(data.url)}
+                    onClick={() => setCurrThumbnail(data.url)}
                   />
               )})}
             </div>
@@ -160,7 +160,10 @@ export default function Display(...props) {
           )}
           <h1>Listing Details</h1>
           <div className="details">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{selfText}</ReactMarkdown>
+            <ReactMarkdown
+              className='markdown'
+              remarkPlugins={[remarkGfm]}
+            >{selfText}</ReactMarkdown>
           </div>
         </section>
 

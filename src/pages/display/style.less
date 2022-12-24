@@ -219,11 +219,28 @@
 
     .self-text {
       max-width: 50rem;
+      font-size: 1.1rem;
       text-align: left;
 
-      .details {
-        font-size: 1.2rem;
-        line-height: 1.5rem;
+      .markdown {
+        line-height: 1.7rem;
+
+        p + ul {
+          margin-top: -1rem;
+        }
+
+        li {
+          list-style-type: none;
+        }
+
+        code {
+          font-family: Montserrat;
+          font-size: .8em;
+        }
+
+        > :not(table) {
+          margin-block: 1rem;
+        }
 
         tr > th {
           border-bottom: .1rem solid @ntl-fair;
@@ -231,6 +248,10 @@
 
         td ~ td, th ~ th {
           padding-left: .35rem;
+        }
+
+        td, th {
+          vertical-align: initial;
         }
 
         :is(td, th):last-of-type {

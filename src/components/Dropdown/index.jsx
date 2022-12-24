@@ -31,9 +31,21 @@ export default function DropdownMenu({ children, links, isOpen, setIsOpen }) {
   }, [currentTarget])
 
   useEffect(() => {
-    // Stop scroll on radio click
-    document.body.style.overflowY = isOpen ? 'clip' : 'auto'
-    return () => document.body.style.overflowY = 'auto'
+    // // Stop scroll on radio click
+    // document.body.style.overflowY = isOpen ? 'clip' : 'auto'
+    // return () => document.body.style.overflowY = 'auto'
+    const scrollPosition = window.scrollY
+
+    const scrollLock = e => {
+      e.preventDefault()
+      console.log(window.scrollY)
+      window.scrollY = scrollPosition
+      return
+    }
+
+    isOpen && document.body.addEventListener('scroll', scrollLock)
+
+    // return () => document.body.removeEventListener('scroll', scrollLock)
   }, [isOpen])
 
   return (
@@ -97,7 +109,6 @@ const DropdownListItem = ({ href, text, page, i }) => {
     <Link to={href}>{listItem}</Link>
     :
     <a href={href} target="_blank">{listItem}</a>
-
 }
 
 const animateHide = () => {

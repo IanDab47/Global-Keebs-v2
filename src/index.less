@@ -120,7 +120,7 @@ button {
   &:hover::before {
     opacity: .3;
   }
-  &:is(:focus-within) {
+  &:where(:focus-within) {
     outline: .3rem solid @act-main;
     outline-offset: .3rem;
   }

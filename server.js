@@ -15,7 +15,8 @@ app.use(morgan('dev'));
 
 // Major Fetch
 fetchReddit();
-setInterval(minorFetch, 300_000);
+const fetchTimer = 1000 * 60 * 5; // Milliseconds * seconds * minutes
+setInterval(minorFetch, fetchTimer);
 
 // BACKEND ROUTES
 app.use('/src', loadImage);

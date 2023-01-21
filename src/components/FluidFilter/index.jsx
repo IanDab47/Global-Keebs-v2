@@ -53,11 +53,11 @@ export default function FluidFilter({
       <div
         className='fluid'
         name={`${filterType}`}
-        onClick={
-          e => setSearchInput(searchInput[searchInput.length - 1] === ' '
-            ? searchInput
-            : searchInput + ' '
-        )}
+        // onClick={
+        //   e => setSearchInput(searchInput[searchInput.length - 1] === ' '
+        //     ? searchInput
+        //     : searchInput + ' '
+        // )}
       >
         <div>
           <p 

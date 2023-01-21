@@ -31,6 +31,7 @@ export default function List() {
   const [searchInput, setSearchInput] = useState('')
   const [filterInput, setFilterInput] = useState([''])
   const [locationInput, setLocationInput] = useState([''])
+  const [applyFilters, setApplyFilters] = useState(false)
   let listAPIURL = null
   
   // Hooks
@@ -145,16 +146,14 @@ export default function List() {
                 filterType={'category'}
                 filterInput={filterInput}
                 setFilterInput={setFilterInput}
-                searchInput={searchInput}
-                setSearchInput={setSearchInput}
+                setApplyFilters={setApplyFilters}
               />
 
               <FluidFilter
                 filterType={'location'}
                 filterInput={locationInput}
                 setFilterInput={setLocationInput}
-                searchInput={searchInput}
-                setSearchInput={setSearchInput}
+                setApplyFilters={setApplyFilters}
               />
             
               <div className='view-type'>
@@ -164,10 +163,7 @@ export default function List() {
                     setListType={setListType}
                   />
                 }
-                {filterInput !== category || locationInput !== location
-                  ? <button>Apply</button>
-                  : null
-                }
+                <button className={applyFilters ? null : 'clear'} onClick={() => setApplyFilters(false)}>Apply</button>
               </div>
 
             </section>

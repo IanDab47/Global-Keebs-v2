@@ -164,6 +164,10 @@ export default function List() {
                     setListType={setListType}
                   />
                 }
+                {filterInput !== category || locationInput !== location
+                  ? <button>Apply</button>
+                  : null
+                }
               </div>
 
             </section>

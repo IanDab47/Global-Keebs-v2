@@ -1,12 +1,12 @@
 {
-  "name": "react-and-express-boilerplate",
+  "name": "globalkeebs_v2",
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "clear & concurrently 'vite' 'node server.js'",
-    "dev": "clear & concurrently 'vite' 'nodemon server.js'",
+    "start": "clear && npm run build",
+    "dev": "clear & concurrently 'vite' 'nodemon server.js' 'cross-env NODE_ENV=development'",
     "build": "vite build",
-    "preview": "concurrently 'vite preview --port 3000' 'node server.js'"
+    "preview": "concurrently 'vite preview' 'node server.js' 'cross-env NODE_ENV=production'"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -16,6 +16,7 @@
     "axios": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dompurify": "^2.4.1",
     "dotenv": "^16.0.3",
     "express": "^4.17.3",

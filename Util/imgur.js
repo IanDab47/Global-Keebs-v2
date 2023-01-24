@@ -46,8 +46,6 @@ const fetchAlbumImages = async (albumHash) => {
     const url = `https://api.imgur.com/3/album/${albumHash}`;
     const response = await axios.get(url, options);
 
-    console.log(response.data);
-
     await db.timestamp.update(
       {
         status: 'OPENED',

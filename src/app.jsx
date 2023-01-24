@@ -4,7 +4,7 @@ import axios from "axios";
 // React
 import { useState, useEffect } from "react";
 import { ClickProvider } from "./context/ClickContext";
-import logo from "/logo.svg";
+// import logo from "/logo.svg";
 
 // Components
 import Navbar from "./components/Navbar";
